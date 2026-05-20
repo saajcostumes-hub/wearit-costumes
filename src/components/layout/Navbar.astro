@@ -1,0 +1,95 @@
+---
+const navLinks = [
+  { label: "Home",     href: "/" },
+  { label: "Catalog",  href: "/collection" },
+  { label: "Policies", href: "/policies" },
+  { label: "About",    href: "/about" },
+];
+
+const currentPath = Astro.url.pathname;
+
+const links = navLinks.map(link => ({
+  label: link.label,
+  href:  link.href,
+  desktopCls: currentPath === link.href
+    ? "text-sm font-medium text-primary-500 border-b-2 border-primary-500 pb-0.5"
+    : "text-sm font-medium text-charcoal-500 hover:text-primary-500 transition-colors",
+  mobileCls: currentPath === link.href
+    ? "block px-4 py-3 text-sm font-medium rounded-md text-primary-600 bg-primary-50"
+    : "block px-4 py-3 text-sm font-medium rounded-md text-charcoal-600 hover:bg-charcoal-50",
+}));
+
+const waLink = "https://wa.me/919999999999";
+---
+
+<!-- Alpine.js scope starts here: open = is mobile menu open? -->
+<header class="sticky top-0 z-50 bg-white border-b border-charcoal-100" x-data="{ open: false }">
+  <div class="container-x flex items-center justify-between h-16">
+
+    <!-- Wordmark -->
+    <a href="/" class="font-display text-2xl font-semibold tracking-tight hover:opacity-80 transition-opacity">
+      <span class="text-charcoal-700">wear</span><span class="text-primary-500">it</span>
+    </a>
+
+    <!-- Desktop nav — disappears on mobile -->
+    <nav class="hidden md:flex items-center gap-8" aria-label="Main navigation">
+      {links.map((link) => (
+        <a href={link.href} class={link.desktopCls}>{link.label}</a>
+      ))}
+    </nav>
+
+    <!-- Desktop Book Now — disappears on mobile -->
+    <a href={waLink} target="_blank" rel="noopener noreferrer"
+       class="hidden md:inline-flex items-center gap-2 btn-whatsapp text-sm px-4 py-2 rounded-md">
+      Book Now
+    </a>
+
+    <!-- Hamburger button — appears on mobile only -->
+    <!-- @click toggles open true/false                -->
+    <!-- :class applies rotation classes via Alpine.js  -->
+    <button @click="open = !open"
+            class="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 rounded-md hover:bg-charcoal-50 transition-colors"
+            aria-label="Toggle menu">
+      <span class="block w-5 h-0.5 bg-charcoal-700 transition-all duration-300 origin-center"
+            :class="open ? 'rotate-45 translate-y-2' : ''"></span>
+      <span class="block w-5 h-0.5 bg-charcoal-700 transition-all duration-300"
+            :class="open ? 'opacity-0' : 'opacity-100'"></span>
+      <span class="block w-5 h-0.5 bg-charcoal-700 transition-all duration-300 origin-center"
+            :class="open ? '-rotate-45 -translate-y-2' : ''"></span>
+    </button>
+
+  </div>
+
+  <!-- Mobile menu panel                                      -->
+  <!-- x-show: Alpine.js shows/hides based on open state     -->
+  <!-- x-transition: smooth slide + fade animation           -->
+  <!-- @click.outside: closes when user taps elsewhere       -->
+  <nav x-show="open"
+       x-transition:enter="transition ease-out duration-200"
+       x-transition:enter-start="opacity-0 -translate-y-1"
+       x-transition:enter-end="opacity-100 translate-y-0"
+       x-transition:leave="transition ease-in duration-150"
+       x-transition:leave-start="opacity-100 translate-y-0"
+       x-transition:leave-end="opacity-0 -translate-y-1"
+       @click.outside="open = false"
+       class="md:hidden border-t border-charcoal-100 bg-white"
+       aria-label="Mobile navigation">
+
+    <div class="container-x py-3 flex flex-col gap-1">
+      {links.map((link) => (
+        <a href={link.href} class={link.mobileCls} @click="open = false">
+          {link.label}
+        </a>
+      ))}
+
+      <!-- WhatsApp CTA inside mobile menu -->
+      <div class="mt-2 pt-3 border-t border-charcoal-100">
+        <a href={waLink} target="_blank" rel="noopener noreferrer"
+           class="btn-whatsapp w-full justify-center text-sm rounded-md"
+           @click="open = false">
+          Book via WhatsApp
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>

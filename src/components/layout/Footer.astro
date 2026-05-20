@@ -1,0 +1,73 @@
+---
+import { BUSINESS } from "../../lib/constants.js";
+
+const year = new Date().getFullYear();
+const waLink = `https://wa.me/${BUSINESS.whatsapp.waMeNumber}`;
+---
+
+<footer style="background-color: var(--color-charcoal-700); color: white; margin-top: auto;">
+
+  <!-- 3-column grid -->
+  <div class="container-x py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
+
+    <!-- Column 1: Brand block -->
+    <div class="flex flex-col gap-3">
+      <a href="/" class="font-display text-2xl font-semibold tracking-tight w-fit">
+        <span style="color: white;">wear</span><span style="color: var(--color-primary-400);">it</span>
+      </a>
+      <p style="color: var(--color-charcoal-300); font-size: 0.875rem; line-height: 1.6;">
+        Premium, UV-sanitized costume rentals.<br />
+        Delivered to your door across western Pune.
+      </p>
+      <a href={waLink} target="_blank" rel="noopener noreferrer"
+         style="color: var(--color-whatsapp); font-size: 0.875rem; font-weight: 500;">
+        💬 Chat on WhatsApp
+      </a>
+    </div>
+
+    <!-- Column 2: Service areas -->
+    <div class="flex flex-col gap-3">
+      <h3 style="color: var(--color-charcoal-400); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">
+        We deliver to
+      </h3>
+      <ul class="flex flex-col gap-1.5">
+        {BUSINESS.serviceAreas.map((area) => (
+          <li style="color: var(--color-charcoal-300); font-size: 0.875rem;">{area}</li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Column 3: Hours + contact -->
+    <div class="flex flex-col gap-3">
+      <h3 style="color: var(--color-charcoal-400); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">
+        Hours & Contact
+      </h3>
+      <ul class="flex flex-col gap-1.5" style="color: var(--color-charcoal-300); font-size: 0.875rem;">
+        <li>{BUSINESS.hours.weekdays.label} · {BUSINESS.hours.weekdays.open} – {BUSINESS.hours.weekdays.close}</li>
+        <li>{BUSINESS.hours.sunday.label} · {BUSINESS.hours.sunday.note}</li>
+      </ul>
+      <div class="flex flex-col gap-1 mt-2" style="color: var(--color-charcoal-300); font-size: 0.875rem;">
+        <span>📍 {BUSINESS.pickupLocation.area}, {BUSINESS.pickupLocation.city} {BUSINESS.pickupLocation.pin}</span>
+        <a href={waLink} target="_blank" rel="noopener noreferrer"
+           style="color: var(--color-charcoal-300);">
+          📱 {BUSINESS.whatsapp.display}
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom bar: copyright + links -->
+  <div style="border-top: 1px solid var(--color-charcoal-600);">
+    <div class="container-x py-4 flex flex-col md:flex-row items-center justify-between gap-2"
+         style="font-size: 0.75rem; color: var(--color-charcoal-400);">
+      <span>© {year} {BUSINESS.legalName}. All rights reserved.</span>
+      <div class="flex items-center gap-4">
+        <a href="/policies" style="color: var(--color-charcoal-400);">Policies</a>
+        <a href="/faq" style="color: var(--color-charcoal-400);">FAQ</a>
+        <a href="/contact" style="color: var(--color-charcoal-400);">Contact</a>
+      </div>
+    </div>
+  </div>
+
+</footer>
