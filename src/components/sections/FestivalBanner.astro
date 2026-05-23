@@ -1,0 +1,198 @@
+---
+// FestivalBanner.astro — Sprint 1 · S6
+// ─────────────────────────────────────────────
+// Reads from: src/data/categories.js (festiveBanner)
+// Renders ONLY if festiveBanner.active === true
+// Dark gradient background, Style B glow pill CTA
+// WhatsApp link pre-filled with festival + costume context
+// To change festival: edit categories.js ONLY — zero component changes
+// ─────────────────────────────────────────────
+
+import { festiveBanner } from '../../data/categories.js';
+import { BUSINESS }       from '../../lib/constants.js';
+
+// Build WhatsApp URL from constants.js (single source of truth for number)
+const waNumber  = BUSINESS?.whatsapp?.waMeNumber ?? '919999999999';
+const waMessage = encodeURIComponent(festiveBanner.whatsappMessage);
+const waUrl     = `https://wa.me/${waNumber}?text=${waMessage}`;
+---
+
+{/* Only renders if active flag is true in categories.js */}
+{festiveBanner.active && (
+  <section class="festive" aria-labelledby="festive-title">
+
+    <div class="festive__inner">
+
+      <!-- Eyebrow label -->
+      <div class="festive__label">
+        <span class="festive__dot" aria-hidden="true"></span>
+        <span>{festiveBanner.label}</span>
+      </div>
+
+      <!-- Festival title -->
+      <h2 class="festive__title" id="festive-title">
+        {festiveBanner.title}
+      </h2>
+
+      <!-- Urgency text -->
+      <p class="festive__urgency">
+        {festiveBanner.urgency}
+      </p>
+
+      <!-- Glow pill CTA — Style B (same as hero) -->
+      <a
+        href={waUrl}
+        class="festive__cta"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${festiveBanner.ctaLabel} — opens WhatsApp`}
+      >
+        <span class="festive__cta-icon" aria-hidden="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="white">
+            <path d="M12 2l2.09 6.26L21 9.27l-5 4.73 1.18 6.54L12 17.27l-5.18 3.27L8 14l-5-4.73 6.91-1.01z"/>
+          </svg>
+        </span>
+        <span class="festive__cta-text">{festiveBanner.ctaLabel}</span>
+        <span class="festive__cta-arrow" aria-hidden="true">→</span>
+      </a>
+
+    </div>
+
+  </section>
+)}
+
+<style>
+  /* ═══════════════════════════════════════════
+     SECTION — dark gradient bg, full width
+  ═══════════════════════════════════════════ */
+  .festive {
+    background: linear-gradient(135deg, #1A1A2E 0%, #252040 60%, #1A1A2E 100%);
+    padding: 2.5rem 0;
+  }
+
+  .festive__inner {
+    max-width: 700px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.625rem;
+  }
+
+  @media (min-width: 768px) {
+    .festive__inner {
+      padding-inline: 3rem;
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  /* ═══════════════════════════════════════════
+     EYEBROW LABEL
+  ═══════════════════════════════════════════ */
+  .festive__label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(201, 168, 76, 0.65);
+    font-weight: 500;
+  }
+
+  .festive__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #C9A84C;
+    flex-shrink: 0;
+    animation: festive-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes festive-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.35; }
+  }
+
+  /* ═══════════════════════════════════════════
+     FESTIVAL TITLE
+  ═══════════════════════════════════════════ */
+  .festive__title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.375rem, 4vw, 2rem);
+    font-weight: 700;
+    color: #C9A84C;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  /* ═══════════════════════════════════════════
+     URGENCY TEXT
+  ═══════════════════════════════════════════ */
+  .festive__urgency {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.52);
+    line-height: 1.65;
+    max-width: 42ch;
+  }
+
+  /* ═══════════════════════════════════════════
+     GLOW PILL CTA — Style B
+     Matches hero button exactly
+  ═══════════════════════════════════════════ */
+  .festive__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    border-radius: 9999px;
+    padding: 0.9375rem 2rem;
+    width: 100%;
+    background: #E85D26;
+    box-shadow:
+      0 6px 22px rgba(232, 93, 38, 0.45),
+      0 2px 6px  rgba(232, 93, 38, 0.25);
+    text-decoration: none;
+    margin-top: 0.5rem;
+    min-height: 44px;
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+  }
+
+  .festive__cta:hover {
+    box-shadow:
+      0 8px 28px rgba(232, 93, 38, 0.55),
+      0 3px 8px  rgba(232, 93, 38, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .festive__cta:active { transform: scale(0.98); }
+
+  @media (min-width: 768px) {
+    .festive__cta { width: auto; min-width: 280px; }
+  }
+
+  .festive__cta-icon {
+    width: 1.625rem;
+    height: 1.625rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .festive__cta-text {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .festive__cta-arrow {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    flex-shrink: 0;
+  }
+</style>

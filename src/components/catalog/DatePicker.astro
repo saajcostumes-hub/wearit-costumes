@@ -1,0 +1,315 @@
+---
+// @ts-nocheck
+// DatePicker.astro — Sprint 2 · Step 6
+// ─────────────────────────────────────────────
+// flatpickr range date picker (CDN — on network allowlist)
+// Disables past dates, mobile-friendly
+// Fires: wearit:dates-selected → { startDate, endDate, days, totalRental }
+// Fires: wearit:dates-cleared  → {}
+//
+// Props:
+//   price    — base rental price per event (₹) — used to calculate multi-day total
+//   deposit  — deposit amount (passed through to WhatsApp message)
+// ─────────────────────────────────────────────
+
+const { price = 0, deposit = 0 } = Astro.props;
+---
+
+<!-- flatpickr CSS from CDN -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
+/>
+
+<div class="date-picker-wrap" id="date-picker-wrap">
+
+  <div class="date-picker__header">
+    <p class="date-picker__label">Select Rental Dates</p>
+    <button
+      class="date-picker__clear"
+      id="date-clear-btn"
+      type="button"
+      style="display: none;"
+      aria-label="Clear selected dates"
+    >
+      Clear
+    </button>
+  </div>
+
+  <!-- flatpickr input -->
+  <div class="date-picker__input-wrap">
+    <svg class="date-picker__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+      <line x1="16" y1="2" x2="16" y2="6"/>
+      <line x1="8" y1="2" x2="8" y2="6"/>
+      <line x1="3" y1="10" x2="21" y2="10"/>
+    </svg>
+    <input
+      type="text"
+      id="date-picker-input"
+      class="date-picker__input"
+      placeholder="Tap to select dates"
+      readonly
+      aria-label="Select rental start and end dates"
+    />
+  </div>
+
+  <!-- Selected date summary — hidden until dates chosen -->
+  <div class="date-picker__summary" id="date-summary" style="display: none;">
+    <span class="date-picker__summary-text" id="summary-text"></span>
+    <span class="date-picker__days-badge" id="days-badge"></span>
+  </div>
+
+</div>
+
+<!-- flatpickr JS from CDN -->
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+
+<!-- Hidden data for JS calculation -->
+<span id="dp-base-price"   style="display:none">{price}</span>
+<span id="dp-base-deposit" style="display:none">{deposit}</span>
+
+<script>
+  // @ts-nocheck
+
+  const basePrice   = parseInt(document.getElementById('dp-base-price')?.textContent ?? '0', 10);
+  const baseDeposit = parseInt(document.getElementById('dp-base-deposit')?.textContent ?? '0', 10);
+  const clearBtn    = document.getElementById('date-clear-btn');
+  const summaryEl   = document.getElementById('date-summary');
+  const summaryText = document.getElementById('summary-text');
+  const daysBadge   = document.getElementById('days-badge');
+
+  // ── Calculate multi-day rental total ──
+  // 1-day: base price
+  // Multi-day: base + 50% per additional day
+  function calcTotal(days) {
+    if (days <= 1) return basePrice;
+    return basePrice + (Math.round(basePrice * 0.5) * (days - 1));
+  }
+
+  // ── Format date for display ──
+  function fmtDate(dateStr) {
+    return new Date(dateStr).toLocaleDateString('en-IN', {
+      day: 'numeric', month: 'short', year: 'numeric',
+    });
+  }
+
+  // ── Wait for flatpickr to load then init ──
+  function initFlatpickr() {
+    if (typeof flatpickr === 'undefined') {
+      setTimeout(initFlatpickr, 100);
+      return;
+    }
+
+    flatpickr('#date-picker-input', {
+      mode:        'range',
+      minDate:     'today',
+      dateFormat:  'Y-m-d',
+      showMonths:  1,
+      disableMobile: false,   // use native mobile picker on phones
+
+      onChange(selectedDates) {
+        if (selectedDates.length === 2) {
+          const [start, end] = selectedDates;
+
+          // Calculate days
+          const diffMs = end.getTime() - start.getTime();
+          const days   = Math.max(1, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
+
+          const totalRental = calcTotal(days);
+
+          // Update summary display
+          const startStr = start.toISOString().split('T')[0];
+          const endStr   = end.toISOString().split('T')[0];
+
+          if (summaryText) {
+            summaryText.textContent = `${fmtDate(startStr)} → ${fmtDate(endStr)}`;
+          }
+
+          if (daysBadge) {
+            daysBadge.textContent = days === 1 ? '1 day' : `${days} days`;
+          }
+
+          if (summaryEl) summaryEl.style.display = 'flex';
+          if (clearBtn)  clearBtn.style.display  = 'inline-block';
+
+          // Fire event for PriceBreakdown + WhatsAppBooking
+          document.dispatchEvent(new CustomEvent('wearit:dates-selected', {
+            detail: {
+              startDate:   startStr,
+              endDate:     endStr,
+              days,
+              totalRental,
+              deposit:     baseDeposit,
+            }
+          }));
+        }
+      },
+
+      onReady() {
+        // Style the calendar to match brand
+        const cal = document.querySelector('.flatpickr-calendar');
+        if (cal) cal.setAttribute('data-wearit', 'true');
+      },
+    });
+  }
+
+  initFlatpickr();
+
+  // ── Clear button ──
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      const fp = document.getElementById('date-picker-input')?._flatpickr;
+      if (fp) fp.clear();
+
+      if (summaryEl) summaryEl.style.display = 'none';
+      if (clearBtn)  clearBtn.style.display  = 'none';
+
+      document.dispatchEvent(new CustomEvent('wearit:dates-cleared'));
+    });
+  }
+</script>
+
+<style>
+  /* ═══════════════════════════════════════════
+     WRAPPER
+  ═══════════════════════════════════════════ */
+  .date-picker-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  /* ── Header ── */
+  .date-picker__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .date-picker__label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1A1A2E;
+    margin: 0;
+  }
+
+  .date-picker__clear {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #E85D26;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+    text-decoration: underline;
+  }
+
+  /* ── Input wrapper ── */
+  .date-picker__input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .date-picker__icon {
+    position: absolute;
+    left: 0.875rem;
+    color: rgba(26, 26, 46, 0.35);
+    pointer-events: none;
+    flex-shrink: 0;
+  }
+
+  .date-picker__input {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 2.75rem;
+    font-size: 0.9375rem;
+    color: #1A1A2E;
+    background: #fff;
+    border: 1.5px solid rgba(26, 26, 46, 0.15);
+    border-radius: 0.625rem;
+    cursor: pointer;
+    font-family: inherit;
+    min-height: 52px;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .date-picker__input:focus,
+  .date-picker__input.active {
+    border-color: #E85D26;
+  }
+
+  .date-picker__input::placeholder {
+    color: rgba(26, 26, 46, 0.38);
+  }
+
+  /* ── Date summary ── */
+  .date-picker__summary {
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .date-picker__summary-text {
+    font-size: 0.8125rem;
+    color: rgba(26, 26, 46, 0.6);
+  }
+
+  .date-picker__days-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(232, 93, 38, 0.1);
+    color: #E85D26;
+    padding: 0.2rem 0.625rem;
+    border-radius: 9999px;
+  }
+
+  /* ═══════════════════════════════════════════
+     FLATPICKR BRAND OVERRIDES
+     Orange accent to match wearit design
+  ═══════════════════════════════════════════ */
+
+  /* Selected day */
+  .flatpickr-day.selected,
+  .flatpickr-day.startRange,
+  .flatpickr-day.endRange,
+  .flatpickr-day.selected:hover,
+  .flatpickr-day.startRange:hover,
+  .flatpickr-day.endRange:hover {
+    background: #E85D26 !important;
+    border-color: #E85D26 !important;
+    color: #fff !important;
+  }
+
+  /* In-range days */
+  .flatpickr-day.inRange {
+    background: rgba(232, 93, 38, 0.12) !important;
+    border-color: rgba(232, 93, 38, 0.12) !important;
+    color: #1A1A2E !important;
+    box-shadow: -5px 0 0 rgba(232,93,38,0.12), 5px 0 0 rgba(232,93,38,0.12) !important;
+  }
+
+  /* Today dot */
+  .flatpickr-day.today {
+    border-color: #E85D26 !important;
+  }
+
+  .flatpickr-day.today:hover {
+    background: rgba(232, 93, 38, 0.08) !important;
+  }
+
+  /* Month nav arrows */
+  .flatpickr-prev-month:hover svg,
+  .flatpickr-next-month:hover svg {
+    fill: #E85D26 !important;
+  }
+
+  /* Calendar shadow */
+  .flatpickr-calendar {
+    border-radius: 0.75rem !important;
+    box-shadow: 0 8px 32px rgba(26,26,46,0.15) !important;
+    border: 0.5px solid rgba(26,26,46,0.1) !important;
+  }
+</style>

@@ -1,0 +1,172 @@
+---
+// @ts-nocheck
+// SizeSelector.astro — Sprint 2 · Step 4
+// ─────────────────────────────────────────────
+// Tappable size chips for product detail page
+// Vanilla JS handles selection state
+// Fires custom event 'wearit:size-selected' on selection
+// WhatsAppBooking.astro listens for this event
+//
+// Props:
+//   sizes    — string[] from product data e.g. ['S','M','L','XL']
+//   sizeType — 'standard' | 'kids'
+//   productName — used for aria labels
+// ─────────────────────────────────────────────
+
+const { sizes = [], sizeType = 'standard', productName = 'costume' } = Astro.props;
+
+const isKids = sizeType === 'kids';
+const label  = isKids ? 'Select Age Group' : 'Select Size';
+---
+
+<div class="size-selector" id="size-selector">
+
+  <div class="size-selector__header">
+    <p class="size-selector__label">{label}</p>
+    <p class="size-selector__hint" id="size-hint">Please select a size to continue</p>
+  </div>
+
+  <div
+    class="size-selector__chips"
+    role="group"
+    aria-label={`${label} for ${productName}`}
+  >
+    {sizes.map(size => (
+      <button
+        class={`size-chip-btn${isKids ? ' size-chip-btn--kids' : ''}`}
+        data-size={size}
+        type="button"
+        aria-label={`Select size ${size}`}
+        aria-pressed="false"
+      >
+        {size}
+      </button>
+    ))}
+  </div>
+
+  <!-- Hidden input — read by WhatsAppBooking.astro script -->
+  <input type="hidden" id="selected-size" value="" />
+
+</div>
+
+<script>
+  // @ts-nocheck
+  const sizeButtons = document.querySelectorAll('.size-chip-btn');
+  const hiddenInput = document.getElementById('selected-size');
+  const sizeHint    = document.getElementById('size-hint');
+
+  sizeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Clear all active states
+      sizeButtons.forEach(b => {
+        b.classList.remove('size-chip-btn--active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+
+      // Set selected
+      btn.classList.add('size-chip-btn--active');
+      btn.setAttribute('aria-pressed', 'true');
+
+      const selectedSize = btn.dataset.size;
+
+      // Update hidden input
+      if (hiddenInput) hiddenInput.value = selectedSize;
+
+      // Update hint text
+      if (sizeHint) {
+        sizeHint.textContent = `Size ${selectedSize} selected`;
+        sizeHint.classList.add('size-selector__hint--selected');
+      }
+
+      // Fire custom event — WhatsAppBooking.astro listens for this
+      document.dispatchEvent(new CustomEvent('wearit:size-selected', {
+        detail: { size: selectedSize }
+      }));
+    });
+  });
+</script>
+
+<style>
+  /* ═══════════════════════════════════════════
+     WRAPPER
+  ═══════════════════════════════════════════ */
+  .size-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* ── Header row ── */
+  .size-selector__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .size-selector__label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1A1A2E;
+    margin: 0;
+  }
+
+  .size-selector__hint {
+    font-size: 0.75rem;
+    color: rgba(26, 26, 46, 0.4);
+    margin: 0;
+    transition: color 0.15s ease;
+  }
+
+  .size-selector__hint--selected {
+    color: #E85D26;
+    font-weight: 500;
+  }
+
+  /* ── Chips row ── */
+  .size-selector__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* ── Base chip ── */
+  .size-chip-btn {
+    min-width: 3rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #1A1A2E;
+    background: #fff;
+    border: 1.5px solid rgba(26, 26, 46, 0.15);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    min-height: 44px;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+
+  .size-chip-btn:hover {
+    border-color: #E85D26;
+    color: #E85D26;
+  }
+
+  /* Kids chips — slightly wider for age ranges */
+  .size-chip-btn--kids {
+    min-width: auto;
+    font-size: 0.8125rem;
+  }
+
+  /* Active / selected state — set by JS */
+  .size-chip-btn--active {
+    background: #E85D26 !important;
+    border-color: #E85D26 !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+  }
+</style>

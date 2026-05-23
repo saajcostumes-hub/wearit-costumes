@@ -1,23 +1,93 @@
+---
+// src/layouts/Layout.astro
+// ─────────────────────────────────────────────
+// Main page shell for all wearit pages.
+// Wires in: Navbar · WhatsAppFAB · page content · Footer
+// Fonts: Playfair Display (display) + Inter (body) via Google Fonts
+// Title passed as prop from each page
+// ─────────────────────────────────────────────
+
+import '../styles/global.css';
+
+import Navbar       from '../components/layout/Navbar.astro';
+import Footer       from '../components/layout/Footer.astro';
+import WhatsAppFAB  from '../components/shared/WhatsAppFAB.astro';
+
+const { title = 'wearit — Premium Costume Rentals, Hinjewadi Pune' } = Astro.props;
+---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+
+    <!-- SEO -->
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content="Premium costume rentals in Hinjewadi, Wakad, Baner & Balewadi, Pune. Washed & ironed. 100% refundable deposit. Book via WhatsApp." />
+
+    <!-- Google Fonts: Playfair Display + Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+
+    <!-- Top navigation -->
+    <Navbar />
+
+    <!-- Page content (sections injected here) -->
+    <main>
+      <slot />
+    </main>
+
+    <!-- Fixed WhatsApp button — bottom right, always visible -->
+    <WhatsAppFAB />
+
+    <!-- Footer -->
+    <Footer />
+
+  </body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+<style is:global>
+  /* ── Base reset ── */
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    margin: 0;
+    width: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-color: #FDF6EE;
+  }
+
+  main { flex: 1; }
+
+  img, svg { display: block; max-width: 100%; }
+
+  a { text-decoration: none; }
+
+  /* ── Playfair Display utility ── */
+  .font-display {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
 </style>

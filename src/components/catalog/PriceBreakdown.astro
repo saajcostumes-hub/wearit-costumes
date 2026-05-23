@@ -1,0 +1,276 @@
+---
+// @ts-nocheck
+// PriceBreakdown.astro — Sprint 2 · Step 5 (updated with savings)
+// ─────────────────────────────────────────────
+// Shows rental cost + deposit breakdown on product detail page
+// Updates dynamically when DatePicker fires 'wearit:dates-selected'
+// Shows savings badge for multi-day bookings
+// ─────────────────────────────────────────────
+
+const { price = 0, deposit = 0 } = Astro.props;
+
+const baseTotal      = price + deposit;
+const priceDisplay   = price.toLocaleString('en-IN');
+const depositDisplay = deposit.toLocaleString('en-IN');
+const totalDisplay   = baseTotal.toLocaleString('en-IN');
+---
+
+<div class="price-breakdown" id="price-breakdown">
+
+  <p class="price-breakdown__label">Price Breakdown</p>
+
+  <div class="price-breakdown__rows">
+
+    <!-- Rental row -->
+    <div class="price-breakdown__row">
+      <span class="price-breakdown__row-label">
+        Rental
+        <span class="price-breakdown__duration" id="duration-label">(1 event)</span>
+      </span>
+      <div class="price-breakdown__rental-col">
+        <!-- Strikethrough full price — shown only for multi-day -->
+        <span class="price-breakdown__original" id="original-amount" style="display:none;"></span>
+        <span class="price-breakdown__row-value" id="rental-amount">₹{priceDisplay}</span>
+      </div>
+    </div>
+
+    <!-- Savings badge — visible only for multi-day bookings -->
+    <div class="price-breakdown__savings" id="savings-row" style="display:none;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+      <span id="savings-text"></span>
+    </div>
+
+    <!-- Deposit row — always fixed -->
+    <div class="price-breakdown__row">
+      <span class="price-breakdown__row-label">
+        Security Deposit
+        <span class="price-breakdown__refund-tag">100% refundable</span>
+      </span>
+      <span class="price-breakdown__row-value price-breakdown__row-value--muted">
+        ₹{depositDisplay}
+      </span>
+    </div>
+
+    <div class="price-breakdown__divider"></div>
+
+    <!-- Total at pickup -->
+    <div class="price-breakdown__row price-breakdown__row--total">
+      <span class="price-breakdown__total-label">Total at Pickup</span>
+      <span class="price-breakdown__total-value" id="total-amount">₹{totalDisplay}</span>
+    </div>
+
+  </div>
+
+  <!-- Deposit return note -->
+  <p class="price-breakdown__note">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
+    </svg>
+    Deposit of ₹{depositDisplay} returned same day on costume return
+  </p>
+
+</div>
+
+<span id="base-price"   style="display:none">{price}</span>
+<span id="base-deposit" style="display:none">{deposit}</span>
+
+<script>
+  // @ts-nocheck
+  const basePrice   = parseInt(document.getElementById('base-price')?.textContent  ?? '0', 10);
+  const baseDeposit = parseInt(document.getElementById('base-deposit')?.textContent ?? '0', 10);
+
+  const rentalAmountEl  = document.getElementById('rental-amount');
+  const originalAmountEl = document.getElementById('original-amount');
+  const totalAmountEl   = document.getElementById('total-amount');
+  const durationLabelEl = document.getElementById('duration-label');
+  const savingsRowEl    = document.getElementById('savings-row');
+  const savingsTextEl   = document.getElementById('savings-text');
+
+  function inr(n) {
+    return '₹' + n.toLocaleString('en-IN');
+  }
+
+  document.addEventListener('wearit:dates-selected', (e) => {
+    const { days, totalRental } = e.detail;
+
+    // Update rental amount
+    if (rentalAmountEl)  rentalAmountEl.textContent  = inr(totalRental);
+
+    // Update duration label
+    if (durationLabelEl) {
+      durationLabelEl.textContent = days === 1 ? '(1 event)' : `(${days} days)`;
+    }
+
+    // Update total
+    if (totalAmountEl) totalAmountEl.textContent = inr(totalRental + baseDeposit);
+
+    // ── Savings logic — shown only for multi-day ──
+    if (days > 1) {
+      const fullPrice = basePrice * days;   // what they'd pay renting 1-day repeatedly
+      const savings   = fullPrice - totalRental;
+
+      if (originalAmountEl && savings > 0) {
+        originalAmountEl.textContent = inr(fullPrice);
+        originalAmountEl.style.display = 'inline';
+      }
+
+      if (savingsRowEl && savingsTextEl && savings > 0) {
+        savingsTextEl.textContent = `You save ${inr(savings)} on this booking!`;
+        savingsRowEl.style.display = 'flex';
+      }
+    } else {
+      // Reset savings for 1-day
+      if (originalAmountEl) originalAmountEl.style.display = 'none';
+      if (savingsRowEl)     savingsRowEl.style.display     = 'none';
+    }
+  });
+
+  document.addEventListener('wearit:dates-cleared', () => {
+    if (rentalAmountEl)   rentalAmountEl.textContent   = inr(basePrice);
+    if (totalAmountEl)    totalAmountEl.textContent    = inr(basePrice + baseDeposit);
+    if (durationLabelEl)  durationLabelEl.textContent  = '(1 event)';
+    if (originalAmountEl) originalAmountEl.style.display = 'none';
+    if (savingsRowEl)     savingsRowEl.style.display   = 'none';
+  });
+</script>
+
+<style>
+  .price-breakdown {
+    background: #fff;
+    border: 0.5px solid rgba(26, 26, 46, 0.1);
+    border-radius: 0.875rem;
+    padding: 1.125rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .price-breakdown__label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(26, 26, 46, 0.4);
+    margin: 0;
+  }
+
+  .price-breakdown__rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .price-breakdown__row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .price-breakdown__row-label {
+    font-size: 0.875rem;
+    color: rgba(26, 26, 46, 0.6);
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    flex-wrap: wrap;
+  }
+
+  .price-breakdown__duration {
+    font-size: 0.75rem;
+    color: rgba(26, 26, 46, 0.38);
+  }
+
+  .price-breakdown__refund-tag {
+    font-size: 0.625rem;
+    font-weight: 600;
+    background: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+  }
+
+  /* Rental column — stacks original + discounted */
+  .price-breakdown__rental-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.1rem;
+  }
+
+  /* Strikethrough full price */
+  .price-breakdown__original {
+    font-size: 0.75rem;
+    color: rgba(26, 26, 46, 0.35);
+    text-decoration: line-through;
+  }
+
+  .price-breakdown__row-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1A1A2E;
+    white-space: nowrap;
+  }
+
+  .price-breakdown__row-value--muted {
+    color: rgba(26, 26, 46, 0.5);
+    font-weight: 500;
+  }
+
+  /* ── Savings badge ── */
+  .price-breakdown__savings {
+    align-items: center;
+    gap: 0.375rem;
+    background: rgba(34, 197, 94, 0.08);
+    border: 0.5px solid rgba(34, 197, 94, 0.25);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #15803d;
+    margin-top: 0.125rem;
+  }
+
+  .price-breakdown__savings svg {
+    flex-shrink: 0;
+    color: #16a34a;
+  }
+
+  .price-breakdown__divider {
+    height: 0.5px;
+    background: rgba(26, 26, 46, 0.08);
+    margin: 0.125rem 0;
+  }
+
+  .price-breakdown__row--total { align-items: center; }
+
+  .price-breakdown__total-label {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #1A1A2E;
+  }
+
+  .price-breakdown__total-value {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #E85D26;
+    white-space: nowrap;
+  }
+
+  .price-breakdown__note {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.75rem;
+    color: rgba(26, 26, 46, 0.42);
+    margin: 0;
+    padding-top: 0.125rem;
+    border-top: 0.5px solid rgba(26, 26, 46, 0.07);
+    line-height: 1.5;
+  }
+
+  .price-breakdown__note svg { flex-shrink: 0; color: rgba(26, 26, 46, 0.3); }
+</style>

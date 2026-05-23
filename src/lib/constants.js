@@ -27,10 +27,10 @@ export const BUSINESS = {
 
   // ⚠️ PLACEHOLDERS — update when real values are confirmed
   whatsapp: {
-    raw:        "+919999999999",   // with + sign
-    display:    "+91 99999 99999", // human-readable
-    waMeNumber: "919999999999",    // for wa.me links (no +)
-  },
+  waMeNumber: '917385556766',       // ← was 919999999999
+  display:    '+91 73855 56766',    // ← shown in footer
+  raw:        '917385556766',       // ← if this field exists
+},
   email:     "hello@wearit.in",
   instagram: "@wearit.pune",
 

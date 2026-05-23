@@ -1,26 +1,44 @@
 ---
-import Navbar from "../components/layout/Navbar.astro";
-import Footer from "../components/layout/Footer.astro";
-import WhatsAppFAB from "../components/shared/WhatsAppFAB.astro";
-import "../styles/global.css";
+// src/pages/index.astro
+// ─────────────────────────────────────────────
+// wearit — Homepage · Sprint 1 complete
+//
+// Section order (locked in design May 2026):
+//   S1  HeroSection         ✅
+//   S2  HowItWorks          ✅
+//   S3  PopularThisSeason   ✅
+//   S4  CategoryGrid        ✅
+//   S5  TrustSignals        ✅
+//   S6  FestivalBanner      ✅
+// ─────────────────────────────────────────────
+
+import Layout            from '../layouts/Layout.astro';
+import HeroSection       from '../components/sections/HeroSection.astro';
+import HowItWorks        from '../components/sections/HowItWorks.astro';
+import PopularThisSeason from '../components/sections/PopularThisSeason.astro';
+import CategoryGrid      from '../components/sections/CategoryGrid.astro';
+import TrustSignals      from '../components/sections/TrustSignals.astro';
+import FestivalBanner    from '../components/sections/FestivalBanner.astro';
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>wearit — Dev</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  </head>
-  <body class="flex flex-col min-h-screen">
-    <Navbar />
-    <main class="flex-1 p-8">
-      <p class="text-charcoal-500">Day 6 — Footer + FAB test</p>
-    </main>
-    <Footer />
-    <WhatsAppFAB />
-  </body>
-</html>
+<Layout title="wearit — Premium Costume Rentals in Hinjewadi, Wakad & Baner, Pune">
+
+  <!-- S1: Hero — headline, costume chips, glow pill CTA, trust pills -->
+  <HeroSection />
+
+  <!-- S2: How it Works — 3 bold tiles (Browse · Book · Pickup) -->
+  <HowItWorks />
+
+  <!-- S3: Popular this Season — Nauwari Saree + Lehenga cards -->
+  <PopularThisSeason />
+
+  <!-- S4: Category Grid — Women's · Traditional · Kids tabs -->
+  <CategoryGrid />
+
+  <!-- S5: Trust Signals — Washed & Ironed, Refundable, Local, 30-min reply -->
+  <TrustSignals />
+
+  <!-- S6: Festival Banner — Ganesh Chaturthi pre-booking strip -->
+  <FestivalBanner />
+
+</Layout>
