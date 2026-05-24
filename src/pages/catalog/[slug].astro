@@ -1,23 +1,20 @@
 ---
 // @ts-nocheck
-// src/pages/catalog/[slug].astro
+// src/pages/catalog/[slug].astro — Sprint 4 update
 // ─────────────────────────────────────────────
-// Dynamic product detail page — one per product slug
-// Sprint 2 · Step 8
-//
-// getStaticPaths → generates all 17 product pages at build time
-// Layout: mobile single-col, desktop 2-col (image | booking panel)
-// Wires: SizeSelector → DatePicker → PriceBreakdown → WhatsAppBooking
+// Changes from Sprint 2:
+//   - Price info COMMENTED OUT (uncomment when ready to show pricing)
+//   - Photo gallery added (up to 5 images, swipeable on mobile)
 // ─────────────────────────────────────────────
 
 import Layout          from '../../layouts/Layout.astro';
-import SizeSelector    from '../../components/catalog/SizeSelector.astro';
+// SizeSelector not needed — all products are Free Size (auto-selected)
+// import SizeSelector from '../../components/catalog/SizeSelector.astro';
 import DatePicker      from '../../components/catalog/DatePicker.astro';
-import PriceBreakdown  from '../../components/catalog/PriceBreakdown.astro';
+// import PriceBreakdown  from '../../components/catalog/PriceBreakdown.astro'; // HIDDEN — uncomment when ready to show pricing
 import WhatsAppBooking from '../../components/catalog/WhatsAppBooking.astro';
 import { allProducts, getProductBySlug, formatPrice } from '../../data/products.js';
 
-// Generate all product pages at build time
 export function getStaticPaths() {
   return allProducts.map(product => ({
     params: { slug: product.slug },
@@ -27,18 +24,28 @@ export function getStaticPaths() {
 
 const { product } = Astro.props;
 
-// Precompute display values in frontmatter
-const priceDisplay   = formatPrice(product.price);
-const depositDisplay = formatPrice(product.deposit);
+// Price display — COMMENTED OUT for Phase 1 launch
+// Uncomment these when ready to show pricing publicly
+// const priceDisplay   = formatPrice(product.price);
+// const depositDisplay = formatPrice(product.deposit);
 
 const categoryLabelMap = {
-  womens:      "Women's",
-  traditional: 'Traditional',
-  kids:        'Kids',
+  nauwari:   'Nauwari Sarees',
+  lehenga:   'Lehenga',
+  maternity: 'Maternity Gowns',
+  shaadi:    'Shaadi Specials',
+  western:   'Western & Themed',
 };
 const categoryLabel = categoryLabelMap[product.category] ?? product.category;
 
-// Related products — same category, exclude current
+// Gallery — up to 5 images from product.images array
+const galleryImages  = product.images ?? [];
+const productColors  = product.colors  ?? [];
+const hasColors      = productColors.length > 0;
+const hasImages      = galleryImages.length > 0;
+const thumbCount     = Math.min(5, galleryImages.length);
+
+// Related products — same category, exclude current, max 3
 const related = allProducts
   .filter(p => p.category === product.category && p.id !== product.id)
   .slice(0, 3);
@@ -46,7 +53,7 @@ const related = allProducts
 
 <Layout
   title={`${product.name} — wearit Costume Rentals, Hinjewadi Pune`}
-  description={`Rent ${product.name} in Hinjewadi, Wakad & Baner, Pune. From ${formatPrice(product.price)}/event. 100% refundable deposit. Washed & ironed. WhatsApp booking.`}
+  description={`Rent ${product.name} in Hinjewadi, Wakad & Baner, Pune. Washed & ironed. 100% refundable deposit. WhatsApp booking.`}
 >
 
   <div class="detail-page">
@@ -56,58 +63,89 @@ const related = allProducts
       <div class="breadcrumb__inner">
         <a href="/" class="breadcrumb__link">Home</a>
         <span class="breadcrumb__sep">›</span>
-        <a href={`/catalog?category=${product.category}`} class="breadcrumb__link">
-          {categoryLabel}
-        </a>
+        <a href={`/catalog?category=${product.category}`} class="breadcrumb__link">{categoryLabel}</a>
         <span class="breadcrumb__sep">›</span>
         <span class="breadcrumb__current">{product.name}</span>
       </div>
     </div>
 
-    <!-- ── Main content — 2-col on desktop ── -->
+    <!-- ── Main grid ── -->
     <div class="detail-grid">
 
-      <!-- LEFT: Product image + info -->
+      <!-- LEFT — Gallery + info -->
       <div class="detail-left">
 
-        <!-- Product image -->
-        <div class="product-image">
-          {product.image ? (
-            <img
-              src={product.image}
-              alt={product.alt}
-              class="product-image__img"
-              loading="eager"
-              width="600"
-              height="450"
-            />
-          ) : (
-            <div class="product-image__placeholder">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true">
-                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                <circle cx="12" cy="13" r="4"/>
-              </svg>
-              <p>Your costume photography here</p>
+        <!-- ═══ PHOTO GALLERY ═══ -->
+        <div class="gallery" id="gallery">
+
+          <!-- Main image display -->
+          <div class="gallery__main" id="gallery-main">
+            {hasImages ? (
+              <img
+                src={galleryImages[0]}
+                alt={product.alt}
+                class="gallery__img"
+                id="gallery-img"
+                loading="eager"
+              />
+            ) : (
+              <div class="gallery__placeholder" aria-label="Costume photo placeholder">
+                <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+                <p>Your costume photography here</p>
+              </div>
+            )}
+
+            <!-- Product badges -->
+            <div class="gallery__badges">
+              {product.badge && (
+                <span class={`img-badge img-badge--${product.badgeType}`}>{product.badge}</span>
+              )}
+              <span class="img-badge img-badge--cat">{categoryLabel}</span>
+            </div>
+
+            <!-- Nav arrows — only shown when >1 image (JS shows/hides) -->
+            {hasImages && galleryImages.length > 1 && (
+              <>
+                <button class="gallery__nav gallery__nav--prev" id="gal-prev" type="button" aria-label="Previous photo">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="gallery__nav gallery__nav--next" id="gal-next" type="button" aria-label="Next photo">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                <span class="gallery__counter" id="gallery-counter">1 / {galleryImages.length}</span>
+              </>
+            )}
+          </div>
+
+          <!-- Thumbnail strip — up to 5, shown only when images exist -->
+          {hasImages && (
+            <div class="gallery__thumbs" id="gallery-thumbs" role="list">
+              {galleryImages.slice(0, 5).map((img, i) => (
+                <button
+                  class={`gallery__thumb${i === 0 ? ' gallery__thumb--active' : ''}`}
+                  data-index={i}
+                  data-src={img}
+                  type="button"
+                  role="listitem"
+                  aria-label={`View photo ${i + 1}`}
+                  aria-pressed={i === 0 ? 'true' : 'false'}
+                >
+                  <img src={img} alt={`${product.name} — photo ${i + 1}`} loading="lazy" />
+                </button>
+              ))}
             </div>
           )}
 
-          <!-- Badges overlay -->
-          <div class="product-image__badges">
-            {product.badge && (
-              <span class={`img-badge img-badge--${product.badgeType}`}>
-                {product.badge}
-              </span>
-            )}
-            <span class="img-badge img-badge--cat">{categoryLabel}</span>
-          </div>
-        </div>
+        </div><!-- /gallery -->
 
         <!-- Product info -->
         <div class="product-info">
           <h1 class="product-info__title">{product.name}</h1>
           <p class="product-info__desc">{product.description}</p>
 
-          <!-- Tags -->
           {product.tags && product.tags.length > 0 && (
             <div class="product-info__tags">
               {product.tags.map(tag => (
@@ -116,7 +154,8 @@ const related = allProducts
             </div>
           )}
 
-          <!-- Quick price reference (mobile-friendly summary) -->
+          <!-- PRICE ROW — COMMENTED OUT for Phase 1
+          Uncomment when ready to display pricing publicly
           <div class="product-info__price-row">
             <div>
               <span class="product-info__price">{priceDisplay}</span>
@@ -127,32 +166,66 @@ const related = allProducts
               <span class="product-info__refund">100% refundable</span>
             </div>
           </div>
+          -->
+
+          <!-- Hygiene trust signal -->
+          <div class="product-info__trust">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Washed &amp; ironed before every rental
+          </div>
         </div>
 
       </div><!-- /detail-left -->
 
-      <!-- RIGHT: Booking panel (sticky on desktop) -->
+      <!-- RIGHT — Booking panel -->
       <div class="detail-right">
         <div class="booking-panel" id="booking-panel">
 
           <!-- Panel header -->
           <div class="booking-panel__header">
             <p class="booking-panel__name">{product.name}</p>
+            <!-- PRICE IN HEADER — COMMENTED OUT for Phase 1
             <p class="booking-panel__price">
               {priceDisplay}<span class="booking-panel__per"> /event</span>
             </p>
+            -->
+            <p class="booking-panel__enquire">WhatsApp us for pricing →</p>
           </div>
 
           <div class="booking-panel__divider"></div>
 
-          <!-- Size selector -->
-          <SizeSelector
-            sizes={product.sizes}
-            sizeType={product.sizeType}
-            productName={product.name}
-          />
+          <!-- Free Size indicator — auto-selected, no user input needed -->
+          <div class="free-size-tag">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Free Size — fits all</span>
+          </div>
 
           <div class="booking-panel__divider"></div>
+
+          <!-- Colour selector — shown only when product has colours defined -->
+          {hasColors && (
+            <div class="color-selector" id="color-selector">
+              <div class="color-selector__header">
+                <p class="color-selector__label">Select Colour</p>
+                <p class="color-selector__hint" id="color-hint">Please select a colour</p>
+              </div>
+              <div class="color-selector__chips">
+                {productColors.map((color, i) => (
+                  <button
+                    class="color-chip"
+                    data-color={color}
+                    type="button"
+                    aria-label={`Select colour ${color}`}
+                    aria-pressed="false"
+                  >
+                    {color}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {hasColors && <div class="booking-panel__divider"></div>}
 
           <!-- Date picker -->
           <DatePicker
@@ -162,31 +235,30 @@ const related = allProducts
 
           <div class="booking-panel__divider"></div>
 
-          <!-- Price breakdown -->
+          <!-- PRICE BREAKDOWN — COMMENTED OUT for Phase 1
+          Uncomment when ready to show pricing publicly
           <PriceBreakdown
             price={product.price}
             deposit={product.deposit}
           />
-
           <div class="booking-panel__divider"></div>
+          -->
 
-          <!-- WhatsApp booking CTA -->
-          <WhatsAppBooking product={product} />
+          <!-- WhatsApp booking CTA (no price in message for Phase 1) -->
+          <WhatsAppBooking product={product} showPrice={false} categoryLabel={categoryLabel} />
 
           <!-- Hygiene note -->
           <p class="booking-panel__hygiene">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
             Washed &amp; ironed before every rental
           </p>
 
         </div>
-      </div><!-- /detail-right -->
+      </div>
 
     </div><!-- /detail-grid -->
 
-    <!-- ── Related products ── -->
+    <!-- Related products -->
     {related.length > 0 && (
       <div class="related-section">
         <div class="related-section__inner">
@@ -197,15 +269,12 @@ const related = allProducts
                 <div class="related-card__img"></div>
                 <div class="related-card__body">
                   <p class="related-card__name">{item.name}</p>
-                  <p class="related-card__price">{formatPrice(item.price)}<span> /event</span></p>
                 </div>
               </a>
             ))}
           </div>
           <div class="related-section__link">
-            <a href={`/catalog?category=${product.category}`}>
-              View all {categoryLabel.toLowerCase()} costumes →
-            </a>
+            <a href={`/catalog?category=${product.category}`}>View all {categoryLabel.toLowerCase()} →</a>
           </div>
         </div>
       </div>
@@ -215,368 +284,329 @@ const related = allProducts
 
 </Layout>
 
-<style>
-  /* ═══════════════════════════════════════════
-     PAGE WRAPPER
-  ═══════════════════════════════════════════ */
-  .detail-page {
-    background: #FDF6EE;
-    min-height: 100vh;
+<!-- Colour selector JS — vanilla -->
+<script>
+  // @ts-nocheck
+  const colorChips = document.querySelectorAll('.color-chip');
+  const colorHint  = document.getElementById('color-hint');
+
+  colorChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      colorChips.forEach(c => {
+        c.classList.remove('color-chip--active');
+        c.setAttribute('aria-pressed', 'false');
+      });
+      chip.classList.add('color-chip--active');
+      chip.setAttribute('aria-pressed', 'true');
+
+      const selectedColor = chip.dataset.color;
+      if (colorHint) {
+        colorHint.textContent = `${selectedColor} selected`;
+        colorHint.style.color = '#E85D26';
+      }
+
+      document.dispatchEvent(new CustomEvent('wearit:color-selected', {
+        detail: { color: selectedColor }
+      }));
+    });
+  });
+
+  // If no colour chips (product has no colours), auto-fire with null
+  if (colorChips.length === 0) {
+    // No colour selection needed — will use 'N/A' in message
   }
+</script>
 
-  /* ═══════════════════════════════════════════
-     BREADCRUMB
-  ═══════════════════════════════════════════ */
-  .breadcrumb {
-    border-bottom: 0.5px solid rgba(26,26,46,0.08);
-    background: #fff;
-    padding: 0.75rem 0;
-  }
+<!-- Auto-fire Free Size selection on page load -->
+<script>
+  // @ts-nocheck
+  // All products are Free Size — auto-select immediately so WhatsApp button activates on date selection only
+  document.addEventListener('DOMContentLoaded', () => {
+    document.dispatchEvent(new CustomEvent('wearit:size-selected', {
+      detail: { size: 'Free Size' }
+    }));
+  });
+</script>
 
-  .breadcrumb__inner {
-    max-width: 1200px;
-    margin-inline: auto;
-    padding-inline: 1.25rem;
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-    flex-wrap: wrap;
-    font-size: 0.8125rem;
-  }
+<!-- ── Gallery JS (vanilla, no Alpine) ── -->
+<script>
+  // @ts-nocheck
 
-  @media (min-width: 768px) {
-    .breadcrumb__inner { padding-inline: 3rem; }
-  }
+  // ── State ──
+  let currentIndex = 0;
+  const galleryImg  = document.getElementById('gallery-img');
+  const thumbBtns   = document.querySelectorAll('.gallery__thumb');
+  const counterEl   = document.getElementById('gallery-counter');
+  const prevBtn     = document.getElementById('gal-prev');
+  const nextBtn     = document.getElementById('gal-next');
+  const total       = thumbBtns.length;
 
-  .breadcrumb__link {
-    color: rgba(26,26,46,0.5);
-    text-decoration: none;
-    transition: color 0.15s ease;
-  }
+  if (total === 0) {
+    // No images — nothing to wire up
+  } else {
+    // ── Switch to index ──
+    function goTo(index) {
+      currentIndex = (index + total) % total;
 
-  .breadcrumb__link:hover { color: #E85D26; }
-  .breadcrumb__sep        { color: rgba(26,26,46,0.25); }
-  .breadcrumb__current    { color: #1A1A2E; font-weight: 500; }
+      // Update main image
+      const src = thumbBtns[currentIndex]?.dataset.src;
+      if (galleryImg && src) galleryImg.src = src;
 
-  /* ═══════════════════════════════════════════
-     MAIN GRID — single col mobile, 2-col desktop
-  ═══════════════════════════════════════════ */
-  .detail-grid {
-    max-width: 1200px;
-    margin-inline: auto;
-    padding: 1.5rem 1.25rem 3rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
+      // Update counter
+      if (counterEl) counterEl.textContent = `${currentIndex + 1} / ${total}`;
 
-  @media (min-width: 768px) {
-    .detail-grid {
-      grid-template-columns: 1fr 380px;
-      gap: 2.5rem;
-      padding: 2rem 3rem 4rem;
-      align-items: start;
+      // Update thumbnail active states
+      thumbBtns.forEach((btn, i) => {
+        btn.classList.toggle('gallery__thumb--active', i === currentIndex);
+        btn.setAttribute('aria-pressed', i === currentIndex ? 'true' : 'false');
+      });
     }
+
+    // ── Thumbnail clicks ──
+    thumbBtns.forEach(btn => {
+      btn.addEventListener('click', () => goTo(parseInt(btn.dataset.index, 10)));
+    });
+
+    // ── Arrow navigation ──
+    prevBtn?.addEventListener('click', () => goTo(currentIndex - 1));
+    nextBtn?.addEventListener('click', () => goTo(currentIndex + 1));
+
+    // ── Touch swipe (mobile) ──
+    const galleryMain = document.getElementById('gallery-main');
+    let touchStartX = 0;
+
+    galleryMain?.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    galleryMain?.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].screenX;
+      if (Math.abs(diff) > 50) {
+        goTo(diff > 0 ? currentIndex + 1 : currentIndex - 1);
+      }
+    }, { passive: true });
+
+    // ── Keyboard navigation ──
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft')  goTo(currentIndex - 1);
+      if (e.key === 'ArrowRight') goTo(currentIndex + 1);
+    });
+  }
+</script>
+
+<style>
+
+
+  /* Colour selector */
+  .color-selector { display: flex; flex-direction: column; gap: 0.625rem; }
+  .color-selector__header { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+  .color-selector__label { font-size: 0.875rem; font-weight: 600; color: #1A1A2E; margin: 0; }
+  .color-selector__hint { font-size: 0.75rem; color: rgba(26,26,46,0.4); margin: 0; transition: color 0.15s; }
+  .color-selector__chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .color-chip {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #1A1A2E;
+    background: #fff;
+    border: 1.5px solid rgba(26,26,46,0.15);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    min-height: 44px;
+    font-family: inherit;
+    outline: none;
   }
 
-  /* ═══════════════════════════════════════════
-     LEFT — IMAGE + INFO
-  ═══════════════════════════════════════════ */
-  .detail-left {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
+  .color-chip:hover { border-color: #E85D26; color: #E85D26; }
+  .color-chip--active { background: #E85D26 !important; border-color: #E85D26 !important; color: #fff !important; font-weight: 600 !important; }
+
+  /* Free size tag */
+  .free-size-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(34, 197, 94, 0.08);
+    border: 0.5px solid rgba(34, 197, 94, 0.25);
+    border-radius: 0.5rem;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #15803d;
   }
 
-  /* ── Image ── */
-  .product-image {
+  .detail-page { background: #FDF6EE; min-height: 100vh; }
+
+  /* Breadcrumb */
+  .breadcrumb { border-bottom: 0.5px solid rgba(26,26,46,0.08); background: #fff; padding: 0.75rem 0; }
+  .breadcrumb__inner { max-width: 1200px; margin-inline: auto; padding-inline: 1.25rem; display: flex; align-items: center; gap: 0.375rem; flex-wrap: wrap; font-size: 0.8125rem; }
+  @media (min-width: 768px) { .breadcrumb__inner { padding-inline: 3rem; } }
+  .breadcrumb__link { color: rgba(26,26,46,0.5); text-decoration: none; transition: color 0.15s; }
+  .breadcrumb__link:hover { color: #E85D26; }
+  .breadcrumb__sep { color: rgba(26,26,46,0.25); }
+  .breadcrumb__current { color: #1A1A2E; font-weight: 500; }
+
+  /* Main grid */
+  .detail-grid { max-width: 1200px; margin-inline: auto; padding: 1.5rem 1.25rem 3rem; display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  @media (min-width: 768px) { .detail-grid { grid-template-columns: 1fr 380px; gap: 2.5rem; padding: 2rem 3rem 4rem; align-items: start; } }
+
+  .detail-left { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  /* ═══ GALLERY ═══ */
+  .gallery { display: flex; flex-direction: column; gap: 0.625rem; }
+
+  .gallery__main {
     position: relative;
     border-radius: 1rem;
     overflow: hidden;
     border: 0.5px solid rgba(26,26,46,0.08);
-  }
-
-  .product-image__img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    display: block;
-  }
-
-  .product-image__placeholder {
     background: linear-gradient(145deg, #F5E6D0, #EDD5B8);
     aspect-ratio: 4 / 3;
+    cursor: grab;
+  }
+
+  .gallery__main:active { cursor: grabbing; }
+
+  .gallery__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.2s ease;
+  }
+
+  .gallery__placeholder {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
-    color: rgba(26,26,46,0.25);
+    color: rgba(26,26,46,0.22);
   }
 
-  .product-image__placeholder p {
-    font-size: 0.875rem;
-    margin: 0;
-  }
+  .gallery__placeholder p { font-size: 0.875rem; margin: 0; }
 
-  .product-image__badges {
-    position: absolute;
-    top: 0.875rem;
-    left: 0.875rem;
-    display: flex;
-    gap: 0.375rem;
-    flex-wrap: wrap;
-  }
-
-  .img-badge {
-    font-size: 0.625rem;
-    font-weight: 700;
-    padding: 0.3rem 0.7rem;
-    border-radius: 9999px;
-    backdrop-filter: blur(4px);
-  }
-
+  /* Badges */
+  .gallery__badges { position: absolute; top: 0.875rem; left: 0.875rem; display: flex; gap: 0.375rem; flex-wrap: wrap; }
+  .img-badge { font-size: 0.625rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: 9999px; backdrop-filter: blur(4px); }
   .img-badge--exclusive { background: rgba(255,255,255,0.92); color: #E85D26; }
   .img-badge--price     { background: rgba(255,255,255,0.92); color: #C9A84C; }
-  .img-badge--cat       { background: rgba(26,26,46,0.7);     color: #fff;    }
+  .img-badge--cat       { background: rgba(26,26,46,0.7); color: #fff; }
 
-  /* ── Product info ── */
-  .product-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.875rem;
-  }
-
-  .product-info__title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    font-weight: 700;
-    color: #1A1A2E;
-    margin: 0;
-    line-height: 1.2;
-  }
-
-  .product-info__desc {
-    font-size: 0.9375rem;
-    color: rgba(26,26,46,0.6);
-    line-height: 1.7;
-    margin: 0;
-  }
-
-  .product-info__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.375rem;
-  }
-
-  .product-tag {
-    font-size: 0.6875rem;
-    background: rgba(26,26,46,0.06);
-    color: rgba(26,26,46,0.45);
-    padding: 0.25rem 0.625rem;
-    border-radius: 9999px;
-    border: 0.5px solid rgba(26,26,46,0.1);
-  }
-
-  .product-info__price-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.5rem;
-    padding: 0.875rem;
-    background: #fff;
-    border-radius: 0.75rem;
-    border: 0.5px solid rgba(26,26,46,0.08);
-    flex-wrap: wrap;
-  }
-
-  .product-info__price {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #E85D26;
-  }
-
-  .product-info__per { font-size: 0.875rem; color: rgba(26,26,46,0.35); }
-
-  .product-info__deposit {
-    font-size: 0.875rem;
-    color: rgba(26,26,46,0.5);
+  /* Nav arrows */
+  .gallery__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.92);
+    border: none;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.375rem;
-    flex-wrap: wrap;
-  }
-
-  .product-info__refund {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    background: rgba(34,197,94,0.1);
-    color: #16a34a;
-    padding: 0.15rem 0.5rem;
-    border-radius: 9999px;
-  }
-
-  /* ═══════════════════════════════════════════
-     RIGHT — BOOKING PANEL
-  ═══════════════════════════════════════════ */
-  .detail-right {
-    position: relative;
-  }
-
-  @media (min-width: 768px) {
-    .detail-right { position: sticky; top: 5rem; }
-  }
-
-  .booking-panel {
-    background: #fff;
-    border: 0.5px solid rgba(26,26,46,0.1);
-    border-radius: 1.125rem;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.125rem;
-    box-shadow: 0 4px 24px rgba(26,26,46,0.07);
-  }
-
-  .booking-panel__header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .booking-panel__name {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1A1A2E;
-    margin: 0;
-  }
-
-  .booking-panel__price {
-    font-size: 1.375rem;
-    font-weight: 700;
-    color: #E85D26;
-    margin: 0;
-    white-space: nowrap;
-  }
-
-  .booking-panel__per {
-    font-size: 0.8125rem;
-    font-weight: 400;
-    color: rgba(26,26,46,0.35);
-  }
-
-  .booking-panel__divider {
-    height: 0.5px;
-    background: rgba(26,26,46,0.07);
-    margin: 0;
-  }
-
-  .booking-panel__hygiene {
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-    font-size: 0.75rem;
-    color: rgba(26,26,46,0.38);
-    margin: 0;
-    text-align: center;
     justify-content: center;
+    box-shadow: 0 2px 8px rgba(26,26,46,0.15);
+    transition: background 0.15s ease;
+    z-index: 2;
   }
 
-  /* ═══════════════════════════════════════════
-     RELATED PRODUCTS
-  ═══════════════════════════════════════════ */
-  .related-section {
-    border-top: 0.5px solid rgba(26,26,46,0.08);
-    padding: 2.5rem 0 3rem;
-    background: #FDF6EE;
+  .gallery__nav:hover { background: #fff; }
+  .gallery__nav--prev { left: 0.625rem; }
+  .gallery__nav--next { right: 0.625rem; }
+
+  /* Counter */
+  .gallery__counter {
+    position: absolute;
+    bottom: 0.625rem;
+    right: 0.75rem;
+    background: rgba(26,26,46,0.6);
+    color: #fff;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    padding: 0.2rem 0.55rem;
+    border-radius: 9999px;
   }
 
-  .related-section__inner {
-    max-width: 1200px;
-    margin-inline: auto;
-    padding-inline: 1.25rem;
+  /* Thumbnails */
+  .gallery__thumbs {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 0.125rem;
   }
 
-  @media (min-width: 768px) {
-    .related-section__inner { padding-inline: 3rem; }
-  }
+  .gallery__thumbs::-webkit-scrollbar { display: none; }
 
-  .related-section__title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.375rem;
-    font-weight: 700;
-    color: #1A1A2E;
-    margin: 0 0 1.25rem;
-  }
-
-  .related-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.875rem;
-    margin-bottom: 1.125rem;
-  }
-
-  @media (min-width: 768px) {
-    .related-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-
-  .related-card {
-    background: #fff;
-    border: 0.5px solid rgba(26,26,46,0.08);
-    border-radius: 0.875rem;
+  .gallery__thumb {
+    flex-shrink: 0;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 0.5rem;
     overflow: hidden;
-    text-decoration: none;
-    transition: box-shadow 0.2s ease, transform 0.15s ease;
-  }
-
-  .related-card:hover {
-    box-shadow: 0 4px 16px rgba(26,26,46,0.1);
-    transform: translateY(-2px);
-  }
-
-  .related-card__img {
+    border: 2px solid rgba(26,26,46,0.1);
+    cursor: pointer;
+    padding: 0;
     background: linear-gradient(145deg, #F5E6D0, #EDD5B8);
-    aspect-ratio: 4 / 3;
+    transition: border-color 0.15s ease;
   }
 
-  .related-card__body {
-    padding: 0.75rem;
-  }
+  .gallery__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gallery__thumb--active { border-color: #E85D26; }
+  .gallery__thumb:hover:not(.gallery__thumb--active) { border-color: rgba(232,93,38,0.4); }
 
-  .related-card__name {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #1A1A2E;
-    margin: 0 0 0.25rem;
-  }
+  /* Product info */
+  .product-info { display: flex; flex-direction: column; gap: 0.875rem; }
+  .product-info__title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #1A1A2E; margin: 0; line-height: 1.2; }
+  .product-info__desc { font-size: 0.9375rem; color: rgba(26,26,46,0.6); line-height: 1.7; margin: 0; }
+  .product-info__tags { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+  .product-tag { font-size: 0.6875rem; background: rgba(26,26,46,0.06); color: rgba(26,26,46,0.45); padding: 0.25rem 0.625rem; border-radius: 9999px; border: 0.5px solid rgba(26,26,46,0.1); }
 
-  .related-card__price {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #E85D26;
-    margin: 0;
-  }
+  /* Price row — kept in CSS in case we uncomment it */
+  .product-info__price-row { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; padding: 0.875rem; background: #fff; border-radius: 0.75rem; border: 0.5px solid rgba(26,26,46,0.08); flex-wrap: wrap; }
+  .product-info__price { font-size: 1.5rem; font-weight: 700; color: #E85D26; }
+  .product-info__per { font-size: 0.875rem; color: rgba(26,26,46,0.35); }
+  .product-info__deposit { font-size: 0.875rem; color: rgba(26,26,46,0.5); display: flex; align-items: center; gap: 0.375rem; flex-wrap: wrap; }
+  .product-info__refund { font-size: 0.6875rem; font-weight: 600; background: rgba(34,197,94,0.1); color: #16a34a; padding: 0.15rem 0.5rem; border-radius: 9999px; }
 
-  .related-card__price span {
-    font-size: 0.75rem;
-    font-weight: 400;
-    color: rgba(26,26,46,0.35);
-  }
+  /* Trust signal */
+  .product-info__trust { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.8125rem; color: rgba(26,26,46,0.5); background: rgba(34,197,94,0.06); border: 0.5px solid rgba(34,197,94,0.15); border-radius: 0.5rem; padding: 0.5rem 0.75rem; }
 
-  .related-section__link {
-    text-align: center;
-  }
+  /* Booking panel */
+  .detail-right { position: relative; }
+  @media (min-width: 768px) { .detail-right { position: sticky; top: 5rem; } }
 
-  .related-section__link a {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #E85D26;
-    text-decoration: none;
-  }
+  .booking-panel { background: #fff; border: 0.5px solid rgba(26,26,46,0.1); border-radius: 1.125rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.125rem; box-shadow: 0 4px 24px rgba(26,26,46,0.07); }
 
-  .related-section__link a:hover {
-    text-decoration: underline;
-  }
+  .booking-panel__header { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
+  .booking-panel__name { font-size: 1rem; font-weight: 600; color: #1A1A2E; margin: 0; }
+  .booking-panel__enquire { font-size: 0.8125rem; color: #E85D26; font-weight: 500; margin: 0; }
+
+  /* Price styles — kept for when we uncomment */
+  .booking-panel__price { font-size: 1.375rem; font-weight: 700; color: #E85D26; margin: 0; white-space: nowrap; }
+  .booking-panel__per { font-size: 0.8125rem; font-weight: 400; color: rgba(26,26,46,0.35); }
+
+  .booking-panel__divider { height: 0.5px; background: rgba(26,26,46,0.07); }
+  .booking-panel__hygiene { display: flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; color: rgba(26,26,46,0.38); margin: 0; text-align: center; justify-content: center; }
+
+  /* Related */
+  .related-section { border-top: 0.5px solid rgba(26,26,46,0.08); padding: 2.5rem 0 3rem; }
+  .related-section__inner { max-width: 1200px; margin-inline: auto; padding-inline: 1.25rem; }
+  @media (min-width: 768px) { .related-section__inner { padding-inline: 3rem; } }
+  .related-section__title { font-family: 'Playfair Display', Georgia, serif; font-size: 1.375rem; font-weight: 700; color: #1A1A2E; margin: 0 0 1.25rem; }
+  .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.875rem; margin-bottom: 1.125rem; }
+  @media (min-width: 768px) { .related-grid { grid-template-columns: repeat(3, 1fr); } }
+  .related-card { background: #fff; border: 0.5px solid rgba(26,26,46,0.08); border-radius: 0.875rem; overflow: hidden; text-decoration: none; transition: transform 0.15s, box-shadow 0.15s; }
+  .related-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(26,26,46,0.1); }
+  .related-card__img { background: linear-gradient(145deg, #F5E6D0, #EDD5B8); aspect-ratio: 4 / 3; }
+  .related-card__body { padding: 0.75rem; }
+  .related-card__name { font-size: 0.875rem; font-weight: 600; color: #1A1A2E; margin: 0; }
+  .related-section__link { text-align: center; }
+  .related-section__link a { font-size: 0.875rem; font-weight: 600; color: #E85D26; text-decoration: none; }
 </style>

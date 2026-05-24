@@ -1,12 +1,7 @@
 ---
 // @ts-nocheck
-// HeroSection.astro — Sprint 1 · S1 (updated: Alpine → vanilla JS)
-// ─────────────────────────────────────────────
-// Reads from:  src/data/categories.js (heroChips)
-// Vanilla JS:  chip tap → updates glow pill button text + href
-// Desktop fix: md:grid-cols-2 — text left, image right (no blank space)
-// No WhatsApp button — FAB handles it
-// ─────────────────────────────────────────────
+// HeroSection.astro — Sprint 4 update (carousel added)
+// Vanilla JS chips + 4-slide auto-carousel
 
 import { heroChips } from '../../data/categories.js';
 
@@ -22,51 +17,64 @@ const chips = heroChips.map(chip => ({
   chipClass: chip.isWomens ? 'chip chip--womens' : 'chip chip--default',
   isFirst:   chip.id === defaultChip.id,
 }));
+
+// Carousel slides — update with real photos when available
+const carouselSlides = [
+  { label: 'Nauwari Sarees',  tag: 'Most Booked', bg: 'linear-gradient(145deg, #F5E6D0, #EDD5B8)' },
+  { label: 'Lehenga',         tag: 'Festive Fav',  bg: 'linear-gradient(145deg, #F0DFD0, #E8CDB5)' },
+  { label: 'Maternity Gowns', tag: 'New Arrival',  bg: 'linear-gradient(145deg, #EDE0D4, #E5CEBC)' },
+  { label: 'Shaadi Specials', tag: 'New Arrival',  bg: 'linear-gradient(145deg, #F2E4D6, #EDD4C0)' },
+];
 ---
 
 <section class="hero" aria-label="Hero section">
-
   <div class="hero__inner">
 
-    <!-- LEFT COLUMN — Text + Chips -->
+    <!-- LEFT: Text + Chips -->
     <div class="hero__content">
 
-      <!-- Festival badge -->
-      <div class="festival-badge" aria-label="Upcoming festival announcement">
+      <div class="festival-badge">
         <span class="festival-badge__dot" aria-hidden="true"></span>
         <span>Ganesh Chaturthi 2026 — Pre-Book Now</span>
       </div>
 
-      <!-- Headline -->
       <h1 class="hero__headline">
         Premium Costume Rentals in
         <span class="hero__headline-location">Hinjewadi · Wakad · Baner</span>
       </h1>
 
-      <!-- Subline -->
-      <p class="hero__subline">
-        Festival-Ready Costumes · Washed &amp; Ironed · WhatsApp Booking
-      </p>
+      <p class="hero__subline">Festival-Ready Costumes · Washed &amp; Ironed · WhatsApp Booking</p>
 
-      <!-- Image stage — MOBILE only -->
-      <div class="hero__stage hero__stage--mobile" role="img" aria-label="Costume photography placeholder">
-        <span class="stage__tag" aria-hidden="true">
-          <svg width="9" height="9" viewBox="0 0 12 12" fill="#E85D26" aria-hidden="true">
-            <path d="M6 1l1.545 3.09L11 4.618l-2.5 2.427.59 3.42L6 8.817l-3.09 1.648.59-3.42L1 4.618z"/>
-          </svg>
-          Most Booked
-        </span>
-        <svg class="stage__camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-          <circle cx="12" cy="13" r="4"/>
-        </svg>
-        <p class="stage__caption">Your costume photography here</p>
+      <!-- Carousel — MOBILE only -->
+      <div class="hero__carousel hero__carousel--mobile" aria-label="Featured categories">
+        <div class="carousel__track">
+          {carouselSlides.map((slide, i) => (
+            <div
+              class={`carousel__slide${i === 0 ? ' carousel__slide--active' : ''}`}
+              style={`background: ${slide.bg};`}
+            >
+              <span class="stage__tag">
+                <svg width="9" height="9" viewBox="0 0 12 12" fill="#E85D26" aria-hidden="true"><path d="M6 1l1.545 3.09L11 4.618l-2.5 2.427.59 3.42L6 8.817l-3.09 1.648.59-3.42L1 4.618z"/></svg>
+                {slide.tag}
+              </span>
+              <svg class="stage__camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                <circle cx="12" cy="13" r="4"/>
+              </svg>
+              <p class="stage__caption">Your costume photography here</p>
+              <span class="carousel__label">{slide.label}</span>
+            </div>
+          ))}
+        </div>
+        <div class="carousel__dots">
+          {carouselSlides.map((_, i) => (
+            <button class={`carousel__dot${i === 0 ? ' carousel__dot--active' : ''}`} data-slide={i} type="button" aria-label={`Slide ${i + 1}`}></button>
+          ))}
+        </div>
       </div>
 
-      <!-- Chip label -->
       <p class="chip-label" aria-hidden="true">What are you looking for?</p>
 
-      <!-- Costume chips — first chip active by default via HTML -->
       <div class="chips" role="group" aria-label="Filter costumes by type">
         {chips.map(chip => (
           <button
@@ -83,13 +91,7 @@ const chips = heroChips.map(chip => ({
         ))}
       </div>
 
-      <!-- Glow pill CTA — Style B -->
-      <a
-        id="hero-glow-pill"
-        class="glow-pill"
-        href={defaultHref}
-        aria-label={defaultLabel}
-      >
+      <a id="hero-glow-pill" class="glow-pill" href={defaultHref} aria-label={defaultLabel}>
         <span class="glow-pill__icon" aria-hidden="true">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="white">
             <path d="M12 2l2.09 6.26L21 9.27l-5 4.73 1.18 6.54L12 17.27l-5.18 3.27L8 14l-5-4.73 6.91-1.01z"/>
@@ -98,7 +100,6 @@ const chips = heroChips.map(chip => ({
         <span class="glow-pill__text" id="hero-btn-text">{defaultLabel}</span>
       </a>
 
-      <!-- Trust pills -->
       <ul class="trust-pills" aria-label="Key trust signals">
         <li class="trust-pill">Washed &amp; Ironed</li>
         <li class="trust-pill">Refundable Deposit</li>
@@ -108,298 +109,257 @@ const chips = heroChips.map(chip => ({
 
     </div><!-- /hero__content -->
 
-    <!-- RIGHT COLUMN — Image (desktop only) -->
-    <div class="hero__stage hero__stage--desktop" role="img" aria-label="Costume photography placeholder" aria-hidden="true">
-      <span class="stage__tag">
-        <svg width="9" height="9" viewBox="0 0 12 12" fill="#E85D26" aria-hidden="true">
-          <path d="M6 1l1.545 3.09L11 4.618l-2.5 2.427.59 3.42L6 8.817l-3.09 1.648.59-3.42L1 4.618z"/>
-        </svg>
-        Most Booked
-      </span>
-      <svg class="stage__camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-        <circle cx="12" cy="13" r="4"/>
-      </svg>
-      <p class="stage__caption">Your costume photography here</p>
+    <!-- RIGHT: Carousel (desktop only) -->
+    <div class="hero__carousel hero__carousel--desktop" aria-label="Featured costume categories">
+      <div class="carousel__track">
+        {carouselSlides.map((slide, i) => (
+          <div
+            class={`carousel__slide${i === 0 ? ' carousel__slide--active' : ''}`}
+            style={`background: ${slide.bg};`}
+          >
+            <span class="stage__tag">
+              <svg width="9" height="9" viewBox="0 0 12 12" fill="#E85D26" aria-hidden="true"><path d="M6 1l1.545 3.09L11 4.618l-2.5 2.427.59 3.42L6 8.817l-3.09 1.648.59-3.42L1 4.618z"/></svg>
+              {slide.tag}
+            </span>
+            <svg class="stage__camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
+            <p class="stage__caption">Your costume photography here</p>
+            <span class="carousel__label">{slide.label}</span>
+          </div>
+        ))}
+      </div>
+      <div class="carousel__dots">
+        {carouselSlides.map((_, i) => (
+          <button class={`carousel__dot${i === 0 ? ' carousel__dot--active' : ''}`} data-slide={i} type="button" aria-label={`Go to slide ${i + 1}`}></button>
+        ))}
+      </div>
     </div>
 
-  </div><!-- /hero__inner -->
-
+  </div>
 </section>
 
-<!-- Vanilla JS chip switching — no Alpine needed -->
+<!-- Carousel auto-swap JS -->
 <script>
   // @ts-nocheck
-  const chipBtns  = document.querySelectorAll('.hero .chip');
-  const glowPill  = document.getElementById('hero-glow-pill');
-  const btnText   = document.getElementById('hero-btn-text');
+  const slides  = document.querySelectorAll('.carousel__slide');
+  const dots    = document.querySelectorAll('.carousel__dot');
+  let current   = 0;
+  let timer     = null;
+
+  function goTo(index) {
+    slides[current]?.classList.remove('carousel__slide--active');
+    dots[current]?.classList.remove('carousel__dot--active');
+    current = (index + slides.length) % slides.length;
+    slides[current]?.classList.add('carousel__slide--active');
+    dots[current]?.classList.add('carousel__dot--active');
+  }
+
+  function startAuto() { timer = setInterval(() => goTo(current + 1), 2800); }
+  function stopAuto()  { clearInterval(timer); }
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => { stopAuto(); goTo(i); startAuto(); });
+  });
+
+  let touchStart = 0;
+  document.querySelectorAll('.hero__carousel').forEach(el => {
+    el.addEventListener('touchstart', e => { touchStart = e.changedTouches[0].screenX; }, { passive: true });
+    el.addEventListener('touchend',   e => {
+      const diff = touchStart - e.changedTouches[0].screenX;
+      if (Math.abs(diff) > 50) { stopAuto(); goTo(diff > 0 ? current + 1 : current - 1); startAuto(); }
+    }, { passive: true });
+    el.addEventListener('mouseenter', stopAuto);
+    el.addEventListener('mouseleave', startAuto);
+  });
+
+  startAuto();
+</script>
+
+<!-- Chip switching JS -->
+<script>
+  // @ts-nocheck
+  const chipBtns = document.querySelectorAll('.hero .chip');
+  const glowPill = document.getElementById('hero-glow-pill');
+  const btnText  = document.getElementById('hero-btn-text');
 
   chipBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      // Clear all active states
-      chipBtns.forEach(b => {
-        b.classList.remove('chip--active');
-        b.setAttribute('aria-pressed', 'false');
-      });
-
-      // Set clicked chip as active
+      chipBtns.forEach(b => { b.classList.remove('chip--active'); b.setAttribute('aria-pressed', 'false'); });
       btn.classList.add('chip--active');
       btn.setAttribute('aria-pressed', 'true');
-
-      // Update glow pill button
-      const label = btn.dataset.btnLabel;
-      const href  = btn.dataset.btnHref;
-
-      if (glowPill) {
-        glowPill.setAttribute('href', href);
-        glowPill.setAttribute('aria-label', label);
-      }
-      if (btnText) btnText.textContent = label;
+      if (glowPill) { glowPill.setAttribute('href', btn.dataset.btnHref); glowPill.setAttribute('aria-label', btn.dataset.btnLabel); }
+      if (btnText)  btnText.textContent = btn.dataset.btnLabel;
     });
   });
 </script>
 
-<!--
-  WHEN YOU HAVE PHOTOS:
-  Replace .hero__stage div with:
-  <img src="/images/hero-costume.jpg" alt="..." class="hero__photo" loading="eager" />
-  Add to style: .hero__photo { width:100%; border-radius:1rem; object-fit:cover; aspect-ratio:5/6; }
--->
-
 <style>
-  .hero {
-    background-color: #FDF6EE;
-    padding-top: 2rem;
-    padding-bottom: 2.5rem;
-  }
+  .hero { background-color: #FDF6EE; padding-top: 2rem; padding-bottom: 2.5rem; }
 
-  .hero__inner {
-    max-width: 1200px;
-    margin-inline: auto;
-    padding-inline: 1.25rem;
-  }
+  .hero__inner { max-width: 1200px; margin-inline: auto; padding-inline: 1.25rem; }
 
   @media (min-width: 768px) {
-    .hero__inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-      padding-inline: 3rem;
-    }
+    .hero__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; padding-inline: 3rem; }
   }
 
-  .hero__stage--mobile  { display: flex; }
-  .hero__stage--desktop { display: none; }
-
-  @media (min-width: 768px) {
-    .hero__stage--mobile  { display: none; }
-    .hero__stage--desktop { display: flex; }
-  }
-
-  .festival-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(232, 93, 38, 0.08);
-    border: 0.5px solid rgba(232, 93, 38, 0.22);
-    border-radius: 9999px;
-    padding: 0.3rem 0.75rem;
-    font-size: 0.6875rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #E85D26;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-
-  .festival-badge__dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #E85D26;
-    flex-shrink: 0;
-    animation: badge-pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes badge-pulse {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0.35; }
-  }
-
-  .hero__headline {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(1.75rem, 5vw, 3rem);
-    line-height: 1.17;
-    color: #1A1A2E;
-    margin-bottom: 0.5rem;
-  }
-
-  .hero__headline-location {
-    display: block;
-    color: #E85D26;
-    margin-top: 0.1em;
-  }
-
-  .hero__subline {
-    font-size: 0.8125rem;
-    color: rgba(26, 26, 46, 0.5);
-    line-height: 1.65;
+  /* ── CAROUSEL ── */
+  .hero__carousel {
+    position: relative;
+    border-radius: 1rem;
+    border: 0.5px solid rgba(232,93,38,0.1);
+    overflow: hidden;
     margin-bottom: 1.25rem;
   }
 
-  .hero__stage {
-    background: linear-gradient(145deg, #F5E6D0, #EDD5B8);
-    border-radius: 1rem;
-    border: 0.5px solid rgba(232, 93, 38, 0.1);
+  @media (min-width: 768px) {
+    .hero__carousel { min-height: 380px; margin-bottom: 0; border-radius: 1.25rem; }
+  }
+
+  .hero__carousel--mobile  { display: block; }
+  .hero__carousel--desktop { display: none;  }
+
+  @media (min-width: 768px) {
+    .hero__carousel--mobile  { display: none;  }
+    .hero__carousel--desktop { display: block; }
+  }
+
+  .carousel__track { position: relative; width: 100%; min-height: 180px; }
+
+  @media (min-width: 768px) { .carousel__track { min-height: 380px; } }
+
+  .carousel__slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: relative;
-    min-height: 180px;
-    margin-bottom: 1.25rem;
     padding: 2rem 1.5rem;
+    opacity: 0;
+    transition: opacity 0.65s ease;
+    pointer-events: none;
   }
 
-  @media (min-width: 768px) {
-    .hero__stage { min-height: 380px; margin-bottom: 0; border-radius: 1.25rem; }
+  .carousel__slide--active {
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
   }
 
-  .stage__tag {
+  .carousel__label {
     position: absolute;
-    top: 0.625rem;
-    left: 0.625rem;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 0.5rem;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.5625rem;
-    font-weight: 700;
-    color: #E85D26;
+    bottom: 0.875rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(26,26,46,0.68);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.3rem 0.875rem;
+    border-radius: 9999px;
+    white-space: nowrap;
+  }
+
+  .carousel__dots {
+    position: absolute;
+    bottom: 0.625rem;
+    right: 0.75rem;
     display: flex;
-    align-items: center;
-    gap: 0.3rem;
+    gap: 0.375rem;
+    z-index: 2;
   }
 
-  .stage__camera {
-    width: 2.25rem;
-    height: 2.25rem;
-    color: rgba(232, 93, 38, 0.2);
-    margin-bottom: 0.625rem;
+  .carousel__dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.45);
+    border: none; cursor: pointer; padding: 0;
+    transition: background 0.2s, transform 0.2s;
   }
 
-  .stage__caption {
-    font-size: 0.6875rem;
-    color: rgba(26, 26, 46, 0.28);
-    text-align: center;
-    line-height: 1.5;
+  .carousel__dot--active { background: #E85D26; transform: scale(1.3); }
+
+  /* stage elements */
+  .stage__tag {
+    position: absolute; top: 0.625rem; left: 0.625rem;
+    background: rgba(255,255,255,0.92); border-radius: 0.5rem;
+    padding: 0.25rem 0.5rem; font-size: 0.5625rem; font-weight: 700;
+    color: #E85D26; display: flex; align-items: center; gap: 0.3rem;
   }
 
-  .chip-label {
-    font-size: 0.625rem;
-    color: rgba(26, 26, 46, 0.38);
-    letter-spacing: 0.02em;
-    margin-bottom: 0.5rem;
+  .stage__camera { width: 2.25rem; height: 2.25rem; color: rgba(26,26,46,0.2); margin-bottom: 0.625rem; }
+  .stage__caption { font-size: 0.6875rem; color: rgba(26,26,46,0.28); text-align: center; }
+
+  /* ── CONTENT ── */
+  .hero__content { display: flex; flex-direction: column; gap: 0; }
+
+  .festival-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(232,93,38,0.08); border: 0.5px solid rgba(232,93,38,0.22);
+    border-radius: 9999px; padding: 0.3rem 0.75rem;
+    font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase;
+    color: #E85D26; font-weight: 600; margin-bottom: 1rem;
   }
+
+  .festival-badge__dot {
+    width: 6px; height: 6px; border-radius: 50%; background: #E85D26; flex-shrink: 0;
+    animation: badge-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes badge-pulse { 0%,100% { opacity:1; } 50% { opacity:0.35; } }
+
+  .hero__headline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.75rem, 5vw, 3rem); line-height: 1.17;
+    color: #1A1A2E; margin-bottom: 0.5rem;
+  }
+
+  .hero__headline-location { display: block; color: #E85D26; margin-top: 0.1em; }
+
+  .hero__subline { font-size: 0.8125rem; color: rgba(26,26,46,0.5); line-height: 1.65; margin-bottom: 1.25rem; }
+
+  .chip-label { font-size: 0.625rem; color: rgba(26,26,46,0.38); letter-spacing: 0.02em; margin-bottom: 0.5rem; }
 
   .chips {
-    display: flex;
-    gap: 0.4rem;
-    overflow-x: auto;
-    padding-bottom: 0.25rem;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    margin-bottom: 1.125rem;
+    display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 0.25rem;
+    scrollbar-width: none; -ms-overflow-style: none; margin-bottom: 1.125rem;
   }
-
   .chips::-webkit-scrollbar { display: none; }
 
   .chip {
-    display: inline-flex;
-    align-items: center;
-    border-radius: 9999px;
-    padding: 0.4375rem 0.8rem;
-    font-size: 0.6875rem;
-    font-weight: 500;
-    color: #1A1A2E;
-    white-space: nowrap;
-    flex-shrink: 0;
-    cursor: pointer;
-    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-    border: 1px solid transparent;
-    min-height: 44px;
-    outline: none;
-    -webkit-appearance: none;
-    appearance: none;
-    font-family: inherit;
+    display: inline-flex; align-items: center; border-radius: 9999px;
+    padding: 0.4375rem 0.8rem; font-size: 0.6875rem; font-weight: 500;
+    color: #1A1A2E; white-space: nowrap; flex-shrink: 0; cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    border: 1px solid transparent; min-height: 44px; outline: none;
+    -webkit-appearance: none; appearance: none; font-family: inherit;
   }
 
   .chip--womens  { background: rgba(201,168,76,0.05); border-color: rgba(201,168,76,0.4); }
   .chip--default { background: #fff; border-color: rgba(232,93,38,0.28); }
-
-  /* JS adds/removes this class */
-  .chip--active {
-    background: #E85D26 !important;
-    border-color: #E85D26 !important;
-    color: #fff !important;
-  }
+  .chip--active  { background: #E85D26 !important; border-color: #E85D26 !important; color: #fff !important; }
 
   .glow-pill {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.625rem;
-    border-radius: 9999px;
-    padding: 0.9375rem 1.5rem;
-    width: 100%;
+    display: flex; align-items: center; justify-content: center; gap: 0.625rem;
+    border-radius: 9999px; padding: 0.9375rem 1.5rem; width: 100%;
     background: #E85D26;
     box-shadow: 0 6px 22px rgba(232,93,38,0.38), 0 2px 6px rgba(232,93,38,0.2);
-    text-decoration: none;
-    margin-bottom: 1rem;
-    min-height: 44px;
-    transition: box-shadow 0.2s ease, transform 0.15s ease;
+    text-decoration: none; margin-bottom: 1rem; min-height: 44px;
+    transition: box-shadow 0.2s, transform 0.15s;
   }
 
-  .glow-pill:hover {
-    box-shadow: 0 8px 28px rgba(232,93,38,0.48), 0 3px 8px rgba(232,93,38,0.25);
-    transform: translateY(-1px);
-  }
-
+  .glow-pill:hover { box-shadow: 0 8px 28px rgba(232,93,38,0.48), 0 3px 8px rgba(232,93,38,0.25); transform: translateY(-1px); }
   .glow-pill:active { transform: scale(0.98); }
 
   .glow-pill__icon {
-    width: 1.625rem;
-    height: 1.625rem;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.18);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    width: 1.625rem; height: 1.625rem; border-radius: 50%;
+    background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
 
-  .glow-pill__text {
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: #fff;
-    flex: 1;
-    text-align: center;
-  }
+  .glow-pill__text { font-size: 0.875rem; font-weight: 700; color: #fff; flex: 1; text-align: center; }
 
-  .trust-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.375rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .trust-pill {
-    background: rgba(26,26,46,0.06);
-    border: 0.5px solid rgba(26,26,46,0.09);
-    color: rgba(26,26,46,0.48);
-    font-size: 0.625rem;
-    padding: 0.3125rem 0.625rem;
-    border-radius: 9999px;
-  }
+  .trust-pills { display: flex; flex-wrap: wrap; gap: 0.375rem; list-style: none; padding: 0; margin: 0; }
+  .trust-pill { background: rgba(26,26,46,0.06); border: 0.5px solid rgba(26,26,46,0.09); color: rgba(26,26,46,0.48); font-size: 0.625rem; padding: 0.3125rem 0.625rem; border-radius: 9999px; }
 </style>

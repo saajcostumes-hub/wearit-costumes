@@ -1,15 +1,14 @@
 ---
-// src/pages/index.astro
+// @ts-nocheck
+// src/pages/index.astro — Sprint 4 update
 // ─────────────────────────────────────────────
-// wearit — Homepage · Sprint 1 complete
-//
-// Section order (locked in design May 2026):
-//   S1  HeroSection         ✅
-//   S2  HowItWorks          ✅
-//   S3  PopularThisSeason   ✅
-//   S4  CategoryGrid        ✅
-//   S5  TrustSignals        ✅
-//   S6  FestivalBanner      ✅
+// Section order (updated):
+//   S1  HeroSection
+//   S2  PopularThisSeason
+//   S3  CategoryGrid
+//   S4  HowItWorks        ← moved here (before TrustSignals)
+//   S5  TrustSignals
+//   S6  FestivalBanner
 // ─────────────────────────────────────────────
 
 import Layout            from '../layouts/Layout.astro';
@@ -21,27 +20,11 @@ import TrustSignals      from '../components/sections/TrustSignals.astro';
 import FestivalBanner    from '../components/sections/FestivalBanner.astro';
 ---
 
-<Layout
-  title="wearit — Premium Costume Rentals in Hinjewadi, Wakad & Baner, Pune"
-  description="Browse traditional Marathi costumes, kids fancy dress & festival wear for rent in Hinjewadi, Wakad & Baner, Pune. Nauwari sarees, Shivaji Maharaj sets. Washed & ironed. WhatsApp booking."
->
-
-  <!-- S1: Hero — headline, costume chips, glow pill CTA, trust pills -->
+<Layout title="wearit — Premium Costume Rentals in Hinjewadi, Wakad & Baner, Pune">
   <HeroSection />
-
-  <!-- S2: How it Works — 3 bold tiles (Browse · Book · Pickup) -->
-  <HowItWorks />
-
-  <!-- S3: Popular this Season — Nauwari Saree + Lehenga cards -->
   <PopularThisSeason />
-
-  <!-- S4: Category Grid — Women's · Traditional · Kids tabs -->
   <CategoryGrid />
-
-  <!-- S5: Trust Signals — Washed & Ironed, Refundable, Local, 30-min reply -->
+  <HowItWorks />
   <TrustSignals />
-
-  <!-- S6: Festival Banner — Ganesh Chaturthi pre-booking strip -->
   <FestivalBanner />
-
 </Layout>

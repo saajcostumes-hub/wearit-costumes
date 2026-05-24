@@ -1,19 +1,14 @@
 /**
- * categories.js — wearit single source of truth
+ * categories.js — wearit Phase 1
  * ─────────────────────────────────────────────
- * All homepage dynamic content lives here.
- * To update for a new festival or add a category:
- *   → Edit THIS file only. Zero component code changes needed.
- *   → Push to GitHub → Vercel auto-deploys in ~60 seconds.
+ * Sprint 4 update: 5 women's categories + Kids coming soon
+ * Traditional Marathi → Phase 2 (commented out below)
+ * ─────────────────────────────────────────────
  */
 
 
 // ─────────────────────────────────────────────
-// 1. HERO CHIPS
-// ─────────────────────────────────────────────
-// categoryId  → the catalog tab to open (/catalog?category=womens)
-// catalogSlug → the type filter within that category (/catalog?category=womens&type=nauwari-saree)
-// As inventory grows, multiple products of same type will be filtered by &type= param
+// 1. HERO CHIPS (Phase 1)
 // ─────────────────────────────────────────────
 
 export const heroChips = [
@@ -21,7 +16,7 @@ export const heroChips = [
     id:          'nauwari-saree',
     label:       'Nauwari Saree',
     isWomens:    true,
-    categoryId:  'womens',
+    categoryId:  'nauwari',
     catalogSlug: 'nauwari-saree',
     btnLabel:    'Browse Nauwari Sarees',
   },
@@ -29,79 +24,115 @@ export const heroChips = [
     id:          'lehenga',
     label:       'Lehenga',
     isWomens:    true,
-    categoryId:  'womens',
+    categoryId:  'lehenga',
     catalogSlug: 'lehenga',
     btnLabel:    'Browse Lehengas',
   },
   {
-    id:          'gown',
-    label:       'Gown',
+    id:          'maternity',
+    label:       'Maternity Gowns',
     isWomens:    true,
-    categoryId:  'womens',
-    catalogSlug: 'gown',
-    btnLabel:    'Browse Gowns',
+    categoryId:  'maternity',
+    catalogSlug: 'maternity-gown',
+    btnLabel:    'Browse Maternity Gowns',
   },
   {
-    id:          'festive-saree',
-    label:       'Festive Saree',
+    id:          'shaadi',
+    label:       'Shaadi Specials',
     isWomens:    true,
-    categoryId:  'womens',
-    catalogSlug: 'festive-saree',
-    btnLabel:    'Browse Festive Sarees',
+    categoryId:  'shaadi',
+    catalogSlug: 'shaadi-specials',
+    btnLabel:    'Browse Shaadi Specials',
   },
   {
-    id:          'kids-fancy-dress',
-    label:       'Kids Fancy Dress',
-    isWomens:    false,
-    categoryId:  'kids',
-    catalogSlug: 'kids-fancy-dress',
-    btnLabel:    'Browse Kids Fancy Dress',
+    id:          'western',
+    label:       'Western & Themed',
+    isWomens:    true,
+    categoryId:  'western',
+    catalogSlug: 'western-themed',
+    btnLabel:    'Browse Western & Themed',
   },
 ];
 
-// Chip that is active/selected by default on page load (first chip)
+// Kids chip — shown as "Coming Soon" in HeroSection
+// Uncomment and add to heroChips array when Phase 2 is ready
+// {
+//   id:         'kids',
+//   label:      'Kids Fancy Dress',
+//   isWomens:   false,
+//   categoryId: 'kids',
+//   catalogSlug:'kids-fancy-dress-mixed',
+//   btnLabel:   'Browse Kids Fancy Dress',
+// }
+
 export const defaultChipId = heroChips[0].id;
 
 
 // ─────────────────────────────────────────────
-// 2. CATEGORY TABS
+// 2. CATEGORY TABS (Phase 1 — catalog page)
 // ─────────────────────────────────────────────
 
 export const categoryTabs = [
   {
-    id:        'womens',
-    label:     "Women's",
-    isDefault: true,
+    id:        'nauwari',
+    label:     'Nauwari Sarees',
+    isDefault: false,
     items: [
-      { id: 'nauwari-saree',  name: 'Nauwari Saree',  sub: '9-yard · Festival wear',    badge: 'Only in wearit', badgeType: 'exclusive', slug: 'nauwari-saree'  },
-      { id: 'lehenga',        name: 'Lehenga',         sub: 'Festive · Celebrations',    badge: 'From ₹400',      badgeType: 'price',     slug: 'lehenga'        },
-      { id: 'gown',           name: 'Gown',            sub: 'Events · Formal',           badge: 'From ₹500',      badgeType: 'price',     slug: 'gown'           },
-      { id: 'festive-saree',  name: 'Festive Saree',   sub: 'Navratri · Puja',           badge: 'From ₹250',      badgeType: 'price',     slug: 'festive-saree'  },
+      { id: 'nauwari-saree', name: 'Nauwari Saree', sub: '9-yard · Festival wear', badge: 'Only in wearit', badgeType: 'exclusive', slug: 'nauwari-saree' },
+      { id: 'kashta-saree',  name: 'Kashta Saree',  sub: 'Traditional Marathi drape', badge: null, badgeType: null, slug: 'kashta-saree' },
+      { id: 'festive-saree', name: 'Festive Saree', sub: 'Navratri · Puja',    badge: null, badgeType: null, slug: 'festive-saree' },
     ],
   },
   {
-    id:        'traditional',
-    label:     'Traditional',
+    id:        'lehenga',
+    label:     'Lehenga',
     isDefault: false,
     items: [
-      { id: 'shivaji-set',    name: 'Shivaji Maharaj Set', sub: 'Kids + Adult sizes',       badge: 'From ₹700', badgeType: 'price', slug: 'shivaji-set-adult'  },
-      { id: 'mawla-warrior',  name: 'Mawla Warrior',       sub: 'Full set with accessories', badge: 'From ₹500', badgeType: 'price', slug: 'mawla-warrior'      },
-      { id: 'kashta-saree',   name: 'Kashta Saree',        sub: 'Traditional Marathi drape', badge: 'From ₹350', badgeType: 'price', slug: 'kashta-saree'       },
-      { id: 'angarkha',       name: 'Angarkha',             sub: "Men's traditional",        badge: 'From ₹400', badgeType: 'price', slug: 'angarkha'           },
+      { id: 'lehenga',              name: 'Lehenga',              sub: 'Festive · Celebrations', badge: null, badgeType: null, slug: 'lehenga' },
+      { id: 'navratri-chaniya-choli', name: 'Navratri Chaniya Choli', sub: 'Garba · Dandiya',  badge: null, badgeType: null, slug: 'navratri-chaniya-choli' },
     ],
   },
   {
-    id:        'kids',
-    label:     'Kids',
+    id:        'maternity',
+    label:     'Maternity Gowns',
     isDefault: false,
     items: [
-      { id: 'kids-fancy-mixed',   name: 'Fancy Dress Mixed',  sub: 'Animals, fruits, misc',     badge: 'From ₹150', badgeType: 'price', slug: 'kids-fancy-dress-mixed' },
-      { id: 'national-leaders',   name: 'National Leaders',   sub: 'Gandhi, Nehru, Laxmibai',   badge: 'From ₹300', badgeType: 'price', slug: 'national-leaders'       },
-      { id: 'kids-animals',       name: 'Animals & Nature',   sub: 'Zoo animals, insects',      badge: 'From ₹150', badgeType: 'price', slug: 'kids-animals'           },
-      { id: 'superheroes',        name: 'Superheroes',        sub: 'Popular characters',         badge: 'From ₹250', badgeType: 'price', slug: 'superheroes'            },
+      { id: 'maternity-gown', name: 'Maternity Gown', sub: 'Photoshoot · Baby shower', badge: 'New Arrival', badgeType: 'exclusive', slug: 'maternity-gown' },
+    ],
+  },
+  {
+    id:        'shaadi',
+    label:     'Shaadi Specials',
+    isDefault: false,
+    items: [
+      { id: 'shaadi-specials', name: 'Shaadi Specials', sub: 'Engagement · Mehndi · Sangeet', badge: 'New Arrival', badgeType: 'exclusive', slug: 'shaadi-specials' },
+    ],
+  },
+  {
+    id:        'western',
+    label:     'Western & Themed',
+    isDefault: false,
+    items: [
+      { id: 'western-themed', name: 'Western & Themed', sub: 'Halloween · Office · Parties', badge: 'New Arrival', badgeType: 'exclusive', slug: 'western-themed' },
     ],
   },
 ];
+
+// Phase 2 tabs — uncomment when ready
+// {
+//   id: 'traditional', label: 'Traditional Marathi', isDefault: false,
+//   items: [
+//     { id: 'shivaji-adult', name: 'Shivaji Maharaj Set', sub: 'Kids + Adult', badge: 'Most Booked', badgeType: 'exclusive', slug: 'shivaji-set-adult' },
+//     { id: 'mawla', name: 'Mawla Warrior', sub: 'Full set', badge: null, badgeType: null, slug: 'mawla-warrior' },
+//   ],
+// },
+// {
+//   id: 'kids', label: 'Kids Fancy Dress', isDefault: false,
+//   items: [
+//     { id: 'kids-mixed', name: 'Fancy Dress Mixed', sub: 'Animals · Fruits', badge: null, badgeType: null, slug: 'kids-fancy-dress-mixed' },
+//     { id: 'national-leaders', name: 'National Leaders', sub: 'Gandhi · Nehru', badge: null, badgeType: null, slug: 'national-leaders' },
+//   ],
+// },
 
 
 // ─────────────────────────────────────────────

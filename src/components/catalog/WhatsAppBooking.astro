@@ -14,7 +14,8 @@
 
 import { BUSINESS } from '../../lib/constants.js';
 
-const { product } = Astro.props;
+const { product, showPrice = false, categoryLabel = "" } = Astro.props;
+// showPrice: false = Phase 1 (no price in message), true = show full price breakdown
 const waNumber = BUSINESS?.whatsapp?.waMeNumber ?? '919999999999';
 ---
 
@@ -24,18 +25,21 @@ const waNumber = BUSINESS?.whatsapp?.waMeNumber ?? '919999999999';
   data-wa-number={waNumber}
   data-product={product.name}
   data-deposit={product.deposit}
+  data-show-price={showPrice ? "true" : "false"}
+  data-section={categoryLabel}
+  data-description={product.description}
+  data-has-colors={(product.colors && product.colors.length > 0) ? "true" : "false"}
 >
 
-  <!-- Status indicator — shows what's still needed -->
+  <!-- Status indicator — only dates needed (size is auto-selected as Free Size) -->
   <div class="wa-booking__status" id="booking-status">
-    <div class="status-step" id="step-size">
+    <div class="status-step" id="step-size" style="display:none;">
       <span class="status-dot status-dot--pending"></span>
       <span class="status-text">Choose a size</span>
     </div>
-    <span class="status-sep">·</span>
     <div class="status-step" id="step-dates">
       <span class="status-dot status-dot--pending"></span>
-      <span class="status-text">Select dates</span>
+      <span class="status-text">Select your rental dates</span>
     </div>
   </div>
 
@@ -75,7 +79,11 @@ const waNumber = BUSINESS?.whatsapp?.waMeNumber ?? '919999999999';
   const summaryText = document.getElementById('booking-summary-text');
   const summaryRef  = document.getElementById('booking-ref');
 
-  const waNumber   = wrap?.dataset.waNumber  ?? '919999999999';
+  const waNumber    = wrap?.dataset.waNumber  ?? '919999999999';
+  const showPrice   = wrap?.dataset.showPrice === 'true';
+  const sectionName = wrap?.dataset.section      ?? '';
+  const productDesc = wrap?.dataset.description  ?? '';
+  const hasColors   = wrap?.dataset.hasColors    === 'true';
   const productName = wrap?.dataset.product   ?? 'Costume';
   const deposit     = parseInt(wrap?.dataset.deposit ?? '0', 10);
 
@@ -85,6 +93,7 @@ const waNumber = BUSINESS?.whatsapp?.waMeNumber ?? '919999999999';
   let selectedEndDate   = null;
   let selectedDays      = 0;
   let selectedRental    = 0;
+  let selectedColor     = null;
 
   // ── Generate Booking ID ──
   function makeBookingId() {
@@ -140,27 +149,40 @@ const waNumber = BUSINESS?.whatsapp?.waMeNumber ?? '919999999999';
       ? fmtDate(selectedStartDate)
       : `${fmtDate(selectedStartDate)} to ${fmtDate(selectedEndDate)} (${selectedDays} days)`;
 
-    const msg = [
-      `Hi wearit! I'd like to book a costume. 🙏`,
-      ``,
-      `📋 Booking Details`,
-      `Costume: ${productName}`,
-      `Size: ${selectedSize}`,
-      `Date: ${dateText}`,
+    // Payment summary — only included when showPrice is true
+    const paymentLines = showPrice ? [
       ``,
       `💰 Payment Summary`,
       `Rental: ${inr(selectedRental)}`,
       `Refundable Deposit: ${inr(deposit)}`,
       `Total at Pickup: ${inr(totalAtPickup)}`,
+    ] : [
+      ``,
+      `Please share pricing and availability.`,
+    ];
+
+    const msg = [
+      `Hi wearit! 🙏`,
+      ``,
+      `📋 Booking Details`,
+      `Costume: ${productName}`,
+      `Section: ${sectionName}`,
+      `Size: ${selectedSize}`,
+      ...(selectedColor ? [`Color: ${selectedColor}`] : []),
+      `Date: ${dateText}`,
+      ``,
+      `📝 Description`,
+      `${productDesc.slice(0, 120)}${productDesc.length > 120 ? '...' : ''}`,
+      ...paymentLines,
       ``,
       `Booking Ref: ${bookingId}`,
       ``,
-      `Please confirm availability. Thank you!`,
+      `Thank you!`,
     ].join('\n');
 
     // Show summary
     if (summaryText) {
-      summaryText.textContent = `${productName} · ${selectedSize} · ${selectedDays} day${selectedDays > 1 ? 's' : ''} · ${inr(totalAtPickup)} total`;
+      summaryText.textContent = `${productName} · ${selectedSize}${selectedColor ? ' · ' + selectedColor : ''} · ${selectedDays} day${selectedDays > 1 ? 's' : ''}`;
     }
     if (summaryRef) {
       summaryRef.textContent = bookingId;
@@ -172,7 +194,7 @@ const waNumber = BUSINESS?.whatsapp?.waMeNumber ?? '919999999999';
 
   // ── Enable / Disable button ──
   function updateButton() {
-    const isReady = selectedSize && selectedStartDate && selectedEndDate;
+    const isReady = selectedSize && selectedStartDate && selectedEndDate && (!hasColors || selectedColor);
 
     if (isReady) {
       const url = buildWaUrl();
@@ -198,7 +220,11 @@ const waNumber = BUSINESS?.whatsapp?.waMeNumber ?? '919999999999';
       ctaBtn?.setAttribute('aria-disabled', 'true');
       ctaBtn?.classList.replace('wa-btn--ready', 'wa-btn--disabled');
       ctaBtn?.classList.remove('wa-btn--partial');
-      if (btnText) btnText.innerHTML = 'Select size &amp; dates to book';
+      if (hasColors && !selectedColor) {
+        if (btnText) btnText.textContent = 'Select colour & dates to book';
+      } else {
+        if (btnText) btnText.textContent = 'Select dates to book';
+      }
       if (summary) summary.style.display = 'none';
     }
   }
@@ -206,6 +232,13 @@ const waNumber = BUSINESS?.whatsapp?.waMeNumber ?? '919999999999';
   // ── Listen for size selection ──
   document.addEventListener('wearit:size-selected', (e) => {
     selectedSize = e.detail.size;
+    updateSteps();
+    updateButton();
+  });
+
+  // ── Listen for color selection ──
+  document.addEventListener('wearit:color-selected', (e) => {
+    selectedColor = e.detail.color;
     updateSteps();
     updateButton();
   });
