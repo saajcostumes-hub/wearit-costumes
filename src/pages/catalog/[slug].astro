@@ -44,7 +44,10 @@ const related = allProducts
   .slice(0, 3);
 ---
 
-<Layout title={`${product.name} — wearit Costume Rentals, Hinjewadi Pune`}>
+<Layout
+  title={`${product.name} — wearit Costume Rentals, Hinjewadi Pune`}
+  description={`Rent ${product.name} in Hinjewadi, Wakad & Baner, Pune. From ${formatPrice(product.price)}/event. 100% refundable deposit. Washed & ironed. WhatsApp booking.`}
+>
 
   <div class="detail-page">
 

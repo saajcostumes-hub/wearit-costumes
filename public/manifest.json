@@ -1,0 +1,21 @@
+{
+  "name": "wearit — Costume Rentals",
+  "short_name": "wearit",
+  "description": "Premium costume rentals in Hinjewadi, Wakad & Baner, Pune",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FDF6EE",
+  "theme_color": "#E85D26",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

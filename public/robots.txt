@@ -1,0 +1,8 @@
+# robots.txt — wearit
+# https://wearit-costumes.vercel.app
+
+User-agent: *
+Allow: /
+
+# Sitemap location — submitted to Google Search Console
+Sitemap: https://wearit-costumes.vercel.app/sitemap-index.xml

@@ -1,19 +1,25 @@
 ---
+// @ts-nocheck
 // src/layouts/Layout.astro
 // ─────────────────────────────────────────────
-// Main page shell for all wearit pages.
-// Wires in: Navbar · WhatsAppFAB · page content · Footer
-// Fonts: Playfair Display (display) + Inter (body) via Google Fonts
-// Title passed as prop from each page
+// Main page shell — Navbar · content · Footer · WhatsAppFAB
+// Sprint 3: full SEO meta tags, OG, Twitter card, canonical
 // ─────────────────────────────────────────────
 
 import '../styles/global.css';
-
 import Navbar       from '../components/layout/Navbar.astro';
 import Footer       from '../components/layout/Footer.astro';
 import WhatsAppFAB  from '../components/shared/WhatsAppFAB.astro';
 
-const { title = 'wearit — Premium Costume Rentals, Hinjewadi Pune' } = Astro.props;
+const {
+  title       = 'wearit — Premium Costume Rentals in Hinjewadi, Wakad & Baner, Pune',
+  description = 'Premium costume rentals in Hinjewadi, Wakad, Baner & Balewadi, Pune. Traditional Marathi costumes, kids fancy dress, festival wear. Washed & ironed. 100% refundable deposit. Book via WhatsApp.',
+  ogImage     = '/og-default.jpg',
+  noindex     = false,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://wearit-costumes.vercel.app');
+const ogImageURL   = new URL(ogImage, canonicalURL).toString();
 ---
 
 <!doctype html>
@@ -26,41 +32,119 @@ const { title = 'wearit — Premium Costume Rentals, Hinjewadi Pune' } = Astro.p
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
 
-    <!-- SEO -->
-    <meta name="generator" content={Astro.generator} />
+    <!-- Primary SEO -->
     <title>{title}</title>
-    <meta name="description" content="Premium costume rentals in Hinjewadi, Wakad, Baner & Balewadi, Pune. Washed & ironed. 100% refundable deposit. Book via WhatsApp." />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <!-- Google Fonts: Playfair Display + Inter -->
+    <!-- Open Graph (Facebook, WhatsApp preview) -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content={canonicalURL} />
+    <meta property="og:title"       content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image"       content={ogImageURL} />
+    <meta property="og:site_name"   content="wearit" />
+    <meta property="og:locale"      content="en_IN" />
+
+    <!-- Twitter card -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image"       content={ogImageURL} />
+
+    <!-- Local keywords -->
+    <meta name="keywords" content="costume rental Hinjewadi Pune, Nauwari saree on rent Pune, Shivaji Maharaj costume rental Wakad, children fancy dress rental Baner, costume on rent near me Maan Pune, festival costume rental Hinjewadi, wearit costumes" />
+    <meta name="author"  content="wearit — Maan, Hinjewadi, Pune" />
+
+    <!-- JSON-LD LocalBusiness schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context":       "https://schema.org",
+      "@type":          "LocalBusiness",
+      "name":           "wearit",
+      "description":    "Premium costume rentals in Hinjewadi, Wakad, Baner & Balewadi, Pune. Traditional Marathi costumes, kids fancy dress, festival wear.",
+      "url":            "https://wearit-costumes.vercel.app",
+      "telephone":      "+91-73855-56766",
+      "image":          ogImageURL,
+      "priceRange":     "₹150 – ₹1,200",
+      "currenciesAccepted": "INR",
+      "paymentAccepted":    "Cash, UPI",
+      "address": {
+        "@type":           "PostalAddress",
+        "streetAddress":   "Maan",
+        "addressLocality": "Hinjewadi",
+        "addressRegion":   "Maharashtra",
+        "postalCode":      "411057",
+        "addressCountry":  "IN"
+      },
+      "geo": {
+        "@type":     "GeoCoordinates",
+        "latitude":  18.5679,
+        "longitude": 73.7256
+      },
+      "openingHoursSpecification": [
+        {
+          "@type":     "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+          "opens":     "10:00",
+          "closes":    "20:00"
+        }
+      ],
+      "areaServed": [
+        "Maan", "Hinjewadi", "Wakad", "Baner", "Balewadi", "Pimple Saudagar", "Aundh"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name":  "Costume Rentals",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Nauwari Saree" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Shivaji Maharaj Costume" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Kids Fancy Dress" } }
+        ]
+      }
+    })} />
+
+    <!-- Astro meta -->
+    <!-- PWA manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#E85D26" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="wearit" />
+
+    <!-- Performance hints -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+
+    <!-- Astro meta -->
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Google Fonts -->
+    <!-- Google Fonts — non-render-blocking load -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap"
-      rel="stylesheet"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" />
+    </noscript>
   </head>
 
   <body>
-
-    <!-- Top navigation -->
     <Navbar />
-
-    <!-- Page content (sections injected here) -->
-    <main>
-      <slot />
-    </main>
-
-    <!-- Fixed WhatsApp button — bottom right, always visible -->
+    <main><slot /></main>
     <WhatsAppFAB />
-
-    <!-- Footer -->
     <Footer />
-
   </body>
 </html>
 
 <style is:global>
-  /* ── Base reset ── */
   *, *::before, *::after { box-sizing: border-box; }
 
   html {
@@ -86,8 +170,5 @@ const { title = 'wearit — Premium Costume Rentals, Hinjewadi Pune' } = Astro.p
 
   a { text-decoration: none; }
 
-  /* ── Playfair Display utility ── */
-  .font-display {
-    font-family: 'Playfair Display', Georgia, serif;
-  }
+  .font-display { font-family: 'Playfair Display', Georgia, serif; }
 </style>
