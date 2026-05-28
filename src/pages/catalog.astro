@@ -15,6 +15,7 @@ const standardSizes = ['S', 'M', 'L', 'XL'];
 const categoryTabs = [
   { id: 'all',      label: 'All'              },
   { id: 'nauwari',  label: 'Nauwari Sarees'   },
+  { id: 'kashtha',  label: 'Kashtha Sarees'   },
   { id: 'lehenga',  label: 'Lehenga'          },
   { id: 'maternity',label: 'Maternity Gowns'  },
   { id: 'shaadi',   label: 'Shaadi Specials'  },
@@ -120,61 +121,57 @@ const categoryTabs = [
 
 <script>
   // @ts-nocheck
-  let activeCategory = 'all';
-  let activeSize     = 'all';
+  // Catalog filter — vanilla JS
+  // Uses data-category attribute on .catalog-item elements
 
-  const allItems     = document.querySelectorAll('.catalog-item');
-  const countEl      = document.getElementById('product-count');
-  const emptyEl      = document.getElementById('empty-state');
-  const sizeFilterEl = document.getElementById('size-filter');
-  const catTabs      = document.querySelectorAll('.cat-tab:not(.cat-tab--soon)');
-  const sizeChips    = document.querySelectorAll('.size-chip');
-  const resetBtn     = document.getElementById('reset-filters');
+  let activeCategory = 'all';
+
+  const allItems  = Array.from(document.querySelectorAll('.catalog-item'));
+  const catTabs   = Array.from(document.querySelectorAll('.cat-tab:not(.cat-tab--soon)'));
+  const countEl   = document.getElementById('product-count');
+  const emptyEl   = document.getElementById('empty-state');
+  const resetBtn  = document.getElementById('reset-filters');
 
   function applyFilters() {
     let visible = 0;
+
     allItems.forEach(item => {
-      const cat      = item.dataset.category;
-      const sizes    = item.dataset.sizes.split(',');
-      const sizeType = item.dataset.sizetype;
-      const catMatch  = activeCategory === 'all' || cat === activeCategory;
-      const sizeMatch = activeSize === 'all' || sizeType === 'kids' || sizes.includes(activeSize);
-      const show = catMatch && sizeMatch;
+      const cat  = item.getAttribute('data-category');
+      // Shaadi = collection of nauwari + kashtha + lehenga
+      const shaadiCategories = ['nauwari', 'kashtha', 'lehenga'];
+      const show = activeCategory === 'all'
+        || cat === activeCategory
+        || (activeCategory === 'shaadi' && shaadiCategories.includes(cat));
       item.style.display = show ? '' : 'none';
       if (show) visible++;
     });
-    if (countEl) countEl.textContent = visible;
+
+    if (countEl) countEl.textContent = String(visible);
     if (emptyEl) emptyEl.style.display = visible === 0 ? 'flex' : 'none';
   }
 
+  // Tab clicks
   catTabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      catTabs.forEach(t => { t.classList.remove('cat-tab--active'); t.setAttribute('aria-selected', 'false'); });
+      catTabs.forEach(t => {
+        t.classList.remove('cat-tab--active');
+        t.setAttribute('aria-selected', 'false');
+      });
       tab.classList.add('cat-tab--active');
       tab.setAttribute('aria-selected', 'true');
-      activeCategory = tab.dataset.category;
-      activeSize = 'all';
-      sizeChips.forEach(c => c.classList.remove('size-chip--active'));
-      sizeChips[0].classList.add('size-chip--active');
+      activeCategory = tab.getAttribute('data-category');
       applyFilters();
     });
   });
 
-  sizeChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      sizeChips.forEach(c => c.classList.remove('size-chip--active'));
-      chip.classList.add('size-chip--active');
-      activeSize = chip.dataset.size;
-      applyFilters();
-    });
-  });
-
+  // Reset button
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
       activeCategory = 'all';
-      activeSize = 'all';
-      catTabs.forEach((t, i) => { t.classList.toggle('cat-tab--active', i === 0); t.setAttribute('aria-selected', i === 0 ? 'true' : 'false'); });
-      sizeChips.forEach((c, i) => c.classList.toggle('size-chip--active', i === 0));
+      catTabs.forEach((t, i) => {
+        t.classList.toggle('cat-tab--active', i === 0);
+        t.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      });
       applyFilters();
     });
   }
@@ -183,9 +180,12 @@ const categoryTabs = [
   const params   = new URLSearchParams(window.location.search);
   const catParam = params.get('category') ?? params.get('tab');
   if (catParam) {
-    const matchTab = document.querySelector(`.cat-tab[data-category="${catParam}"]`);
+    const matchTab = catTabs.find(t => t.getAttribute('data-category') === catParam);
     if (matchTab) {
-      catTabs.forEach(t => { t.classList.remove('cat-tab--active'); t.setAttribute('aria-selected', 'false'); });
+      catTabs.forEach(t => {
+        t.classList.remove('cat-tab--active');
+        t.setAttribute('aria-selected', 'false');
+      });
       matchTab.classList.add('cat-tab--active');
       matchTab.setAttribute('aria-selected', 'true');
       activeCategory = catParam;

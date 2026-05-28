@@ -40,6 +40,8 @@ const categoryLabel = categoryLabelMap[product.category] ?? product.category;
 
 // Gallery — up to 5 images from product.images array
 const galleryImages  = product.images ?? [];
+const specs          = product.specs ?? null;
+const hasSpecs       = specs && Object.values(specs).some(v => v && !v.startsWith('UPDATE'));
 const productColors  = product.colors  ?? [];
 const hasColors      = productColors.length > 0;
 const hasImages      = galleryImages.length > 0;
@@ -168,6 +170,21 @@ const related = allProducts
           </div>
           -->
 
+          <!-- ── Product Specs highlighted card ── -->
+          {hasSpecs && (
+            <div class="specs-card">
+              <p class="specs-card__title">Product Details</p>
+              <ul class="specs-card__list">
+                {specs.sareeName && <li><span class="specs-icon">💜</span><span><strong>Saree:</strong> {specs.sareeName}</span></li>}
+                {specs.fabric    && <li><span class="specs-icon">💜</span><span><strong>Fabric:</strong> {specs.fabric}</span></li>}
+                {specs.work      && <li><span class="specs-icon">💜</span><span><strong>Work:</strong> {specs.work}</span></li>}
+                {specs.color     && <li><span class="specs-icon">💜</span><span><strong>Color:</strong> {specs.color}</span></li>}
+                {specs.occasion  && <li><span class="specs-icon">💜</span><span><strong>Occasion:</strong> {specs.occasion}</span></li>}
+                {specs.type      && <li><span class="specs-icon">💜</span><span><strong>Type:</strong> {specs.type}</span></li>}
+              </ul>
+            </div>
+          )}
+
           <!-- Hygiene trust signal -->
           <div class="product-info__trust">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
@@ -266,7 +283,11 @@ const related = allProducts
           <div class="related-grid">
             {related.map(item => (
               <a href={`/catalog/${item.slug}`} class="related-card">
-                <div class="related-card__img"></div>
+                <div class="related-card__img">
+                  {item.images?.[0] ? (
+                    <img src={item.images[0]} alt={item.alt} loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                  ) : null}
+                </div>
                 <div class="related-card__body">
                   <p class="related-card__name">{item.name}</p>
                 </div>
@@ -422,6 +443,53 @@ const related = allProducts
   .color-chip:hover { border-color: #D4AF37; color: #D4AF37; }
   .color-chip--active { background: #D4AF37 !important; border-color: #D4AF37 !important; color: #fff !important; font-weight: 600 !important; }
 
+
+  /* ── Product Specs Card ── */
+  .specs-card {
+    background: rgba(42, 17, 36, 0.04);
+    border: 0.5px solid rgba(42, 17, 36, 0.12);
+    border-radius: 0.875rem;
+    padding: 1rem 1.125rem;
+  }
+
+  .specs-card__title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: rgba(42, 17, 36, 0.45);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 0.75rem;
+  }
+
+  .specs-card__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .specs-card__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #2A1124;
+    line-height: 1.5;
+  }
+
+  .specs-icon {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+  }
+
+  .specs-card__list strong {
+    font-weight: 600;
+    color: #2A1124;
+  }
+
   /* Free size tag */
   .free-size-tag {
     display: inline-flex;
@@ -462,7 +530,7 @@ const related = allProducts
     overflow: hidden;
     border: 0.5px solid rgba(42,17,36,0.08);
     background: linear-gradient(145deg, #F5E6D0, #EDD5B8);
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 4;
     cursor: grab;
   }
 
@@ -471,7 +539,7 @@ const related = allProducts
   .gallery__img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     transition: opacity 0.2s ease;
   }
@@ -604,7 +672,7 @@ const related = allProducts
   @media (min-width: 768px) { .related-grid { grid-template-columns: repeat(3, 1fr); } }
   .related-card { background: #fff; border: 0.5px solid rgba(42,17,36,0.08); border-radius: 0.875rem; overflow: hidden; text-decoration: none; transition: transform 0.15s, box-shadow 0.15s; }
   .related-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(42,17,36,0.1); }
-  .related-card__img { background: linear-gradient(145deg, #F5E6D0, #EDD5B8); aspect-ratio: 4 / 3; }
+  .related-card__img { background: linear-gradient(145deg, #F5E6D0, #EDD5B8); aspect-ratio: 3 / 4; overflow: hidden; }
   .related-card__body { padding: 0.75rem; }
   .related-card__name { font-size: 0.875rem; font-weight: 600; color: #2A1124; margin: 0; }
   .related-section__link { text-align: center; }

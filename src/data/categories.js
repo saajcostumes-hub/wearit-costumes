@@ -17,8 +17,16 @@ export const heroChips = [
     label:       'Nauwari Saree',
     isWomens:    true,
     categoryId:  'nauwari',
-    catalogSlug: 'nauwari-saree',
+    catalogSlug: 'nauwari-green-paithani',
     btnLabel:    'Browse Nauwari Sarees',
+  },
+  {
+    id:          'kashtha',
+    label:       'Kashtha Sarees',
+    isWomens:    true,
+    categoryId:  'kashtha',
+    catalogSlug: 'kashtha-velvet-nauvari',
+    btnLabel:    'Browse Kashtha Sarees',
   },
   {
     id:          'lehenga',
@@ -78,9 +86,20 @@ export const categoryTabs = [
     label:     'Nauwari Sarees',
     isDefault: false,
     items: [
-      { id: 'nauwari-saree', name: 'Nauwari Saree', sub: '9-yard · Festival wear', badge: 'Only in wearit', badgeType: 'exclusive', slug: 'nauwari-saree' },
-      { id: 'kashta-saree',  name: 'Kashta Saree',  sub: 'Traditional Marathi drape', badge: null, badgeType: null, slug: 'kashta-saree' },
-      { id: 'festive-saree', name: 'Festive Saree', sub: 'Navratri · Puja',    badge: null, badgeType: null, slug: 'festive-saree' },
+      { id: 'nauwari-green-paithani',  name: 'Green Paithani Rajlakshmi Kashtha',  sub: 'Emerald Green · Paithani Silk', badge: 'Only in wearit', badgeType: 'exclusive', slug: 'nauwari-green-paithani' },
+      { id: 'nauwari-violet-paithani', name: 'Violet Paithani Rajlakshmi Kashtha', sub: 'Deep Violet · Peacock motifs',   badge: null,             badgeType: null,        slug: 'nauwari-violet-paithani' },
+      { id: 'nauwari-blue-paithani',   name: 'Blue Paithani Rajlakshmi Kastha',    sub: 'Royal Blue · Rich pallu work',   badge: null,             badgeType: null,        slug: 'nauwari-blue-paithani' },
+    ],
+  },
+  {
+    id:        'kashtha',
+    label:     'Kashtha Sarees',
+    isDefault: false,
+    items: [
+      { id: 'kashtha-velvet-nauvari',  name: 'Velvet Nauvaari Kashtha',             sub: 'Deep Wine · Velvet',     badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kashtha-velvet-nauvari' },
+      { id: 'kashtha-saree-2',         name: 'Purple Designer Brahmani Kashtha',      sub: 'Deep Purple · Zari',     badge: null,             badgeType: null,        slug: 'kashtha-saree-2' },
+      { id: 'kashtha-saree-3',         name: 'Peach Designer Brahmani Kashtha',       sub: 'Peach · Scalloped border',badge: null,            badgeType: null,        slug: 'kashtha-saree-3' },
+      { id: 'kashtha-peach-brahmani',  name: 'The Peach Designer Brahmani Kashtha', sub: 'Peach · Stone Detailing', badge: 'Most Loved',     badgeType: 'exclusive', slug: 'kashtha-peach-brahmani' },
     ],
   },
   {

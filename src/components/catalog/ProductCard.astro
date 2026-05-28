@@ -53,14 +53,12 @@ const sizePillClass = product.sizes[0] === 'Free Size'
 
   <!-- Image area -->
   <a href={detailUrl} class="prod-card__img-wrap" aria-label={`View details for ${product.name}`} tabindex="-1">
-    {product.image ? (
+    {(product.images?.[0] ?? product.image) ? (
       <img
-        src={product.image}
+        src={product.images?.[0] ?? product.image}
         alt={product.alt}
         class="prod-card__img"
         loading="lazy"
-        width="400"
-        height="300"
       />
     ) : (
       <div class="prod-card__placeholder" aria-hidden="true">
@@ -166,22 +164,33 @@ const sizePillClass = product.sizes[0] === 'Free Size'
     display: block;
     position: relative;
     flex-shrink: 0;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    background: linear-gradient(145deg, #F5E6D0, #EDD5B8);
   }
 
   .prod-card__img {
     width: 100%;
-    aspect-ratio: 4 / 3;
+    height: 100%;
+    aspect-ratio: 3 / 4;
     object-fit: cover;
     display: block;
   }
 
   .prod-card__placeholder {
-    background: linear-gradient(145deg, #F5E6D0, #EDD5B8);
-    aspect-ratio: 4 / 3;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     border-bottom: 0.5px solid rgba(42, 17, 36, 0.06);
+  }
+
+  .prod-card__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .prod-card__camera {
