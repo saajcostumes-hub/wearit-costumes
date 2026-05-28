@@ -331,12 +331,13 @@ const sizePillClass = product.sizes[0] === 'Free Size'
 
   .prod-card__btn-detail:hover { background: #3D1A36; }
 
-  /* WhatsApp — green outline, icon only on mobile */
+  /* WhatsApp — green outline, flex-1 to match View Details */
   .prod-card__btn-wa {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.3rem;
+    flex: 1;                          /* ← FIXED: now matches View Details */
     border: 2px solid #25D366;
     color: #25D366;
     font-size: 0.75rem;
