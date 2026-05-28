@@ -15,14 +15,15 @@
 //   "Book via WhatsApp" → enquiry link (no dates — uses generateEnquiryLink)
 // ─────────────────────────────────────────────
 
-import { generateEnquiryLink } from '../../lib/whatsapp.js';
+import { BUSINESS } from '../../lib/constants.js';
 import { formatPrice }         from '../../data/products.js';
 
 const { product, showCategory = true } = Astro.props;
 
 // Precompute in frontmatter — no logic in template
 const detailUrl  = `/catalog/${product.slug}`;
-const enquiryUrl = generateEnquiryLink({ productName: product.name });
+const enquiryMsg = encodeURIComponent(`Hi wearit! 🙏 I'm interested in renting *${product.name}*. Can you share availability and pricing?`);
+const enquiryUrl = `https://wa.me/${BUSINESS.whatsapp.waMeNumber}?text=${enquiryMsg}`;
 
 const priceDisplay   = formatPrice(product.price);
 const depositDisplay = formatPrice(product.deposit);
