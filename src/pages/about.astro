@@ -14,19 +14,19 @@ const telLink = `tel:+${String(BUSINESS.whatsapp.waMeNumber).replace(/\D/g,'')}`
 const values = [
   {
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>`,
-    color: '#E85D26',
+    color: '#D4AF37',
     title: 'Washed & Ironed',
     desc:  'Every costume is freshly laundered and pressed before handover. No exceptions.',
   },
   {
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
-    color: '#E85D26',
+    color: '#D4AF37',
     title: 'Proudly Local',
     desc:  'Based in Maan, Hinjewadi. We know this neighbourhood and we\'re invested in it.',
   },
   {
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
-    color: '#C9A84C',
+    color: '#D4AF37',
     title: 'Traditional Marathi',
     desc:  'Specializing in Nauwari sarees, Shivaji Maharaj sets — cultural costumes done right.',
   },
@@ -125,7 +125,7 @@ const values = [
           <!-- Location details -->
           <div class="location-details">
             <div class="location-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E85D26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               <div>
                 <p class="location-item__label">Pickup Location</p>
                 <p class="location-item__value">{BUSINESS.pickupLocation.area}, {BUSINESS.pickupLocation.city}<br/>PIN {BUSINESS.pickupLocation.pin}</p>
@@ -134,7 +134,7 @@ const values = [
             </div>
 
             <div class="location-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E85D26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
               <div>
                 <p class="location-item__label">Hours</p>
                 <p class="location-item__value">{BUSINESS.hours.weekdays.label}: {BUSINESS.hours.weekdays.open} – {BUSINESS.hours.weekdays.close}</p>
@@ -143,7 +143,7 @@ const values = [
             </div>
 
             <div class="location-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E85D26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/></svg>
               <div>
                 <p class="location-item__label">We serve</p>
                 <p class="location-item__value">{BUSINESS.serviceAreas.join(' · ')}</p>
@@ -193,12 +193,12 @@ const values = [
 </Layout>
 
 <style>
-  .about-page { background: #FDF6EE; min-height: 100vh; }
+  .about-page { background: #FAF8F5; min-height: 100vh; }
 
   /* ── Header ── */
   .page-header {
     background: #fff;
-    border-bottom: 0.5px solid rgba(26,26,46,0.08);
+    border-bottom: 0.5px solid rgba(42,17,36,0.08);
     padding: 1.5rem 0 1.25rem;
   }
 
@@ -215,23 +215,23 @@ const values = [
     align-items: center;
     gap: 0.375rem;
     font-size: 0.8125rem;
-    color: rgba(26,26,46,0.45);
+    color: rgba(42,17,36,0.45);
     text-decoration: none;
     margin-bottom: 0.875rem;
     transition: color 0.15s;
   }
 
-  .back-link:hover { color: #E85D26; }
+  .back-link:hover { color: #D4AF37; }
 
   .page-header__title {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: clamp(1.5rem, 4vw, 2.25rem);
     font-weight: 700;
-    color: #1A1A2E;
+    color: #2A1124;
     margin: 0 0 0.375rem;
   }
 
-  .page-header__sub { font-size: 0.9375rem; color: rgba(26,26,46,0.45); margin: 0; }
+  .page-header__sub { font-size: 0.9375rem; color: rgba(42,17,36,0.45); margin: 0; }
 
   /* ── Inner ── */
   .about-inner {
@@ -249,22 +249,22 @@ const values = [
     font-family: 'Playfair Display', Georgia, serif;
     font-size: clamp(1.25rem, 3vw, 1.625rem);
     font-weight: 700;
-    color: #1A1A2E;
+    color: #2A1124;
     margin: 0 0 0.25rem;
   }
 
-  .section-sub { font-size: 0.875rem; color: rgba(26,26,46,0.42); margin: 0 0 1.5rem; }
+  .section-sub { font-size: 0.875rem; color: rgba(42,17,36,0.42); margin: 0 0 1.5rem; }
 
   /* ── Founder card ── */
   .founder-card {
     background: #fff;
-    border: 0.5px solid rgba(26,26,46,0.08);
+    border: 0.5px solid rgba(42,17,36,0.08);
     border-radius: 1rem;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    box-shadow: 0 2px 12px rgba(26,26,46,0.06);
+    box-shadow: 0 2px 12px rgba(42,17,36,0.06);
   }
 
   @media (min-width: 640px) { .founder-card { flex-direction: row; gap: 1.5rem; } }
@@ -278,8 +278,8 @@ const values = [
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    color: rgba(26,26,46,0.3);
-    border: 2px solid rgba(232,93,38,0.15);
+    color: rgba(42,17,36,0.3);
+    border: 2px solid rgba(212,175,55,0.15);
   }
 
   .founder-card__content { display: flex; flex-direction: column; gap: 0.75rem; }
@@ -288,13 +288,13 @@ const values = [
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.25rem;
     font-weight: 700;
-    color: #1A1A2E;
+    color: #2A1124;
     margin: 0;
   }
 
   .founder-card__text {
     font-size: 0.9375rem;
-    color: rgba(26,26,46,0.65);
+    color: rgba(42,17,36,0.65);
     line-height: 1.75;
     margin: 0;
   }
@@ -302,7 +302,7 @@ const values = [
   .founder-card__sig {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #E85D26;
+    color: #D4AF37;
     margin: 0;
     padding-top: 0.25rem;
   }
@@ -318,13 +318,13 @@ const values = [
 
   .value-card {
     background: #fff;
-    border: 0.5px solid rgba(26,26,46,0.08);
+    border: 0.5px solid rgba(42,17,36,0.08);
     border-radius: 0.875rem;
     padding: 1.125rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    box-shadow: 0 1px 4px rgba(26,26,46,0.05);
+    box-shadow: 0 1px 4px rgba(42,17,36,0.05);
   }
 
   .value-card__icon { display: flex; }
@@ -332,13 +332,13 @@ const values = [
   .value-card__title {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #1A1A2E;
+    color: #2A1124;
     margin: 0;
   }
 
   .value-card__desc {
     font-size: 0.8125rem;
-    color: rgba(26,26,46,0.5);
+    color: rgba(42,17,36,0.5);
     line-height: 1.6;
     margin: 0;
   }
@@ -355,19 +355,19 @@ const values = [
   .map-wrap {
     border-radius: 0.875rem;
     overflow: hidden;
-    border: 0.5px solid rgba(26,26,46,0.08);
-    box-shadow: 0 2px 12px rgba(26,26,46,0.06);
+    border: 0.5px solid rgba(42,17,36,0.08);
+    box-shadow: 0 2px 12px rgba(42,17,36,0.06);
   }
 
   .location-details {
     background: #fff;
-    border: 0.5px solid rgba(26,26,46,0.08);
+    border: 0.5px solid rgba(42,17,36,0.08);
     border-radius: 0.875rem;
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    box-shadow: 0 1px 4px rgba(26,26,46,0.05);
+    box-shadow: 0 1px 4px rgba(42,17,36,0.05);
   }
 
   .location-item {
@@ -381,7 +381,7 @@ const values = [
   .location-item__label {
     font-size: 0.6875rem;
     font-weight: 600;
-    color: rgba(26,26,46,0.38);
+    color: rgba(42,17,36,0.38);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     margin: 0 0 0.25rem;
@@ -389,7 +389,7 @@ const values = [
 
   .location-item__value {
     font-size: 0.875rem;
-    color: #1A1A2E;
+    color: #2A1124;
     font-weight: 500;
     margin: 0 0 0.2rem;
     line-height: 1.5;
@@ -397,7 +397,7 @@ const values = [
 
   .location-item__hint {
     font-size: 0.75rem;
-    color: rgba(26,26,46,0.4);
+    color: rgba(42,17,36,0.4);
     margin: 0;
     line-height: 1.5;
   }
@@ -422,10 +422,10 @@ const values = [
     border: 0.5px solid transparent;
   }
 
-  .contact-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,26,46,0.1); }
+  .contact-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(42,17,36,0.1); }
 
   .contact-card--wa   { background: #25D366; }
-  .contact-card--call { background: #1A1A2E; }
+  .contact-card--call { background: #2A1124; }
 
   .contact-card__icon {
     width: 3rem;

@@ -1,4 +1,7 @@
 ---
+// @ts-nocheck
+// Footer.astro — Royal Palette update
+
 import { BUSINESS } from "../../lib/constants.js";
 
 const year         = new Date().getFullYear();
@@ -7,7 +10,7 @@ const phoneDisplay = BUSINESS.whatsapp.display;
 const telLink      = `tel:+${String(BUSINESS.whatsapp.waMeNumber).replace(/\D/g, '')}`;
 ---
 
-<footer style="background-color: var(--color-charcoal-700); color: white; margin-top: auto;">
+<footer style="background-color: #2A1124; color: white; margin-top: auto;">
 
   <!-- 3-column grid -->
   <div class="container-x py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -15,43 +18,43 @@ const telLink      = `tel:+${String(BUSINESS.whatsapp.waMeNumber).replace(/\D/g,
     <!-- Column 1: Brand block -->
     <div class="flex flex-col gap-3">
       <a href="/" class="font-display text-2xl font-semibold tracking-tight w-fit">
-        <span style="color: white;">wear</span><span style="color: var(--color-primary-400);">it</span>
+        <span style="color: #FAF8F5;">wear</span><span style="color: #D4AF37;">it</span>
       </a>
-      <p style="color: var(--color-charcoal-300); font-size: 0.875rem; line-height: 1.6;">
+      <p style="color: rgba(250,248,245,0.55); font-size: 0.875rem; line-height: 1.6;">
         Premium costume rentals — washed, ironed &amp; festival-ready.<br />
         Serving Hinjewadi, Wakad, Baner &amp; Balewadi.
       </p>
       <a href={waLink} target="_blank" rel="noopener noreferrer"
-         style="color: var(--color-whatsapp); font-size: 0.875rem; font-weight: 500;">
+         style="color: #25D366; font-size: 0.875rem; font-weight: 500;">
         💬 Chat on WhatsApp
       </a>
     </div>
 
     <!-- Column 2: Service areas -->
     <div class="flex flex-col gap-3">
-      <h3 style="color: var(--color-charcoal-400); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">
+      <h3 style="color: rgba(212,175,55,0.55); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">
         Service Areas
       </h3>
       <ul class="flex flex-col gap-1.5">
         {BUSINESS.serviceAreas.map((area) => (
-          <li style="color: var(--color-charcoal-300); font-size: 0.875rem;">{area}</li>
+          <li style="color: rgba(250,248,245,0.5); font-size: 0.875rem;">{area}</li>
         ))}
       </ul>
     </div>
 
     <!-- Column 3: Hours + pickup -->
     <div class="flex flex-col gap-3">
-      <h3 style="color: var(--color-charcoal-400); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">
+      <h3 style="color: rgba(212,175,55,0.55); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">
         Hours &amp; Pickup
       </h3>
-      <ul class="flex flex-col gap-1.5" style="color: var(--color-charcoal-300); font-size: 0.875rem;">
+      <ul class="flex flex-col gap-1.5" style="color: rgba(250,248,245,0.5); font-size: 0.875rem;">
         <li>{BUSINESS.hours.weekdays.label} · {BUSINESS.hours.weekdays.open} – {BUSINESS.hours.weekdays.close}</li>
         <li>{BUSINESS.hours.sunday.label} · {BUSINESS.hours.sunday.note}</li>
       </ul>
-      <div class="flex flex-col gap-1 mt-2" style="color: var(--color-charcoal-300); font-size: 0.875rem;">
+      <div class="flex flex-col gap-1 mt-2" style="color: rgba(250,248,245,0.5); font-size: 0.875rem;">
         <span>📍 {BUSINESS.pickupLocation.area}, {BUSINESS.pickupLocation.city} {BUSINESS.pickupLocation.pin}</span>
         <a href={waLink} target="_blank" rel="noopener noreferrer"
-           style="color: var(--color-charcoal-300);">
+           style="color: rgba(250,248,245,0.5);">
           📱 {BUSINESS.whatsapp.display}
         </a>
       </div>
@@ -59,11 +62,11 @@ const telLink      = `tel:+${String(BUSINESS.whatsapp.waMeNumber).replace(/\D/g,
 
   </div>
 
-  <!-- ── Contact Strip — WhatsApp + Phone ── -->
-  <div style="border-top: 1px solid var(--color-charcoal-600);">
+  <!-- Contact Strip -->
+  <div style="border-top: 1px solid rgba(212,175,55,0.15);">
     <div class="container-x" style="padding-top: 1.5rem; padding-bottom: 1.5rem;">
 
-      <p style="font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-charcoal-400); margin-bottom: 0.75rem; font-weight: 500;">
+      <p style="font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(212,175,55,0.45); margin-bottom: 0.75rem; font-weight: 500;">
         Get in touch
       </p>
 
@@ -97,22 +100,22 @@ const telLink      = `tel:+${String(BUSINESS.whatsapp.waMeNumber).replace(/\D/g,
 
       </div>
 
-      <p style="font-size: 0.6875rem; color: var(--color-charcoal-400); margin-top: 0.75rem;">
+      <p style="font-size: 0.6875rem; color: rgba(212,175,55,0.35); margin-top: 0.75rem;">
         Mon – Sat &nbsp;·&nbsp; 10am – 8pm
       </p>
 
     </div>
   </div>
 
-  <!-- Bottom bar: copyright + links -->
-  <div style="border-top: 1px solid var(--color-charcoal-600);">
+  <!-- Bottom bar -->
+  <div style="border-top: 1px solid rgba(212,175,55,0.1);">
     <div class="container-x py-4 flex flex-col md:flex-row items-center justify-between gap-2"
-         style="font-size: 0.75rem; color: var(--color-charcoal-400);">
+         style="font-size: 0.75rem; color: rgba(212,175,55,0.35);">
       <span>© {year} {BUSINESS.legalName}. All rights reserved.</span>
       <div class="flex items-center gap-4">
-        <a href="/policies" style="color: var(--color-charcoal-400);">Policies</a>
-        <a href="/faq"      style="color: var(--color-charcoal-400);">FAQ</a>
-        <a href="/contact"  style="color: var(--color-charcoal-400);">Contact</a>
+        <a href="/policies" style="color: rgba(212,175,55,0.35);">Policies</a>
+        <a href="/faq"      style="color: rgba(212,175,55,0.35);">FAQ</a>
+        <a href="/contact"  style="color: rgba(212,175,55,0.35);">Contact</a>
       </div>
     </div>
   </div>
@@ -126,13 +129,13 @@ const telLink      = `tel:+${String(BUSINESS.whatsapp.waMeNumber).replace(/\D/g,
     gap: 0.75rem;
     padding: 0.75rem;
     border-radius: 0.75rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 0.5px solid rgba(255, 255, 255, 0.09);
+    background: rgba(212, 175, 55, 0.06);
+    border: 0.5px solid rgba(212, 175, 55, 0.15);
     text-decoration: none;
     transition: background 0.15s ease;
   }
 
-  .contact-card:hover { background: rgba(255, 255, 255, 0.09); }
+  .contact-card:hover { background: rgba(212, 175, 55, 0.1); }
 
   .contact-card__icon {
     width: 2.25rem;
@@ -145,17 +148,17 @@ const telLink      = `tel:+${String(BUSINESS.whatsapp.waMeNumber).replace(/\D/g,
   }
 
   .contact-card__icon--wa   { background: #25D366; }
-  .contact-card__icon--call { background: rgba(232, 93, 38, 0.85); }
+  .contact-card__icon--call { background: rgba(212, 175, 55, 0.25); }
 
   .contact-card__label {
     font-size: 0.6875rem;
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(212, 175, 55, 0.4);
     margin-bottom: 0.125rem;
   }
 
   .contact-card__number {
     font-size: 0.9375rem;
     font-weight: 600;
-    color: #fff;
+    color: #FAF8F5;
   }
 </style>
