@@ -5,7 +5,8 @@
 import { BUSINESS } from "../../lib/constants.js";
 
 const year         = new Date().getFullYear();
-const waLink       = `https://wa.me/${BUSINESS.whatsapp.waMeNumber}`;
+const waIntroMsg   = encodeURIComponent("Hi wearit! I'd like to know more about your costume rentals.");
+const waLink       = `https://wa.me/${BUSINESS.whatsapp.waMeNumber}?text=${waIntroMsg}`;
 const phoneDisplay = BUSINESS.whatsapp.display;
 const telLink      = `tel:+${String(BUSINESS.whatsapp.waMeNumber).replace(/\D/g, '')}`;
 ---

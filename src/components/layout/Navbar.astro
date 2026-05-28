@@ -13,7 +13,8 @@ const navLinks = [
 ];
 
 const currentPath = Astro.url.pathname;
-const waLink = `https://wa.me/${BUSINESS.whatsapp.waMeNumber}`;
+const waIntroMsg = encodeURIComponent("Hi wearit! I'd like to know more about your costume rentals.");
+const waLink     = `https://wa.me/${BUSINESS.whatsapp.waMeNumber}?text=${waIntroMsg}`;
 ---
 
 <header class="sticky top-0 z-50" style="background: #2A1124; border-bottom: 0.5px solid rgba(212,175,55,0.15);">
