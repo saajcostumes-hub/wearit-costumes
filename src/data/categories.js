@@ -99,7 +99,7 @@ export const categoryTabs = [
       { id: 'kashtha-velvet-nauvari',  name: 'Velvet Nauvaari Kashtha',             sub: 'Deep Wine · Velvet',     badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kashtha-velvet-nauvari' },
       { id: 'kashtha-saree-2',         name: 'Purple Designer Brahmani Kashtha',      sub: 'Deep Purple · Zari',     badge: null,             badgeType: null,        slug: 'kashtha-saree-2' },
       { id: 'kashtha-saree-3',         name: 'Peach Designer Brahmani Kashtha',       sub: 'Peach · Scalloped border',badge: null,            badgeType: null,        slug: 'kashtha-saree-3' },
-      { id: 'kashtha-peach-brahmani',  name: 'The Peach Designer Brahmani Kashtha', sub: 'Peach · Stone Detailing', badge: 'Most Loved',     badgeType: 'exclusive', slug: 'kashtha-peach-brahmani' },
+      { id: 'kashtha-lilac-brahmani',  name: 'Lilac Designer Brahmani Kashtha',     sub: 'Lilac · Embellished',     badge: 'Most Loved',     badgeType: 'exclusive', slug: 'kashtha-lilac-brahmani' },
     ],
   },
   {
@@ -124,7 +124,10 @@ export const categoryTabs = [
     label:     'Shaadi Specials',
     isDefault: false,
     items: [
-      { id: 'shaadi-specials', name: 'Shaadi Specials', sub: 'Engagement · Mehndi · Sangeet', badge: 'New Arrival', badgeType: 'exclusive', slug: 'shaadi-specials' },
+      { id: 'nauwari-green-paithani',  name: 'Green Paithani Rajlakshmi Kashtha',  sub: 'Weddings · Festive',      badge: 'Only in wearit', badgeType: 'exclusive', slug: 'nauwari-green-paithani' },
+      { id: 'kashtha-lilac-brahmani',  name: 'Lilac Designer Brahmani Kashtha',     sub: 'Weddings · Partywear',    badge: 'Most Loved',     badgeType: 'exclusive', slug: 'kashtha-lilac-brahmani' },
+      { id: 'kashtha-saree-2',         name: 'Purple Designer Brahmani Kashtha',    sub: 'Weddings · Festive',      badge: null,             badgeType: null,        slug: 'kashtha-saree-2' },
+      { id: 'lehenga',                 name: 'Lehenga',                             sub: 'Garba · Celebrations',    badge: null,             badgeType: null,        slug: 'lehenga' },
     ],
   },
   {
