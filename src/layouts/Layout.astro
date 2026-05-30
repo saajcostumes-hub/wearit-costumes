@@ -18,7 +18,7 @@ const {
   noindex     = false,
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://wearit-costumes.vercel.app');
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://wearit.co.in');
 const ogImageURL   = new URL(ogImage, canonicalURL).toString();
 ---
 
@@ -27,6 +27,9 @@ const ogImageURL   = new URL(ogImage, canonicalURL).toString();
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="IeAX7jmdVvi8Qe4Dxz3GTJ0IHhGTu3Ca4n8_CpN-7To" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -63,7 +66,7 @@ const ogImageURL   = new URL(ogImage, canonicalURL).toString();
       "@type":          "LocalBusiness",
       "name":           "wearit",
       "description":    "Premium costume rentals in Hinjewadi, Wakad, Baner & Balewadi, Pune. Traditional Marathi costumes, kids fancy dress, festival wear.",
-      "url":            "https://wearit-costumes.vercel.app",
+      "url":            "https://wearit.co.in",
       "telephone":      "+91-88882-89846",
       "image":          ogImageURL,
       "priceRange":     "₹150 – ₹1,200",
@@ -104,7 +107,6 @@ const ogImageURL   = new URL(ogImage, canonicalURL).toString();
       }
     })} />
 
-    <!-- Astro meta -->
     <!-- PWA manifest -->
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#D4AF37" />
@@ -121,7 +123,6 @@ const ogImageURL   = new URL(ogImage, canonicalURL).toString();
     <!-- Astro meta -->
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Google Fonts -->
     <!-- Google Fonts — non-render-blocking load -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
