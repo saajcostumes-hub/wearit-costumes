@@ -14,7 +14,7 @@ import WhatsAppFAB  from '../components/shared/WhatsAppFAB.astro';
 const {
   title       = 'wearit — Premium Costume Rentals in Hinjewadi, Wakad & Baner, Pune',
   description = 'Premium costume rentals in Hinjewadi, Wakad, Baner & Balewadi, Pune. Traditional Marathi costumes, kids fancy dress, festival wear. Washed & ironed. 100% refundable deposit. Book via WhatsApp.',
-  ogImage     = '/og-default.jpg',
+  ogImage     = '/og-default.jpeg',                        // ← FIXED: .jpeg not .jpg
   noindex     = false,
 } = Astro.props;
 
@@ -31,9 +31,12 @@ const ogImageURL   = new URL(ogImage, canonicalURL).toString();
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="IeAX7jmdVvi8Qe4Dxz3GTJ0IHhGTu3Ca4n8_CpN-7To" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <!-- Favicon — all sizes -->
+    <link rel="icon" type="image/x-icon"  href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180"    href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Primary SEO -->
     <title>{title}</title>
@@ -107,8 +110,7 @@ const ogImageURL   = new URL(ogImage, canonicalURL).toString();
       }
     })} />
 
-    <!-- PWA manifest -->
-    <link rel="manifest" href="/manifest.json" />
+    <!-- PWA -->
     <meta name="theme-color" content="#D4AF37" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
