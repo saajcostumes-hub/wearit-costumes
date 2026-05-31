@@ -18,12 +18,12 @@ const chips = heroChips.map(chip => ({
   isFirst:   chip.id === defaultChip.id,
 }));
 
-// Carousel slides — real product photos
+// Carousel slides — updated labels to match new category names
 const carouselSlides = [
-  { label: 'Nauwari Sarees',  tag: 'Most Booked',       image: '/images/nauwari-saree-1.jpg',  href: '/catalog?category=nauwari' },
-  { label: 'Kashtha Sarees',  tag: 'Only in wearit',    image: '/images/kashta-saree-4.jpeg', href: '/catalog?category=kashtha' },
-  { label: 'Kashtha Sarees',  tag: 'Premium Collection', image: '/images/kashta-saree-2.jpeg', href: '/catalog?category=kashtha' },
-  { label: 'Nauwari Sarees',  tag: 'Festival Ready',    image: '/images/nauwari-saree-3.jpg',  href: '/catalog?category=nauwari' },
+  { label: 'Paithani Nauwari Kashta', tag: 'Most Booked',       image: '/images/nauwari-saree-1.jpg',  href: '/catalog?category=nauwari' },
+  { label: 'Velvet Nauwari Kashta',   tag: 'Only in wearit',    image: '/images/kashta-saree-1.jpeg',  href: '/catalog?category=velvet'  },
+  { label: 'Designer Nauwari Kashta', tag: 'Premium Collection', image: '/images/kashta-saree-4.jpeg', href: '/catalog?category=kashtha' },
+  { label: 'Paithani Nauwari Kashta', tag: 'Festival Ready',    image: '/images/nauwari-saree-3.jpg',  href: '/catalog?category=nauwari' },
 ];
 ---
 
@@ -154,24 +154,19 @@ const carouselSlides = [
   </div>
 </section>
 
-<!-- Carousel auto-swap JS — syncs mobile + desktop carousels -->
+<!-- Carousel auto-swap JS -->
 <script>
   // @ts-nocheck
-  // Both mobile + desktop carousels must stay in sync
-  // querySelectorAll('.carousel__slide') returns 8 slides (4×2) — wrong
-  // So we scope by carousel and update BOTH in goTo()
-
   const mSlides = Array.from(document.querySelectorAll('.hero__carousel--mobile  .carousel__slide'));
   const dSlides = Array.from(document.querySelectorAll('.hero__carousel--desktop .carousel__slide'));
   const mDots   = Array.from(document.querySelectorAll('.hero__carousel--mobile  .carousel__dot'));
   const dDots   = Array.from(document.querySelectorAll('.hero__carousel--desktop .carousel__dot'));
-  const total   = mSlides.length; // 4
+  const total   = mSlides.length;
 
   let current = 0;
   let timer   = null;
 
   function goTo(index) {
-    // Remove from both carousels at current
     mSlides[current]?.classList.remove('carousel__slide--active');
     dSlides[current]?.classList.remove('carousel__slide--active');
     mDots[current]?.classList.remove('carousel__dot--active');
@@ -179,7 +174,6 @@ const carouselSlides = [
 
     current = ((index % total) + total) % total;
 
-    // Add to both carousels at new current
     mSlides[current]?.classList.add('carousel__slide--active');
     dSlides[current]?.classList.add('carousel__slide--active');
     mDots[current]?.classList.add('carousel__dot--active');
@@ -189,7 +183,6 @@ const carouselSlides = [
   function startAuto() { timer = setInterval(() => goTo(current + 1), 2800); }
   function stopAuto()  { clearInterval(timer); }
 
-  // Dot clicks — use mobile dots as primary trigger
   mDots.forEach((dot, i) => {
     dot.addEventListener('click', () => { stopAuto(); goTo(i); startAuto(); });
   });
@@ -197,7 +190,6 @@ const carouselSlides = [
     dot.addEventListener('click', () => { stopAuto(); goTo(i); startAuto(); });
   });
 
-  // Touch swipe
   document.querySelectorAll('.hero__carousel').forEach(el => {
     let touchStart = 0;
     el.addEventListener('touchstart', e => { touchStart = e.changedTouches[0].screenX; }, { passive: true });
@@ -236,7 +228,13 @@ const carouselSlides = [
   .hero__inner { max-width: 1200px; margin-inline: auto; padding-inline: 1.25rem; }
 
   @media (min-width: 768px) {
-    .hero__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; padding-inline: 3rem; }
+    .hero__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;        /* ← FIXED: was 'center' — prevents image squish when chips wrap */
+      padding-inline: 3rem;
+    }
   }
 
   /* ── CAROUSEL ── */
@@ -252,7 +250,7 @@ const carouselSlides = [
   @media (min-width: 768px) {
     .hero__carousel {
       aspect-ratio: unset;
-      height: 420px;
+      height: 520px;             /* ← INCREASED: was 420px — gives image more presence */
       margin-bottom: 0;
       border-radius: 1.25rem;
     }
@@ -266,91 +264,55 @@ const carouselSlides = [
     .hero__carousel--desktop { display: block; }
   }
 
-  .carousel__track {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
+  .carousel__track { position: relative; width: 100%; height: 100%; }
 
   .carousel__slide {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: opacity 0.7s ease;
-    pointer-events: none;
-    text-decoration: none;
-    display: block;
+    position: absolute; inset: 0; overflow: hidden;
+    opacity: 0; transition: opacity 0.7s ease;
+    pointer-events: none; text-decoration: none; display: block;
   }
-
-  .carousel__slide--active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
+  .carousel__slide--active { opacity: 1; pointer-events: auto; }
 
   .carousel__slide-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
   }
 
   .carousel__slide-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 0.625rem;
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: space-between; padding: 0.625rem;
     background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 40%, rgba(0,0,0,0.35) 100%);
   }
 
   .carousel__label {
-    position: absolute;
-    bottom: 0.875rem;
-    left: 50%;
+    position: absolute; bottom: 0.875rem; left: 50%;
     transform: translateX(-50%);
-    background: rgba(42,17,36,0.68);
-    color: #fff;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.3rem 0.875rem;
-    border-radius: 9999px;
-    white-space: nowrap;
+    background: rgba(42,17,36,0.68); color: #fff;
+    font-size: 0.75rem; font-weight: 600;
+    padding: 0.3rem 0.875rem; border-radius: 9999px; white-space: nowrap;
   }
 
   .carousel__dots {
-    position: absolute;
-    bottom: 0.625rem;
-    right: 0.75rem;
-    display: flex;
-    gap: 0.375rem;
-    z-index: 2;
+    position: absolute; bottom: 0.625rem; right: 0.75rem;
+    display: flex; gap: 0.375rem; z-index: 2;
   }
 
   .carousel__dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
+    width: 7px; height: 7px; border-radius: 50%;
     background: rgba(255,255,255,0.45);
     border: none; cursor: pointer; padding: 0;
     transition: background 0.2s, transform 0.2s;
   }
-
   .carousel__dot--active { background: #D4AF37; transform: scale(1.3); }
 
-  /* stage elements */
   .stage__tag {
     position: absolute; top: 0.625rem; left: 0.625rem;
     background: rgba(255,255,255,0.92); border-radius: 0.5rem;
     padding: 0.25rem 0.5rem; font-size: 0.5625rem; font-weight: 700;
     color: #D4AF37; display: flex; align-items: center; gap: 0.3rem;
   }
-
-  .stage__camera { width: 2.25rem; height: 2.25rem; color: rgba(42,17,36,0.2); margin-bottom: 0.625rem; }
-  .stage__caption { font-size: 0.6875rem; color: rgba(42,17,36,0.28); text-align: center; }
 
   /* ── CONTENT ── */
   .hero__content { display: flex; flex-direction: column; gap: 0; }
@@ -367,7 +329,6 @@ const carouselSlides = [
     width: 6px; height: 6px; border-radius: 50%; background: #D4AF37; flex-shrink: 0;
     animation: badge-pulse 2s ease-in-out infinite;
   }
-
   @keyframes badge-pulse { 0%,100% { opacity:1; } 50% { opacity:0.35; } }
 
   .hero__headline {
@@ -375,16 +336,19 @@ const carouselSlides = [
     font-size: clamp(1.75rem, 5vw, 3rem); line-height: 1.17;
     color: #2A1124; margin-bottom: 0.5rem;
   }
-
   .hero__headline-location { display: block; color: #D4AF37; margin-top: 0.1em; }
 
   .hero__subline { font-size: 0.8125rem; color: rgba(42,17,36,0.5); line-height: 1.65; margin-bottom: 1.25rem; }
 
   .chip-label { font-size: 0.625rem; color: rgba(42,17,36,0.38); letter-spacing: 0.02em; margin-bottom: 0.5rem; }
 
+  /* ← FIXED: added flex-wrap: nowrap so chips scroll horizontally instead of wrapping to 2 rows */
   .chips {
-    display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 0.25rem;
-    scrollbar-width: none; -ms-overflow-style: none; margin-bottom: 1.125rem;
+    display: flex; gap: 0.4rem;
+    overflow-x: auto; padding-bottom: 0.25rem;
+    flex-wrap: nowrap;                /* ← KEY FIX */
+    scrollbar-width: none; -ms-overflow-style: none;
+    margin-bottom: 1.125rem;
   }
   .chips::-webkit-scrollbar { display: none; }
 
@@ -409,7 +373,6 @@ const carouselSlides = [
     text-decoration: none; margin-bottom: 1rem; min-height: 44px;
     transition: box-shadow 0.2s, transform 0.15s;
   }
-
   .glow-pill:hover { box-shadow: 0 8px 28px rgba(212,175,55,0.48), 0 3px 8px rgba(212,175,55,0.25); transform: translateY(-1px); }
   .glow-pill:active { transform: scale(0.98); }
 
@@ -417,7 +380,6 @@ const carouselSlides = [
     width: 1.625rem; height: 1.625rem; border-radius: 50%;
     background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
-
   .glow-pill__text { font-size: 0.875rem; font-weight: 700; color: #fff; flex: 1; text-align: center; }
 
   .trust-pills { display: flex; flex-wrap: wrap; gap: 0.375rem; list-style: none; padding: 0; margin: 0; }
