@@ -1,22 +1,18 @@
 // @ts-nocheck
 /**
  * products.js — wearit Phase 1 catalog
- * Sprint 4 update: Kashtha as separate category, specs on all products
- *
- * Category slugs (Phase 1):
- *   nauwari  → Nauwari Sarees
- *   kashtha  → Kashtha Sarees (4 individual products)
+ * Sprint 4 update: Kashtha restructured into 3 categories:
+ *   nauwari  → Paithani Nauwari Kashta (3 Paithani products)
+ *   kashtha  → Designer Nauwari Kashta (Purple, Peach, Lilac Brahmani)
+ *   velvet   → Velvet Nauwari Kashta (Velvet Nauvaari — NEW category)
  *   lehenga  → Lehenga
  *   maternity→ Maternity Gowns
  *   western  → Western & Themed
- *   shaadi   → Shaadi Specials (collection: nauwari + kashtha + lehenga)
- *
- * specs object on each product (shown as highlighted card on detail page):
- *   sareeName, fabric, work, color, occasion, type
+ *   shaadi   → Shaadi Specials (collection: nauwari + kashtha + velvet + lehenga)
  */
 
 // ─────────────────────────────────────────────
-// NAUWARI SAREES (2 products — kashta moved to its own category)
+// PAITHANI NAUWARI KASHTA (3 products)
 // ─────────────────────────────────────────────
 
 const nauwariProducts = [
@@ -36,7 +32,7 @@ const nauwariProducts = [
       work:      'Traditional Zari Border with authentic Paithani motifs (royal gold-and-orange border detailing)',
       color:     'Emerald Green (with contrasting golden-cream embellished blouse)',
       occasion:  'Weddings | Festive | Gudi Padwa | Cultural Programs',
-      type:      'Rajlakshmi Kashtha (Nauwari / 9-yard) Saree',
+      type:      'Paithani Nauwari Kashta (9-yard) Saree',
     },
     tags:     ['nauwari', 'paithani', 'green', 'rajlakshmi', 'kashtha', '9-yard', 'zari', 'wedding', 'gudi padwa'],
     badge:    'Only in wearit',
@@ -64,7 +60,7 @@ const nauwariProducts = [
       work:      'Traditional Zari Border with signature Paithani pallu motifs (classic peacock/floral embroidery)',
       color:     'Deep Violet / Royal Purple (with contrasting golden-cream embellished blouse)',
       occasion:  'Weddings | Festive | Gudi Padwa | Cultural Programs',
-      type:      'Rajlakshmi Kashtha (Nauwari / 9-yard) Saree',
+      type:      'Paithani Nauwari Kashta (9-yard) Saree',
     },
     tags:     ['nauwari', 'paithani', 'violet', 'purple', 'rajlakshmi', 'kashtha', '9-yard', 'peacock', 'wedding'],
     badge:    null,
@@ -92,7 +88,7 @@ const nauwariProducts = [
       work:      'Traditional Zari Border with authentic Paithani peacock motifs and rich pallu work',
       color:     'Royal Blue (with contrasting rich red/pink embroidered blouse)',
       occasion:  'Weddings | Festive | Gudi Padwa | Cultural Programs',
-      type:      'Rajlakshmi Kastha (Nauwari / 9-yard) Saree',
+      type:      'Paithani Nauwari Kashta (9-yard) Saree',
     },
     tags:     ['nauwari', 'paithani', 'blue', 'royal blue', 'rajlakshmi', 'kastha', '9-yard', 'peacock', 'wedding'],
     badge:    null,
@@ -107,17 +103,15 @@ const nauwariProducts = [
 ];
 
 // ─────────────────────────────────────────────
-// KASHTHA SAREES (4 individual products — one per saree)
-// Each photo = one unique saree listing
-// Update name/specs per saree when details available
+// VELVET NAUWARI KASHTA (1 product — NEW category)
 // ─────────────────────────────────────────────
 
-const kashthaProducts = [
+const velvetProducts = [
   {
     id:       'kashtha-velvet-nauvari',
     name:     'Velvet Nauvaari Kashtha',
     slug:     'kashtha-velvet-nauvari',
-    category: 'kashtha',
+    category: 'velvet',
     sizes:    ['Free Size'],
     sizeType: 'freesize',
     price:    450,
@@ -129,9 +123,9 @@ const kashthaProducts = [
       work:      'Embroidery Work',
       color:     'Deep Wine / Maroon',
       occasion:  'Festive | Cultural Programs | Ganesh Chaturthi',
-      type:      'Kashtha Saree',
+      type:      'Velvet Nauwari Kashta',
     },
-    tags:     ['kashtha', 'velvet', 'nauvari', 'maharashtrian', 'embroidery', 'festive'],
+    tags:     ['velvet', 'nauvari', 'kashtha', 'maharashtrian', 'embroidery', 'festive'],
     badge:    'Only in wearit',
     badgeType:'exclusive',
     image:    null,
@@ -141,6 +135,13 @@ const kashthaProducts = [
     featured: true,
     phase:    1,
   },
+];
+
+// ─────────────────────────────────────────────
+// DESIGNER NAUWARI KASHTA (3 products — Brahmani series)
+// ─────────────────────────────────────────────
+
+const kashthaProducts = [
   {
     id:       'kashtha-saree-2',
     name:     'Purple Designer Brahmani Kashtha',
@@ -157,7 +158,7 @@ const kashthaProducts = [
       work:      'Heavy Embroidery & Zari Work',
       color:     'Deep Purple (with contrasting red blouse)',
       occasion:  'Weddings | Festive | Cultural Programs',
-      type:      'Kashtha Saree',
+      type:      'Designer Nauwari Kashta',
     },
     tags:     ['kashtha', 'purple', 'brahmani', 'silk', 'zari', 'embroidery', 'wedding', 'festive'],
     badge:    null,
@@ -165,7 +166,7 @@ const kashthaProducts = [
     image:    null,
     images:   ['/images/kashta-saree-2.jpeg'],
     colors:   [],
-    alt:      'Designer Brahmani Kashtha saree — wearit premium rental, Hinjewadi Pune',
+    alt:      'Purple Designer Brahmani Kashtha saree — wearit premium rental, Hinjewadi Pune',
     featured: false,
     phase:    1,
   },
@@ -185,7 +186,7 @@ const kashthaProducts = [
       work:      'Embroidery Work with intricate scalloped borders',
       color:     'Peach (with contrasting deep red/maroon velvet blouse)',
       occasion:  'Festive | Weddings | Cultural Programs',
-      type:      'Kashtha Saree',
+      type:      'Designer Nauwari Kashta',
     },
     tags:     ['kashtha', 'peach', 'brahmani', 'embroidery', 'scalloped border', 'wedding', 'festive'],
     badge:    null,
@@ -193,7 +194,7 @@ const kashthaProducts = [
     image:    null,
     images:   ['/images/kashta-saree-3.jpeg'],
     colors:   [],
-    alt:      'Designer Kashtha saree — wearit premium rental, Hinjewadi Pune',
+    alt:      'Peach Designer Brahmani Kashtha saree — wearit premium rental, Hinjewadi Pune',
     featured: false,
     phase:    1,
   },
@@ -213,7 +214,7 @@ const kashthaProducts = [
       work:      'Rich Embroidery with heavy embellished borders',
       color:     'Lilac / Light Mauve (with contrasting deep maroon/wine blouse)',
       occasion:  'Festive | Weddings | Cultural Programs',
-      type:      'Kashtha Saree',
+      type:      'Designer Nauwari Kashta',
     },
     tags:     ['kashtha', 'lilac', 'mauve', 'brahmani', 'embroidery', 'embellished', 'wedding', 'festive'],
     badge:    'Most Loved',
@@ -221,7 +222,7 @@ const kashthaProducts = [
     image:    null,
     images:   ['/images/kashta-saree-4.jpeg'],
     colors:   [],
-    alt:      'Peach Designer Brahmani Kashtha saree — wearit premium rental, Hinjewadi Pune',
+    alt:      'Lilac Designer Brahmani Kashtha saree — wearit premium rental, Hinjewadi Pune',
     featured: true,
     phase:    1,
   },
@@ -361,9 +362,8 @@ const westernProducts = [
 ];
 
 // NOTE: Shaadi Specials is a COLLECTION tab (not a product category).
-// When "Shaadi Specials" is selected in catalog, it shows:
-//   nauwariProducts + kashthaProducts + lehengaProducts
-// Filter logic is handled in catalog.astro
+// Shows: nauwariProducts + kashthaProducts + velvetProducts + lehengaProducts
+// Filter logic handled in catalog.astro
 
 
 // ═════════════════════════════════════════════
@@ -380,6 +380,7 @@ const westernProducts = [
 
 export const allProducts = [
   ...nauwariProducts,
+  ...velvetProducts,
   ...kashthaProducts,
   ...lehengaProducts,
   ...maternityProducts,
@@ -390,6 +391,7 @@ export const featuredProducts = allProducts.filter(p => p.featured);
 
 export const productsByCategory = {
   nauwari:   nauwariProducts,
+  velvet:    velvetProducts,
   kashtha:   kashthaProducts,
   lehenga:   lehengaProducts,
   maternity: maternityProducts,
@@ -402,9 +404,9 @@ export function getProductBySlug(slug) {
 
 export function filterProducts({ category = 'all' } = {}) {
   if (category === 'all') return allProducts;
-  // Shaadi = collection of nauwari + kashtha + lehenga
+  // Shaadi = collection of nauwari + velvet + kashtha + lehenga
   if (category === 'shaadi') return allProducts.filter(p =>
-    ['nauwari', 'kashtha', 'lehenga'].includes(p.category)
+    ['nauwari', 'velvet', 'kashtha', 'lehenga'].includes(p.category)
   );
   return allProducts.filter(p => p.category === category);
 }

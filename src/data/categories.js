@@ -1,8 +1,10 @@
 /**
  * categories.js — wearit Phase 1
  * ─────────────────────────────────────────────
- * Sprint 4 update: 5 women's categories + Kids coming soon
- * Traditional Marathi → Phase 2 (commented out below)
+ * Sprint 4 update: Restructured Nauwari categories
+ *   nauwari  → Paithani Nauwari Kashta
+ *   kashtha  → Designer Nauwari Kashta (Brahmani — Purple, Peach, Lilac)
+ *   velvet   → Velvet Nauwari Kashta (NEW — Velvet Nauvaari)
  * ─────────────────────────────────────────────
  */
 
@@ -14,19 +16,27 @@
 export const heroChips = [
   {
     id:          'nauwari-saree',
-    label:       'Nauwari Saree',
+    label:       'Paithani Nauwari Kashta',
     isWomens:    true,
     categoryId:  'nauwari',
     catalogSlug: 'nauwari-green-paithani',
-    btnLabel:    'Browse Nauwari Sarees',
+    btnLabel:    'Browse Paithani Nauwari Kashta',
   },
   {
     id:          'kashtha',
-    label:       'Kashtha Sarees',
+    label:       'Designer Nauwari Kashta',
     isWomens:    true,
     categoryId:  'kashtha',
+    catalogSlug: 'kashtha-saree-2',
+    btnLabel:    'Browse Designer Nauwari Kashta',
+  },
+  {
+    id:          'velvet',
+    label:       'Velvet Nauwari Kashta',
+    isWomens:    true,
+    categoryId:  'velvet',
     catalogSlug: 'kashtha-velvet-nauvari',
-    btnLabel:    'Browse Kashtha Sarees',
+    btnLabel:    'Browse Velvet Nauwari Kashta',
   },
   {
     id:          'lehenga',
@@ -62,17 +72,6 @@ export const heroChips = [
   },
 ];
 
-// Kids chip — shown as "Coming Soon" in HeroSection
-// Uncomment and add to heroChips array when Phase 2 is ready
-// {
-//   id:         'kids',
-//   label:      'Kids Fancy Dress',
-//   isWomens:   false,
-//   categoryId: 'kids',
-//   catalogSlug:'kids-fancy-dress-mixed',
-//   btnLabel:   'Browse Kids Fancy Dress',
-// }
-
 export const defaultChipId = heroChips[0].id;
 
 
@@ -83,7 +82,7 @@ export const defaultChipId = heroChips[0].id;
 export const categoryTabs = [
   {
     id:        'nauwari',
-    label:     'Nauwari Sarees',
+    label:     'Paithani Nauwari Kashta',
     isDefault: false,
     items: [
       { id: 'nauwari-green-paithani',  name: 'Green Paithani Rajlakshmi Kashtha',  sub: 'Emerald Green · Paithani Silk', badge: 'Only in wearit', badgeType: 'exclusive', slug: 'nauwari-green-paithani' },
@@ -93,13 +92,20 @@ export const categoryTabs = [
   },
   {
     id:        'kashtha',
-    label:     'Kashtha Sarees',
+    label:     'Designer Nauwari Kashta',
     isDefault: false,
     items: [
-      { id: 'kashtha-velvet-nauvari',  name: 'Velvet Nauvaari Kashtha',             sub: 'Deep Wine · Velvet',     badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kashtha-velvet-nauvari' },
-      { id: 'kashtha-saree-2',         name: 'Purple Designer Brahmani Kashtha',      sub: 'Deep Purple · Zari',     badge: null,             badgeType: null,        slug: 'kashtha-saree-2' },
-      { id: 'kashtha-saree-3',         name: 'Peach Designer Brahmani Kashtha',       sub: 'Peach · Scalloped border',badge: null,            badgeType: null,        slug: 'kashtha-saree-3' },
-      { id: 'kashtha-lilac-brahmani',  name: 'Lilac Designer Brahmani Kashtha',     sub: 'Lilac · Embellished',     badge: 'Most Loved',     badgeType: 'exclusive', slug: 'kashtha-lilac-brahmani' },
+      { id: 'kashtha-saree-2',         name: 'Purple Designer Brahmani Kashtha',      sub: 'Deep Purple · Zari',           badge: null,         badgeType: null,        slug: 'kashtha-saree-2' },
+      { id: 'kashtha-saree-3',         name: 'Peach Designer Brahmani Kashtha',       sub: 'Peach · Scalloped border',     badge: null,         badgeType: null,        slug: 'kashtha-saree-3' },
+      { id: 'kashtha-lilac-brahmani',  name: 'Lilac Designer Brahmani Kashtha',       sub: 'Lilac · Embellished',          badge: 'Most Loved', badgeType: 'exclusive', slug: 'kashtha-lilac-brahmani' },
+    ],
+  },
+  {
+    id:        'velvet',
+    label:     'Velvet Nauwari Kashta',
+    isDefault: false,
+    items: [
+      { id: 'kashtha-velvet-nauvari', name: 'Velvet Nauvaari Kashtha', sub: 'Deep Wine · Velvet · Embroidery', badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kashtha-velvet-nauvari' },
     ],
   },
   {
@@ -107,8 +113,8 @@ export const categoryTabs = [
     label:     'Lehenga',
     isDefault: false,
     items: [
-      { id: 'lehenga',              name: 'Lehenga',              sub: 'Festive · Celebrations', badge: null, badgeType: null, slug: 'lehenga' },
-      { id: 'navratri-chaniya-choli', name: 'Navratri Chaniya Choli', sub: 'Garba · Dandiya',  badge: null, badgeType: null, slug: 'navratri-chaniya-choli' },
+      { id: 'lehenga',                name: 'Lehenga',               sub: 'Festive · Celebrations', badge: null, badgeType: null, slug: 'lehenga' },
+      { id: 'navratri-chaniya-choli', name: 'Navratri Chaniya Choli', sub: 'Garba · Dandiya',        badge: null, badgeType: null, slug: 'navratri-chaniya-choli' },
     ],
   },
   {
@@ -124,10 +130,11 @@ export const categoryTabs = [
     label:     'Shaadi Specials',
     isDefault: false,
     items: [
-      { id: 'nauwari-green-paithani',  name: 'Green Paithani Rajlakshmi Kashtha',  sub: 'Weddings · Festive',      badge: 'Only in wearit', badgeType: 'exclusive', slug: 'nauwari-green-paithani' },
-      { id: 'kashtha-lilac-brahmani',  name: 'Lilac Designer Brahmani Kashtha',     sub: 'Weddings · Partywear',    badge: 'Most Loved',     badgeType: 'exclusive', slug: 'kashtha-lilac-brahmani' },
-      { id: 'kashtha-saree-2',         name: 'Purple Designer Brahmani Kashtha',    sub: 'Weddings · Festive',      badge: null,             badgeType: null,        slug: 'kashtha-saree-2' },
-      { id: 'lehenga',                 name: 'Lehenga',                             sub: 'Garba · Celebrations',    badge: null,             badgeType: null,        slug: 'lehenga' },
+      { id: 'nauwari-green-paithani',  name: 'Green Paithani Rajlakshmi Kashtha',  sub: 'Weddings · Festive',   badge: 'Only in wearit', badgeType: 'exclusive', slug: 'nauwari-green-paithani' },
+      { id: 'kashtha-lilac-brahmani',  name: 'Lilac Designer Brahmani Kashtha',    sub: 'Weddings · Partywear', badge: 'Most Loved',     badgeType: 'exclusive', slug: 'kashtha-lilac-brahmani' },
+      { id: 'kashtha-velvet-nauvari',  name: 'Velvet Nauvaari Kashtha',            sub: 'Weddings · Festive',   badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kashtha-velvet-nauvari' },
+      { id: 'kashtha-saree-2',         name: 'Purple Designer Brahmani Kashtha',   sub: 'Weddings · Festive',   badge: null,             badgeType: null,        slug: 'kashtha-saree-2' },
+      { id: 'lehenga',                 name: 'Lehenga',                            sub: 'Garba · Celebrations', badge: null,             badgeType: null,        slug: 'lehenga' },
     ],
   },
   {
@@ -167,5 +174,5 @@ export const festiveBanner = {
   title:           'Ganesh Chaturthi 2026',
   urgency:         'Nauwari Saree Collection available — only 8 sets left. Pre-book now to secure your size.',
   ctaLabel:        'Pre-Book via WhatsApp',
-  whatsappMessage: "Hi! I'd like to pre-book a Nauwari Saree for Ganesh Chaturthi 2026. Can you share size availability and pricing? \uD83D\uDE4F",
+  whatsappMessage: "Hi! I'd like to pre-book a Nauwari Saree for Ganesh Chaturthi 2026. Can you share size availability and pricing? 🙏",
 };
