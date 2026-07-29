@@ -4,7 +4,8 @@
  * Sprint 4 update: Restructured Nauwari categories
  *   nauwari  → Paithani Nauwari Kashta
  *   kashtha  → Designer Nauwari Kashta (Brahmani — Purple, Peach, Lilac)
- *   velvet   → Velvet Nauwari Kashta (NEW — Velvet Nauvaari)
+ *   velvet   → Velvet Nauwari Kashta (Velvet Nauvaari)
+ *   kids     → Kids Fancy Dress (NEW — real tab, replaces "Coming Soon")
  * ─────────────────────────────────────────────
  */
 
@@ -53,6 +54,14 @@ export const heroChips = [
     categoryId:  'maternity',
     catalogSlug: 'maternity-gown',
     btnLabel:    'Browse Maternity Gowns',
+  },
+  {
+    id:          'kids',
+    label:       'Kids Fancy Dress',
+    isWomens:    false,
+    categoryId:  'kids',
+    catalogSlug: 'kids-fancy-dress',
+    btnLabel:    'Browse Kids Fancy Dress',
   },
   {
     id:          'shaadi',
@@ -126,6 +135,15 @@ export const categoryTabs = [
     ],
   },
   {
+    id:        'kids',
+    label:     'Kids Fancy Dress',
+    isDefault: false,
+    // ⬇ PENDING: items will be filled once photos + product names arrive.
+    // Structure to follow (copy this pattern per costume):
+    // { id: 'kids-slug', name: 'Costume Name', sub: 'Age group · Theme', badge: 'New Arrival', badgeType: 'exclusive', slug: 'kids-slug' },
+    items: [],
+  },
+  {
     id:        'shaadi',
     label:     'Shaadi Specials',
     isDefault: false,
@@ -153,13 +171,6 @@ export const categoryTabs = [
 //   items: [
 //     { id: 'shivaji-adult', name: 'Shivaji Maharaj Set', sub: 'Kids + Adult', badge: 'Most Booked', badgeType: 'exclusive', slug: 'shivaji-set-adult' },
 //     { id: 'mawla', name: 'Mawla Warrior', sub: 'Full set', badge: null, badgeType: null, slug: 'mawla-warrior' },
-//   ],
-// },
-// {
-//   id: 'kids', label: 'Kids Fancy Dress', isDefault: false,
-//   items: [
-//     { id: 'kids-mixed', name: 'Fancy Dress Mixed', sub: 'Animals · Fruits', badge: null, badgeType: null, slug: 'kids-fancy-dress-mixed' },
-//     { id: 'national-leaders', name: 'National Leaders', sub: 'Gandhi · Nehru', badge: null, badgeType: null, slug: 'national-leaders' },
 //   ],
 // },
 

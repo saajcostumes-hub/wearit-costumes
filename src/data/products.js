@@ -1,12 +1,13 @@
 // @ts-nocheck
 /**
  * products.js — wearit Phase 1 catalog
- * Sprint 4 update: Kashtha restructured into 3 categories:
+ * Sprint 4 update: Kashtha restructured into 3 categories + Kids added:
  *   nauwari  → Paithani Nauwari Kashta (3 Paithani products)
  *   kashtha  → Designer Nauwari Kashta (Purple, Peach, Lilac Brahmani)
- *   velvet   → Velvet Nauwari Kashta (Velvet Nauvaari — NEW category)
+ *   velvet   → Velvet Nauwari Kashta (Velvet Nauvaari)
  *   lehenga  → Lehenga
  *   maternity→ Maternity Gowns
+ *   kids     → Kids Fancy Dress (NEW — empty, pending photos)
  *   western  → Western & Themed
  *   shaadi   → Shaadi Specials (collection: nauwari + kashtha + velvet + lehenga)
  */
@@ -103,7 +104,7 @@ const nauwariProducts = [
 ];
 
 // ─────────────────────────────────────────────
-// VELVET NAUWARI KASHTA (1 product — NEW category)
+// VELVET NAUWARI KASHTA (1 product)
 // ─────────────────────────────────────────────
 
 const velvetProducts = [
@@ -327,6 +328,43 @@ const maternityProducts = [
 ];
 
 // ─────────────────────────────────────────────
+// KIDS FANCY DRESS (NEW — pending photos & names)
+// ─────────────────────────────────────────────
+// ⬇ PENDING: Add one object per costume below, following this template:
+// {
+//   id:       'kids-<slug>',
+//   name:     '<Costume Name>',
+//   slug:     'kids-<slug>',
+//   category: 'kids',
+//   sizes:    ['2-4 yrs', '5-7 yrs', '8-10 yrs'],   // or ['Free Size'] if one-size
+//   sizeType: 'age',                                 // or 'freesize'
+//   price:    300,
+//   deposit:  600,
+//   description: '...',
+//   specs: {
+//     sareeName: '<Costume Name>',
+//     fabric:    '...',
+//     work:      '...',
+//     color:     '...',
+//     occasion:  'School Annual Day | Fancy Dress Competition | Birthday',
+//     type:      'Kids Fancy Dress',
+//   },
+//   tags:     ['kids', 'fancy dress', ...],
+//   badge:    'New Arrival',
+//   badgeType:'exclusive',
+//   image:    null,
+//   images:   ['/images/kids-<slug>-1.jpg'],
+//   colors:   [],
+//   alt:      '<Costume Name> — wearit premium rental, Hinjewadi Pune',
+//   featured: false,
+//   phase:    1,
+// },
+
+const kidsProducts = [
+  // Products will be added here once photos + names are shared
+];
+
+// ─────────────────────────────────────────────
 // WESTERN & THEMED
 // ─────────────────────────────────────────────
 
@@ -363,6 +401,7 @@ const westernProducts = [
 
 // NOTE: Shaadi Specials is a COLLECTION tab (not a product category).
 // Shows: nauwariProducts + kashthaProducts + velvetProducts + lehengaProducts
+// Kids is NOT part of Shaadi Specials (different occasion, different audience).
 // Filter logic handled in catalog.astro
 
 
@@ -371,7 +410,6 @@ const westernProducts = [
 // ═════════════════════════════════════════════
 
 // const traditionalProducts = [ ... ];
-// const kidsProducts = [ ... ];
 
 
 // ─────────────────────────────────────────────
@@ -384,6 +422,7 @@ export const allProducts = [
   ...kashthaProducts,
   ...lehengaProducts,
   ...maternityProducts,
+  ...kidsProducts,
   ...westernProducts,
 ];
 
@@ -395,6 +434,7 @@ export const productsByCategory = {
   kashtha:   kashthaProducts,
   lehenga:   lehengaProducts,
   maternity: maternityProducts,
+  kids:      kidsProducts,
   western:   westernProducts,
 };
 
