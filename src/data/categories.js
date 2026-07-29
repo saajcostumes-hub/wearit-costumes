@@ -5,16 +5,25 @@
  *   nauwari  → Paithani Nauwari Kashta
  *   kashtha  → Designer Nauwari Kashta (Brahmani — Purple, Peach, Lilac)
  *   velvet   → Velvet Nauwari Kashta (Velvet Nauvaari)
- *   kids     → Kids Fancy Dress (NEW — real tab, replaces "Coming Soon")
+ *   kids     → Kids Fancy Dress (moved to FIRST position — highest demand)
  * ─────────────────────────────────────────────
  */
 
 
 // ─────────────────────────────────────────────
 // 1. HERO CHIPS (Phase 1)
+// Kids moved to position 0 — now the default active chip on homepage
 // ─────────────────────────────────────────────
 
 export const heroChips = [
+  {
+    id:          'kids',
+    label:       'Kids Fancy Dress',
+    isWomens:    false,
+    categoryId:  'kids',
+    catalogSlug: 'kids-nauvari-kashta-saree-1',
+    btnLabel:    'Browse Kids Fancy Dress',
+  },
   {
     id:          'nauwari-saree',
     label:       'Paithani Nauwari Kashta',
@@ -56,14 +65,6 @@ export const heroChips = [
     btnLabel:    'Browse Maternity Gowns',
   },
   {
-    id:          'kids',
-    label:       'Kids Fancy Dress',
-    isWomens:    false,
-    categoryId:  'kids',
-    catalogSlug: 'kids-fancy-dress',
-    btnLabel:    'Browse Kids Fancy Dress',
-  },
-  {
     id:          'shaadi',
     label:       'Shaadi Specials',
     isWomens:    true,
@@ -86,9 +87,21 @@ export const defaultChipId = heroChips[0].id;
 
 // ─────────────────────────────────────────────
 // 2. CATEGORY TABS (Phase 1 — catalog page)
+// Kids moved to position 0
 // ─────────────────────────────────────────────
 
 export const categoryTabs = [
+  {
+    id:        'kids',
+    label:     'Kids Fancy Dress',
+    isDefault: false,
+    items: [
+      { id: 'kids-combo-set-1',              name: 'Mom & Daughter Nauwari Combo',       sub: 'Matching Sets · Family',   badge: 'New Arrival', badgeType: 'exclusive', slug: 'kids-combo-set-1' },
+      { id: 'kids-varkari-set-1',            name: 'Little Varkari Pilgrim Set',          sub: 'Wari · Cultural',          badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kids-varkari-set-1' },
+      { id: 'kids-rakhumai-set-4',           name: 'Yellow Mirror-Work Festive Lehenga',  sub: 'Navratri · Garba',         badge: 'Most Loved',   badgeType: 'exclusive', slug: 'kids-rakhumai-set-4' },
+      { id: 'kids-nauvari-kashta-saree-1',   name: 'Red & Green Zari Kids Nauwari Kashta',sub: 'Ganesh Chaturthi · Festive', badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kids-nauvari-kashta-saree-1' },
+    ],
+  },
   {
     id:        'nauwari',
     label:     'Paithani Nauwari Kashta',
@@ -133,15 +146,6 @@ export const categoryTabs = [
     items: [
       { id: 'maternity-gown', name: 'Maternity Gown', sub: 'Photoshoot · Baby shower', badge: 'New Arrival', badgeType: 'exclusive', slug: 'maternity-gown' },
     ],
-  },
-  {
-    id:        'kids',
-    label:     'Kids Fancy Dress',
-    isDefault: false,
-    // ⬇ PENDING: items will be filled once photos + product names arrive.
-    // Structure to follow (copy this pattern per costume):
-    // { id: 'kids-slug', name: 'Costume Name', sub: 'Age group · Theme', badge: 'New Arrival', badgeType: 'exclusive', slug: 'kids-slug' },
-    items: [],
   },
   {
     id:        'shaadi',

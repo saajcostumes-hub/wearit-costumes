@@ -1,7 +1,7 @@
 ---
 // @ts-nocheck
 // src/pages/catalog.astro — Sprint 4 update
-// Phase 1: 6 women's categories + Kids Fancy Dress (now LIVE, not "coming soon")
+// Phase 1: Kids Fancy Dress moved to FIRST position (highest demand)
 // ─────────────────────────────────────────────
 
 import Layout      from '../layouts/Layout.astro';
@@ -12,12 +12,12 @@ const totalCount = allProducts.length;
 
 const categoryTabs = [
   { id: 'all',      label: 'All'                      },
+  { id: 'kids',     label: 'Kids Fancy Dress'         },
   { id: 'nauwari',  label: 'Paithani Nauwari Kashta'  },
   { id: 'kashtha',  label: 'Designer Nauwari Kashta'  },
   { id: 'velvet',   label: 'Velvet Nauwari Kashta'    },
   { id: 'lehenga',  label: 'Lehenga'                  },
   { id: 'maternity',label: 'Maternity Gowns'          },
-  { id: 'kids',     label: 'Kids Fancy Dress'         },
   { id: 'shaadi',   label: 'Shaadi Specials'          },
   { id: 'western',  label: 'Western & Themed'         },
 ];
@@ -25,7 +25,7 @@ const categoryTabs = [
 
 <Layout
   title="Costume Catalog — wearit, Hinjewadi Pune"
-  description="Rent costumes in Hinjewadi, Wakad, Baner & Balewadi Pune. Nauwari sarees, lehengas, maternity gowns, kids fancy dress & western themed outfits. Washed & ironed. Book via WhatsApp."
+  description="Rent costumes in Hinjewadi, Wakad, Baner & Balewadi Pune. Kids fancy dress, Nauwari sarees, lehengas, maternity gowns & western themed outfits. Washed & ironed. Book via WhatsApp."
 >
 
   <div class="catalog-page">
@@ -153,7 +153,7 @@ const categoryTabs = [
     });
   }
 
-  // URL param — e.g. /catalog?category=nauwari
+  // URL param — e.g. /catalog?category=kids
   const params   = new URLSearchParams(window.location.search);
   const catParam = params.get('category') ?? params.get('tab');
   if (catParam) {
