@@ -232,7 +232,7 @@ const carouselSlides = [
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 3rem;
-      align-items: start;        /* ← FIXED: was 'center' — prevents image squish when chips wrap */
+      align-items: start;
       padding-inline: 3rem;
     }
   }
@@ -250,7 +250,7 @@ const carouselSlides = [
   @media (min-width: 768px) {
     .hero__carousel {
       aspect-ratio: unset;
-      height: 520px;             /* ← INCREASED: was 420px — gives image more presence */
+      height: 520px;
       margin-bottom: 0;
       border-radius: 1.25rem;
     }
@@ -342,15 +342,11 @@ const carouselSlides = [
 
   .chip-label { font-size: 0.625rem; color: rgba(42,17,36,0.38); letter-spacing: 0.02em; margin-bottom: 0.5rem; }
 
-  /* ← FIXED: added flex-wrap: nowrap so chips scroll horizontally instead of wrapping to 2 rows */
+  /* ← Chips now wrap to next line instead of scrolling off-screen */
   .chips {
-    display: flex; gap: 0.4rem;
-    overflow-x: auto; padding-bottom: 0.25rem;
-    flex-wrap: nowrap;                /* ← KEY FIX */
-    scrollbar-width: none; -ms-overflow-style: none;
+    display: flex; gap: 0.4rem; flex-wrap: wrap;
     margin-bottom: 1.125rem;
   }
-  .chips::-webkit-scrollbar { display: none; }
 
   .chip {
     display: inline-flex; align-items: center; border-radius: 9999px;
