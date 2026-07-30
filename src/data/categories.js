@@ -62,7 +62,7 @@ export const heroChips = [
     label:       'Maternity Gowns',
     isWomens:    true,
     categoryId:  'maternity',
-    catalogSlug: 'maternity-gown',
+    catalogSlug: 'maternity-smoky-plum-grey-gown',
     btnLabel:    'Browse Maternity Gowns',
   },
   {
@@ -145,7 +145,11 @@ export const categoryTabs = [
     label:     'Maternity Gowns',
     isDefault: false,
     items: [
-      { id: 'maternity-gown', name: 'Maternity Gown', sub: 'Photoshoot · Baby shower', badge: 'New Arrival', badgeType: 'exclusive', slug: 'maternity-gown' },
+      { id: 'maternity-smoky-plum-grey-gown', name: 'Smoky Plum-Grey Basket-Weave Gown', sub: 'Photoshoot · Ethereal',  badge: 'New Arrival', badgeType: 'exclusive', slug: 'maternity-smoky-plum-grey-gown' },
+      { id: 'maternity-teal-ruffled-tulle-gown', name: 'Deep Teal Ruffled Tulle Gown',   sub: 'Photoshoot · Dramatic',  badge: null,          badgeType: null,        slug: 'maternity-teal-ruffled-tulle-gown' },
+      { id: 'maternity-rose-bloom-tulle-gown', name: 'Rose Bloom Coral Tulle Gown',       sub: 'Photoshoot · Romantic', badge: 'Most Loved',  badgeType: 'exclusive', slug: 'maternity-rose-bloom-tulle-gown' },
+      { id: 'maternity-wine-ruffled-cape-gown', name: 'Wine Ruffled Tulle Cape Gown',     sub: 'Photoshoot · Statement',badge: null,          badgeType: null,        slug: 'maternity-wine-ruffled-cape-gown' },
+      { id: 'maternity-red-satin-draped-gown', name: 'Crimson Red Satin Draped Gown',     sub: 'Photoshoot · Evening',  badge: null,          badgeType: null,        slug: 'maternity-red-satin-draped-gown' },
     ],
   },
   {
