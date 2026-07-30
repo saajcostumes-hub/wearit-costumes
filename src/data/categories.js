@@ -6,6 +6,7 @@
  *   kashtha  → Designer Nauwari Kashta (Brahmani — Purple, Peach, Lilac)
  *   velvet   → Velvet Nauwari Kashta (Velvet Nauvaari)
  *   kids     → Kids Fancy Dress (moved to FIRST position — highest demand)
+ *   lehenga  → real products added: Ivory Bridal + Navy Paithani
  * ─────────────────────────────────────────────
  */
 
@@ -53,7 +54,7 @@ export const heroChips = [
     label:       'Lehenga',
     isWomens:    true,
     categoryId:  'lehenga',
-    catalogSlug: 'lehenga',
+    catalogSlug: 'lehenga-ivory-bridal',
     btnLabel:    'Browse Lehengas',
   },
   {
@@ -77,7 +78,7 @@ export const heroChips = [
     label:       'Western & Themed',
     isWomens:    true,
     categoryId:  'western',
-    catalogSlug: 'western-themed',
+    catalogSlug: 'western-aubergine-velvet-gown',
     btnLabel:    'Browse Western & Themed',
   },
 ];
@@ -135,8 +136,8 @@ export const categoryTabs = [
     label:     'Lehenga',
     isDefault: false,
     items: [
-      { id: 'lehenga',                name: 'Lehenga',               sub: 'Festive · Celebrations', badge: null, badgeType: null, slug: 'lehenga' },
-      { id: 'navratri-chaniya-choli', name: 'Navratri Chaniya Choli', sub: 'Garba · Dandiya',        badge: null, badgeType: null, slug: 'navratri-chaniya-choli' },
+      { id: 'lehenga-ivory-bridal',  name: 'Ivory Gold Embroidered Net Lehenga', sub: 'Bridal · Reception',       badge: null, badgeType: null, slug: 'lehenga-ivory-bridal' },
+      { id: 'lehenga-navy-paithani', name: 'Navy Blue Paithani Zari Lehenga',    sub: 'Weddings · Festive',       badge: null, badgeType: null, slug: 'lehenga-navy-paithani' },
     ],
   },
   {
@@ -156,7 +157,7 @@ export const categoryTabs = [
       { id: 'kashtha-lilac-brahmani',  name: 'Lilac Designer Brahmani Kashtha',    sub: 'Weddings · Partywear', badge: 'Most Loved',     badgeType: 'exclusive', slug: 'kashtha-lilac-brahmani' },
       { id: 'kashtha-velvet-nauvari',  name: 'Velvet Nauvaari Kashtha',            sub: 'Weddings · Festive',   badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kashtha-velvet-nauvari' },
       { id: 'kashtha-saree-2',         name: 'Purple Designer Brahmani Kashtha',   sub: 'Weddings · Festive',   badge: null,             badgeType: null,        slug: 'kashtha-saree-2' },
-      { id: 'lehenga',                 name: 'Lehenga',                            sub: 'Garba · Celebrations', badge: null,             badgeType: null,        slug: 'lehenga' },
+      { id: 'lehenga-ivory-bridal',    name: 'Ivory Gold Embroidered Net Lehenga', sub: 'Bridal · Reception',   badge: null,             badgeType: null,        slug: 'lehenga-ivory-bridal' },
     ],
   },
   {
@@ -164,7 +165,11 @@ export const categoryTabs = [
     label:     'Western & Themed',
     isDefault: false,
     items: [
-      { id: 'western-themed', name: 'Western & Themed', sub: 'Halloween · Office · Parties', badge: 'New Arrival', badgeType: 'exclusive', slug: 'western-themed' },
+      { id: 'western-aubergine-velvet-gown',    name: 'Aubergine Velvet Slip Gown',           sub: 'Cocktail · Reception',   badge: 'New Arrival', badgeType: 'exclusive', slug: 'western-aubergine-velvet-gown' },
+      { id: 'western-navy-wrap-maxi-dress',      name: 'Navy Textured Wrap Maxi Dress',        sub: 'Evening · Office Party', badge: null,           badgeType: null,        slug: 'western-navy-wrap-maxi-dress' },
+      { id: 'western-maroon-ruffle-saree-gown',  name: 'Maroon Ruffle Pre-Draped Saree Gown',  sub: 'Reception · Fusion',     badge: 'Most Loved',   badgeType: 'exclusive', slug: 'western-maroon-ruffle-saree-gown' },
+      { id: 'western-navy-embroidered-net-saree',name: 'Navy Blue Embroidered Net Saree',      sub: 'Wedding · Reception',    badge: null,           badgeType: null,        slug: 'western-navy-embroidered-net-saree' },
+      { id: 'western-teal-satin-saree',          name: 'Teal Satin Saree with Embroidered Border', sub: 'Reception · Elegant', badge: null,        badgeType: null,        slug: 'western-teal-satin-saree' },
     ],
   },
 ];
