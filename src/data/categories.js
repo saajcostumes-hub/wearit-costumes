@@ -18,6 +18,14 @@
 
 export const heroChips = [
   {
+    id:          'lehenga',
+    label:       'Dandiya Special',
+    isWomens:    true,
+    categoryId:  'lehenga',
+    catalogSlug: 'lehenga-ivory-bridal',
+    btnLabel:    'Browse Dandiya Special',
+  },
+  {
     id:          'kids',
     label:       'Kids Fancy Dress',
     isWomens:    false,
@@ -48,14 +56,6 @@ export const heroChips = [
     categoryId:  'velvet',
     catalogSlug: 'kashtha-velvet-nauvari',
     btnLabel:    'Browse Velvet Nauwari Kashta',
-  },
-  {
-    id:          'lehenga',
-    label:       'Lehenga',
-    isWomens:    true,
-    categoryId:  'lehenga',
-    catalogSlug: 'lehenga-ivory-bridal',
-    btnLabel:    'Browse Lehengas',
   },
   {
     id:          'maternity',
@@ -93,6 +93,27 @@ export const defaultChipId = heroChips[0].id;
 
 export const categoryTabs = [
   {
+    id:        'lehenga',
+    label:     'Dandiya Special',
+    isDefault: false,
+    items: [
+      { id: 'lehenga-ivory-bridal',             name: 'Ivory Gold Embroidered Net Lehenga',         sub: 'Bridal · Reception',   badge: null,             badgeType: null,        slug: 'lehenga-ivory-bridal' },
+      { id: 'lehenga-navy-paithani',             name: 'Navy Blue Paithani Zari Lehenga',            sub: 'Weddings · Festive',   badge: null,             badgeType: null,        slug: 'lehenga-navy-paithani' },
+      { id: 'lehenga-tricolor-dandiya',          name: 'Vibrant Tri-Color Dandiya Lehenga Set',      sub: 'Dandiya · Garba',      badge: 'New Arrival',    badgeType: 'exclusive', slug: 'lehenga-tricolor-dandiya' },
+      { id: 'lehenga-multicolor-striped-dandiya',name: 'Multi-Color Striped Traditional Dandiya Lehenga', sub: 'Dandiya · Navratri', badge: null,        badgeType: null,        slug: 'lehenga-multicolor-striped-dandiya' },
+      { id: 'lehenga-red-black-mirrorwork',      name: 'Red & Black Mirror Work Dandiya Lehenga',    sub: 'Dandiya · Garba',      badge: null,             badgeType: null,        slug: 'lehenga-red-black-mirrorwork' },
+      { id: 'lehenga-white-lining-festive',      name: 'Elegant White Lining Festive Lehenga',       sub: 'Dandiya · Navratri',   badge: null,             badgeType: null,        slug: 'lehenga-white-lining-festive' },
+      { id: 'lehenga-designer-heavy-geometric',  name: 'Designer Heavy Dandiya Lehenga',             sub: 'Dandiya · Garba',      badge: 'Most Loved',     badgeType: 'exclusive', slug: 'lehenga-designer-heavy-geometric' },
+      { id: 'lehenga-multicolor-patchwork',      name: 'Multi-Color Patchwork Style Dandiya Lehenga',sub: 'Dandiya · Navratri',   badge: null,             badgeType: null,        slug: 'lehenga-multicolor-patchwork' },
+      { id: 'lehenga-patachitra-mustard',        name: 'Patachitra-Style Motif Printed Lehenga',     sub: 'Dandiya · Garba',      badge: null,             badgeType: null,        slug: 'lehenga-patachitra-mustard' },
+      { id: 'lehenga-pink-paisley-dupatta',      name: 'Pink Lehenga with Unique Black Festive Dupatta', sub: 'Dandiya · Navratri', badge: null,        badgeType: null,        slug: 'lehenga-pink-paisley-dupatta' },
+      { id: 'lehenga-black-mirrorwork-motif',    name: 'Black Mirror-Work Motif Dandiya Lehenga',    sub: 'Dandiya · Garba',      badge: 'Only in wearit', badgeType: 'exclusive', slug: 'lehenga-black-mirrorwork-motif' },
+      { id: 'lehenga-maroon-sequin-mirrorwork',  name: 'Maroon Sequin Lehenga with Heavy Mirror-Work Border', sub: 'Dandiya · Navratri', badge: null,   badgeType: null,        slug: 'lehenga-maroon-sequin-mirrorwork' },
+      { id: 'lehenga-white-wine-designer',       name: 'Premium Designer White & Wine Lehenga',      sub: 'Dandiya · Garba',      badge: 'New Arrival',    badgeType: 'exclusive', slug: 'lehenga-white-wine-designer' },
+      { id: 'lehenga-teal-orange-patchwork',     name: 'Teal & Orange Designer Patchwork Lehenga',   sub: 'Dandiya · Navratri',   badge: null,             badgeType: null,        slug: 'lehenga-teal-orange-patchwork' },
+    ],
+  },
+  {
     id:        'kids',
     label:     'Kids Fancy Dress',
     isDefault: false,
@@ -129,15 +150,6 @@ export const categoryTabs = [
     isDefault: false,
     items: [
       { id: 'kashtha-velvet-nauvari', name: 'Velvet Nauvaari Kashtha', sub: 'Deep Wine · Velvet · Embroidery', badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kashtha-velvet-nauvari' },
-    ],
-  },
-  {
-    id:        'lehenga',
-    label:     'Lehenga',
-    isDefault: false,
-    items: [
-      { id: 'lehenga-ivory-bridal',  name: 'Ivory Gold Embroidered Net Lehenga', sub: 'Bridal · Reception',       badge: null, badgeType: null, slug: 'lehenga-ivory-bridal' },
-      { id: 'lehenga-navy-paithani', name: 'Navy Blue Paithani Zari Lehenga',    sub: 'Weddings · Festive',       badge: null, badgeType: null, slug: 'lehenga-navy-paithani' },
     ],
   },
   {

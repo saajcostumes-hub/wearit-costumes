@@ -2,6 +2,7 @@
 // @ts-nocheck
 // src/pages/catalog.astro — Sprint 4 update
 // Phase 1: Kids Fancy Dress moved to FIRST position (highest demand)
+// Dandiya update: Lehenga renamed to "Dandiya Special" and moved to position 1 (right after All)
 // ─────────────────────────────────────────────
 
 import Layout      from '../layouts/Layout.astro';
@@ -12,11 +13,11 @@ const totalCount = allProducts.length;
 
 const categoryTabs = [
   { id: 'all',      label: 'All'                      },
+  { id: 'lehenga',  label: 'Dandiya Special'          },
   { id: 'kids',     label: 'Kids Fancy Dress'         },
   { id: 'nauwari',  label: 'Paithani Nauwari Kashta'  },
   { id: 'kashtha',  label: 'Designer Nauwari Kashta'  },
   { id: 'velvet',   label: 'Velvet Nauwari Kashta'    },
-  { id: 'lehenga',  label: 'Lehenga'                  },
   { id: 'maternity',label: 'Maternity Gowns'          },
   { id: 'shaadi',   label: 'Shaadi Specials'          },
   { id: 'western',  label: 'Western & Themed'         },
