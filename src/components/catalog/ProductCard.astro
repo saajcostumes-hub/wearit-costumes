@@ -29,15 +29,20 @@ const priceDisplay   = formatPrice(product.price);
 const depositDisplay = formatPrice(product.deposit);
 
 // Category label + colour precomputed
+// Labels are kept SHORT on purpose: the pill sits top-right on a narrow 2-column
+// mobile card and must not collide with the top-left product badge ("Only in wearit").
 const categoryMap = {
-  womens:      { label: "Women's",      colorClass: 'badge--gold'   },
-  nauwari:     { label: 'Nauwari Sarees', colorClass: 'badge--gold' },
-  lehenga:     { label: 'Lehenga',      colorClass: 'badge--gold'   },
-  maternity:   { label: 'Maternity Gowns', colorClass: 'badge--gold'},
-  shaadi:      { label: 'Shaadi Specials', colorClass: 'badge--gold'},
-  western:     { label: 'Western & Themed', colorClass: 'badge--gold'},
-  traditional: { label: 'Traditional',  colorClass: 'badge--orange' },
-  kids:        { label: 'Kids',          colorClass: 'badge--green'  },
+  womens:      { label: "Women's",          colorClass: 'badge--gold'   },
+  nauwari:     { label: 'Paithani',         colorClass: 'badge--gold'   },
+  kashtha:     { label: 'Designer',         colorClass: 'badge--gold'   },
+  velvet:      { label: 'Velvet',           colorClass: 'badge--gold'   },
+  lehenga:     { label: 'Lehenga',          colorClass: 'badge--gold'   },
+  jewellery:   { label: 'Jewellery',        colorClass: 'badge--gold'   },
+  maternity:   { label: 'Maternity',        colorClass: 'badge--gold'   },
+  shaadi:      { label: 'Shaadi Specials',  colorClass: 'badge--gold'   },
+  western:     { label: 'Western',          colorClass: 'badge--gold'   },
+  traditional: { label: 'Traditional',      colorClass: 'badge--orange' },
+  kids:        { label: 'Kids',             colorClass: 'badge--green'  },
 };
 const categoryInfo = categoryMap[product.category] ?? { label: product.category, colorClass: 'badge--orange' };
 
@@ -337,7 +342,7 @@ const sizePillClass = product.sizes[0] === 'Free Size'
     align-items: center;
     justify-content: center;
     gap: 0.3rem;
-    flex: 1;                          /* ← FIXED: now matches View Details */
+    flex: 1;
     border: 2px solid #25D366;
     color: #25D366;
     font-size: 0.75rem;
