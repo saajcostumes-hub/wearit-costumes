@@ -7,7 +7,7 @@
  *   velvet   → Velvet Nauwari Kashta (Velvet Nauvaari)
  *   kids     → Kids Fancy Dress (moved to FIRST position — highest demand)
  *   lehenga  → real products added: Ivory Bridal + Navy Paithani
- *   jewellery→ NEW — 9 jewellery sets (placed right after Dandiya Special)
+ *   jewellery→ NEW — 19 jewellery sets (placed right after Dandiya Special)
  * ─────────────────────────────────────────────
  */
 
@@ -136,6 +136,16 @@ export const categoryTabs = [
       { id: 'jewellery-gold-multichain-waterfall', name: 'Cascading Multi-Chain Gold Waterfall Set', sub: 'Sangeet · Gowns', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-gold-multichain-waterfall' },
       { id: 'jewellery-kundan-polki-pearl-choker', name: 'Kundan Polki & Pearl Choker Set', sub: 'Bridal · Sangeet', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-kundan-polki-pearl-choker' },
       { id: 'jewellery-peacock-emerald-temple-choker', name: 'Antique Gold Peacock & Emerald Choker Set', sub: 'Ganesh Chaturthi · Festive', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-peacock-emerald-temple-choker' },
+      { id: 'jewellery-kasu-lakshmi-coin-haram', name: 'Royal Lakshmi Kasumala Dual Temple Haram Set', sub: 'Bridal · Temple', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-kasu-lakshmi-coin-haram' },
+      { id: 'jewellery-turquoise-kundan-choker-tikka', name: 'Turquoise Beaded Kundan Choker & Chandbali Set', sub: 'Sangeet · Dandiya', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-turquoise-kundan-choker-tikka' },
+      { id: 'jewellery-peacock-lakshmi-temple-haram', name: 'Grand Temple Arch Lakshmi Dual Bridal Haram', sub: 'Grand Weddings · Bridal', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-peacock-lakshmi-temple-haram' },
+      { id: 'jewellery-gold-bead-mala-lakshmi-pendant', name: 'Heritage Gold Bead & Pearl Lakshmi Haar Set', sub: 'Pujas · Mangalagaur', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-gold-bead-mala-lakshmi-pendant' },
+      { id: 'jewellery-chandrakor-crescent-choker', name: 'Antique Gold Chandrakor Crescent Choker Set', sub: 'Sakharpuda · Haldi', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-chandrakor-crescent-choker' },
+      { id: 'jewellery-gold-bead-ruby-emerald-necklace', name: 'Floral Filigree Ruby & Emerald Festoon Necklace', sub: 'Engagement · Diwali', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-gold-bead-ruby-emerald-necklace' },
+      { id: 'jewellery-beaded-choker-trio', name: 'Triple-Color Pearl & Crystal Choker Trio', sub: 'Sangeet · Garba', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-beaded-choker-trio' },
+      { id: 'jewellery-pearl-gold-lakshmi-rani-haar', name: 'Five-Strand Basra Pearl Lakshmi Haram Set', sub: 'Peshwai · Bridal', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-pearl-gold-lakshmi-rani-haar' },
+      { id: 'jewellery-pearl-fringe-kundan-choker', name: 'Victorian Antique Gold Emerald & Ruby Choker', sub: 'Reception · Bridal', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-pearl-fringe-kundan-choker' },
+      { id: 'jewellery-oxidised-silver-tanmani-black-bead-set', name: 'Oxidized Silver Ghungroo & Black Bead Set', sub: 'Navratri · Fusion', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-oxidised-silver-tanmani-black-bead-set' },
     ],
   },
   {
