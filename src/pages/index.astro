@@ -1,12 +1,12 @@
 ---
 // @ts-nocheck
-// src/pages/index.astro — Sprint 4 update
+// src/pages/index.astro — Sprint 5 update
 // ─────────────────────────────────────────────
 // Section order (updated):
 //   S1  HeroSection
-//   S2  PopularThisSeason
-//   S3  CategoryGrid
-//   S4  HowItWorks        ← moved here (before TrustSignals)
+//   S2  CategoryGrid      ← "Browse by costume" moved up, directly under hero
+//   S3  PopularThisSeason
+//   S4  HowItWorks
 //   S5  TrustSignals
 //   S6  FestivalBanner
 // ─────────────────────────────────────────────
@@ -22,8 +22,8 @@ import FestivalBanner    from '../components/sections/FestivalBanner.astro';
 
 <Layout title="wearit — Premium Costume Rentals in Hinjewadi, Wakad & Baner, Pune">
   <HeroSection />
-  <PopularThisSeason />
   <CategoryGrid />
+  <PopularThisSeason />
   <HowItWorks />
   <TrustSignals />
   <FestivalBanner />

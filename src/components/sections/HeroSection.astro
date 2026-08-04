@@ -1,41 +1,32 @@
 ---
 // @ts-nocheck
-// HeroSection.astro — Sprint 4 update (carousel added)
-// Vanilla JS chips + 4-slide auto-carousel
+// HeroSection.astro — Sprint 5 update
+// Chips + big CTA button REMOVED (customers had to click twice).
+// "Browse by costume" now sits directly under the hero on the homepage.
+// Vanilla JS auto-carousel only.
 
-import { heroChips } from '../../data/categories.js';
-
-const defaultChip  = heroChips[0];
-const defaultHref  = `/catalog?category=${defaultChip.categoryId}`;
-const defaultLabel = `${defaultChip.btnLabel} →`;
-
-const chips = heroChips.map(chip => ({
-  id:        chip.id,
-  label:     chip.label,
-  btnLabel:  chip.btnLabel,
-  href:      `/catalog?category=${chip.categoryId}`,
-  chipClass: chip.isWomens ? 'chip chip--womens' : 'chip chip--default',
-  isFirst:   chip.id === defaultChip.id,
-}));
-
-// Carousel slides — Dandiya Special takeover (4 featured lehenga looks)
+// Carousel slides — one beautiful pick from each category (same order as the category tabs)
 const carouselSlides = [
-  { label: 'Dandiya Special', tag: 'Dandiya Season',  image: '/images/Lehenga-Set-4.jpg', href: '/catalog?category=lehenga' },
-  { label: 'Dandiya Special', tag: 'Dandiya Season',  image: '/images/Lehenga-Set-8.jpg', href: '/catalog?category=lehenga' },
-  { label: 'Dandiya Special', tag: 'New Arrival',     image: '/images/Lehenga-Set-3.jpg', href: '/catalog?category=lehenga' },
-  { label: 'Dandiya Special', tag: 'Dandiya Season',  image: '/images/Lehenga-Set-9.jpg', href: '/catalog?category=lehenga' },
+  { label: 'Kids Fancy Dress',        tag: 'Festive Ready',      image: '/images/kids-Varkari-set-1.jpg',     href: '/catalog?category=kids' },
+  { label: 'Shaadi Specials',         tag: 'Wedding Season',     image: '/images/Stylist_Men_set_1.jpg',      href: '/catalog?category=shaadi' },
+  { label: 'Jewellery',               tag: 'New Arrival',        image: '/images/Jewelry_set_2.jpg',          href: '/catalog?category=jewellery' },
+  { label: 'Paithani Nauwari Kashta', tag: 'Premium Collection', image: '/images/nauwari-saree-1.jpg',        href: '/catalog?category=nauwari' },
+  { label: 'Designer Nauwari Kashta', tag: 'Premium Collection', image: '/images/kashta-saree-4.jpeg',        href: '/catalog?category=kashtha' },
+  { label: 'Velvet Nauwari Kashta',   tag: 'Only in wearit',     image: '/images/kashta-saree-1.jpeg',        href: '/catalog?category=velvet' },
+  { label: 'Maternity Gowns',         tag: 'Photoshoot Ready',   image: '/images/Maternity Gown-set3.jpg',    href: '/catalog?category=maternity' },
+  { label: 'Western & Themed',        tag: 'Reception Ready',    image: '/images/Western-outfit-1.jpg',       href: '/catalog?category=western' },
 ];
 ---
 
 <section class="hero" aria-label="Hero section">
   <div class="hero__inner">
 
-    <!-- LEFT: Text + Chips -->
+    <!-- LEFT: Text + trust pills -->
     <div class="hero__content">
 
       <div class="festival-badge">
         <span class="festival-badge__dot" aria-hidden="true"></span>
-        <span>Ganesh Chaturthi 2026 — Pre-Book Now</span>
+        <span>Wedding Season · Republic Day 2027 — Book Early</span>
       </div>
 
       <h1 class="hero__headline">
@@ -79,33 +70,6 @@ const carouselSlides = [
           ))}
         </div>
       </div>
-
-      <p class="chip-label" aria-hidden="true">What are you looking for?</p>
-
-      <div class="chips" role="group" aria-label="Filter costumes by type">
-        {chips.map(chip => (
-          <button
-            class={`${chip.chipClass}${chip.isFirst ? ' chip--active' : ''}`}
-            data-chip-id={chip.id}
-            data-btn-label={`${chip.btnLabel} →`}
-            data-btn-href={chip.href}
-            type="button"
-            aria-label={`Browse ${chip.label}`}
-            aria-pressed={chip.isFirst ? 'true' : 'false'}
-          >
-            {chip.label}
-          </button>
-        ))}
-      </div>
-
-      <a id="hero-glow-pill" class="glow-pill" href={defaultHref} aria-label={defaultLabel}>
-        <span class="glow-pill__icon" aria-hidden="true">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="white">
-            <path d="M12 2l2.09 6.26L21 9.27l-5 4.73 1.18 6.54L12 17.27l-5.18 3.27L8 14l-5-4.73 6.91-1.01z"/>
-          </svg>
-        </span>
-        <span class="glow-pill__text" id="hero-btn-text">{defaultLabel}</span>
-      </a>
 
       <ul class="trust-pills" aria-label="Key trust signals">
         <li class="trust-pill">Washed &amp; Ironed</li>
@@ -202,24 +166,6 @@ const carouselSlides = [
   });
 
   startAuto();
-</script>
-
-<!-- Chip switching JS -->
-<script>
-  // @ts-nocheck
-  const chipBtns = document.querySelectorAll('.hero .chip');
-  const glowPill = document.getElementById('hero-glow-pill');
-  const btnText  = document.getElementById('hero-btn-text');
-
-  chipBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      chipBtns.forEach(b => { b.classList.remove('chip--active'); b.setAttribute('aria-pressed', 'false'); });
-      btn.classList.add('chip--active');
-      btn.setAttribute('aria-pressed', 'true');
-      if (glowPill) { glowPill.setAttribute('href', btn.dataset.btnHref); glowPill.setAttribute('aria-label', btn.dataset.btnLabel); }
-      if (btnText)  btnText.textContent = btn.dataset.btnLabel;
-    });
-  });
 </script>
 
 <style>
@@ -340,44 +286,6 @@ const carouselSlides = [
 
   .hero__subline { font-size: 0.8125rem; color: rgba(42,17,36,0.5); line-height: 1.65; margin-bottom: 1.25rem; }
 
-  .chip-label { font-size: 0.625rem; color: rgba(42,17,36,0.38); letter-spacing: 0.02em; margin-bottom: 0.5rem; }
-
-  /* ← Chips now wrap to next line instead of scrolling off-screen */
-  .chips {
-    display: flex; gap: 0.4rem; flex-wrap: wrap;
-    margin-bottom: 1.125rem;
-  }
-
-  .chip {
-    display: inline-flex; align-items: center; border-radius: 9999px;
-    padding: 0.4375rem 0.8rem; font-size: 0.6875rem; font-weight: 500;
-    color: #2A1124; white-space: nowrap; flex-shrink: 0; cursor: pointer;
-    transition: background 0.15s, border-color 0.15s, color 0.15s;
-    border: 1px solid transparent; min-height: 44px; outline: none;
-    -webkit-appearance: none; appearance: none; font-family: inherit;
-  }
-
-  .chip--womens  { background: rgba(201,168,76,0.05); border-color: rgba(201,168,76,0.4); }
-  .chip--default { background: #fff; border-color: rgba(212,175,55,0.28); }
-  .chip--active  { background: #D4AF37 !important; border-color: #D4AF37 !important; color: #fff !important; }
-
-  .glow-pill {
-    display: flex; align-items: center; justify-content: center; gap: 0.625rem;
-    border-radius: 9999px; padding: 0.9375rem 1.5rem; width: 100%;
-    background: #D4AF37;
-    box-shadow: 0 6px 22px rgba(212,175,55,0.38), 0 2px 6px rgba(212,175,55,0.2);
-    text-decoration: none; margin-bottom: 1rem; min-height: 44px;
-    transition: box-shadow 0.2s, transform 0.15s;
-  }
-  .glow-pill:hover { box-shadow: 0 8px 28px rgba(212,175,55,0.48), 0 3px 8px rgba(212,175,55,0.25); transform: translateY(-1px); }
-  .glow-pill:active { transform: scale(0.98); }
-
-  .glow-pill__icon {
-    width: 1.625rem; height: 1.625rem; border-radius: 50%;
-    background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .glow-pill__text { font-size: 0.875rem; font-weight: 700; color: #fff; flex: 1; text-align: center; }
-
-  .trust-pills { display: flex; flex-wrap: wrap; gap: 0.375rem; list-style: none; padding: 0; margin: 0; }
+  .trust-pills { margin-top: 0.25rem; display: flex; flex-wrap: wrap; gap: 0.375rem; list-style: none; padding: 0; margin: 0; }
   .trust-pill { background: rgba(42,17,36,0.06); border: 0.5px solid rgba(42,17,36,0.09); color: rgba(42,17,36,0.48); font-size: 0.625rem; padding: 0.3125rem 0.625rem; border-radius: 9999px; }
 </style>

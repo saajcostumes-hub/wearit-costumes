@@ -2496,7 +2496,7 @@ const shaadiMenProducts = [
     badge:    'New Arrival',
     badgeType:'exclusive',
     image:    null,
-    images:   ['/images/Stylist_Men_set_12.jpg'],
+    images:   ['/images/Stylist_Men_set_10.jpg'],
     colors:   [],
     alt:      'Soft Rose Pink Tailored Single-Breasted Blazer Suit — wearit premium rental, Hinjewadi Pune',
     featured: false,

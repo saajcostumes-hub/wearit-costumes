@@ -256,8 +256,8 @@ export const categoryTabs = [
 export const festiveBanner = {
   active:          true,
   label:           'Upcoming Festival',
-  title:           'Ganesh Chaturthi 2026',
-  urgency:         'Nauwari Saree Collection available — only 8 sets left. Pre-book now to secure your size.',
-  ctaLabel:        'Pre-Book via WhatsApp',
-  whatsappMessage: "Hi! I'd like to pre-book a Nauwari Saree for Ganesh Chaturthi 2026. Can you share size availability and pricing? 🙏",
+  title:           'Republic Day · 26 January 2027',
+  urgency:         'Army, Police & more kids fancy dress for school and society celebrations — book your date early. Wedding season outfits are also available now.',
+  ctaLabel:        'Book via WhatsApp',
+  whatsappMessage: "Hi! I'd like to book a costume for Republic Day (26 January 2027). Can you share what's available and the pricing? 🙏",
 };
