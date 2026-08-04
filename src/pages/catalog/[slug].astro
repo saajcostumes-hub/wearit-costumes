@@ -1,6 +1,6 @@
 ---
 // @ts-nocheck
-// src/pages/catalog/[slug].astro — Sprint 4 update
+// src/pages/catalog/[slug].astro — Sprint 4 update + Jewellery details
 // ─────────────────────────────────────────────
 // Changes from Sprint 2:
 //   - Price info COMMENTED OUT (uncomment when ready to show pricing)
@@ -35,8 +35,50 @@ const categoryLabelMap = {
   maternity: 'Maternity Gowns',
   shaadi:    'Shaadi Specials',
   western:   'Western & Themed',
+  // added so breadcrumb / "More in ..." / WhatsApp text never show the raw id
+  kids:      'Kids Fancy Dress',
+  kashtha:   'Designer Nauwari Kashta',
+  velvet:    'Velvet Nauwari Kashta',
+  jewellery: 'Jewellery',
 };
 const categoryLabel = categoryLabelMap[product.category] ?? product.category;
+
+// ── Jewellery gets its own detail rows + hygiene wording ──
+const isJewellery = product.category === 'jewellery';
+
+const specRows = isJewellery
+  ? [
+      { label: 'Jewellery',        value: specs_(product, 'sareeName') },
+      { label: 'Type',             value: specs_(product, 'type') },
+      { label: 'Material & Finish',value: specs_(product, 'fabric') },
+      { label: 'Work & Stones',    value: specs_(product, 'work') },
+      { label: 'Color',            value: specs_(product, 'color') },
+      { label: 'Set Includes',     value: product.setIncludes },
+      { label: 'Occasion',         value: specs_(product, 'occasion') },
+      { label: 'Perfect Pairing',  value: product.pairsWith },
+    ]
+  : [
+      { label: 'Saree',    value: specs_(product, 'sareeName') },
+      { label: 'Fabric',   value: specs_(product, 'fabric') },
+      { label: 'Work',     value: specs_(product, 'work') },
+      { label: 'Color',    value: specs_(product, 'color') },
+      { label: 'Occasion', value: specs_(product, 'occasion') },
+      { label: 'Type',     value: specs_(product, 'type') },
+    ];
+const visibleSpecRows = specRows.filter(r => r.value);
+
+// Hygiene lines — jewellery uses the sanitised wording stored on the product
+const trustFull  = isJewellery
+  ? (product.trustBadge ?? 'Ultrasonically cleaned & sanitized before every rental | Sealed in luxury velvet pouch').replace(' | ', ' · ')
+  : 'Washed & ironed before every rental';
+const trustShort = isJewellery
+  ? 'Ultrasonically cleaned & sanitized before every rental'
+  : 'Washed & ironed before every rental';
+
+function specs_(prod, key) {
+  const v = prod.specs?.[key];
+  return v && !String(v).startsWith('UPDATE') ? v : null;
+}
 
 // Gallery — up to 5 images from product.images array
 const galleryImages  = product.images ?? [];
@@ -175,12 +217,9 @@ const related = allProducts
             <div class="specs-card">
               <p class="specs-card__title">Product Details</p>
               <ul class="specs-card__list">
-                {specs.sareeName && <li><span class="specs-icon">💜</span><span><strong>Saree:</strong> {specs.sareeName}</span></li>}
-                {specs.fabric    && <li><span class="specs-icon">💜</span><span><strong>Fabric:</strong> {specs.fabric}</span></li>}
-                {specs.work      && <li><span class="specs-icon">💜</span><span><strong>Work:</strong> {specs.work}</span></li>}
-                {specs.color     && <li><span class="specs-icon">💜</span><span><strong>Color:</strong> {specs.color}</span></li>}
-                {specs.occasion  && <li><span class="specs-icon">💜</span><span><strong>Occasion:</strong> {specs.occasion}</span></li>}
-                {specs.type      && <li><span class="specs-icon">💜</span><span><strong>Type:</strong> {specs.type}</span></li>}
+                {visibleSpecRows.map(row => (
+                  <li><span class="specs-icon">💜</span><span><strong>{row.label}:</strong> {row.value}</span></li>
+                ))}
               </ul>
             </div>
           )}
@@ -188,7 +227,7 @@ const related = allProducts
           <!-- Hygiene trust signal -->
           <div class="product-info__trust">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            Washed &amp; ironed before every rental
+            {trustFull}
           </div>
         </div>
 
@@ -267,7 +306,7 @@ const related = allProducts
           <!-- Hygiene note -->
           <p class="booking-panel__hygiene">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            Washed &amp; ironed before every rental
+            {trustShort}
           </p>
 
         </div>
