@@ -43,12 +43,24 @@ const categoryLabelMap = {
 };
 const categoryLabel = categoryLabelMap[product.category] ?? product.category;
 
-// ── Jewellery gets its own detail rows + hygiene wording ──
+// ── Jewellery + Stylist Men get their own detail rows + hygiene wording ──
 const isJewellery = product.category === 'jewellery';
+const isMens      = product.group === 'stylist-men';
 
-const specRows = isJewellery
+const specRows = isMens
   ? [
-      { label: 'Jewellery',        value: specs_(product, 'sareeName') },
+      { label: 'Name',                  value: specs_(product, 'sareeName') },
+      { label: 'Type',                  value: specs_(product, 'type') },
+      { label: 'Fabric & Material',     value: specs_(product, 'fabric') },
+      { label: 'Work & Craftsmanship',  value: specs_(product, 'work') },
+      { label: 'Color',                 value: specs_(product, 'color') },
+      { label: 'Set Includes',          value: product.setIncludes },
+      { label: 'Occasion',              value: specs_(product, 'occasion') },
+      { label: 'Perfect Bridal Pairing',value: product.pairsWith },
+    ]
+  : isJewellery
+  ? [
+      { label: 'Name',             value: specs_(product, 'sareeName') },
       { label: 'Type',             value: specs_(product, 'type') },
       { label: 'Material & Finish',value: specs_(product, 'fabric') },
       { label: 'Work & Stones',    value: specs_(product, 'work') },
@@ -58,7 +70,7 @@ const specRows = isJewellery
       { label: 'Perfect Pairing',  value: product.pairsWith },
     ]
   : [
-      { label: 'Saree',    value: specs_(product, 'sareeName') },
+      { label: 'Name',    value: specs_(product, 'sareeName') },
       { label: 'Fabric',   value: specs_(product, 'fabric') },
       { label: 'Work',     value: specs_(product, 'work') },
       { label: 'Color',    value: specs_(product, 'color') },
@@ -68,12 +80,16 @@ const specRows = isJewellery
 const visibleSpecRows = specRows.filter(r => r.value);
 
 // Hygiene lines — jewellery uses the sanitised wording stored on the product
-const trustFull  = isJewellery
-  ? (product.trustBadge ?? 'Ultrasonically cleaned & sanitized before every rental | Sealed in luxury velvet pouch').replace(' | ', ' · ')
+const trustFull  = product.trustBadge
+  ? product.trustBadge.replace(' | ', ' · ')
   : 'Washed & ironed before every rental';
-const trustShort = isJewellery
-  ? 'Ultrasonically cleaned & sanitized before every rental'
+const trustShort = product.trustBadge
+  ? product.trustBadge.split(' | ')[0]
   : 'Washed & ironed before every rental';
+
+// Size note — men's outfits are NOT free size, so ask for size on WhatsApp
+const sizeNote  = isMens ? 'Size — confirm on WhatsApp' : 'Free Size — fits all';
+const sizeValue = isMens ? 'To be confirmed on WhatsApp' : 'Free Size';
 
 function specs_(prod, key) {
   const v = prod.specs?.[key];
@@ -251,9 +267,9 @@ const related = allProducts
           <div class="booking-panel__divider"></div>
 
           <!-- Free Size indicator — auto-selected, no user input needed -->
-          <div class="free-size-tag">
+          <div class="free-size-tag" data-size={sizeValue}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Free Size — fits all</span>
+            <span>{sizeNote}</span>
           </div>
 
           <div class="booking-panel__divider"></div>
@@ -382,8 +398,9 @@ const related = allProducts
   // @ts-nocheck
   // All products are Free Size — auto-select immediately so WhatsApp button activates on date selection only
   document.addEventListener('DOMContentLoaded', () => {
+    const sizeTag = document.querySelector('.free-size-tag');
     document.dispatchEvent(new CustomEvent('wearit:size-selected', {
-      detail: { size: 'Free Size' }
+      detail: { size: sizeTag?.dataset.size || 'Free Size' }
     }));
   });
 </script>
