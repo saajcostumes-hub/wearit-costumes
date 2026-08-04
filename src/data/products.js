@@ -9,7 +9,7 @@
  *   maternity→ Maternity Gowns
  *   kids     → Kids Fancy Dress (ALL 28 added — Batch 1 + Batch 2 complete)
  *   jewellery→ Jewellery (19 sets — enquire via WhatsApp for pricing)
- *   shaadi   → Shaadi Specials now also has its own products: 10 Stylist Men outfits
+ *   shaadi   → Shaadi Specials now also has its own products: 12 Stylist Men outfits
  *   western  → Western & Themed
  *   shaadi   → Shaadi Specials (collection: nauwari + kashtha + velvet + lehenga)
  */
@@ -2176,8 +2176,8 @@ const jewelleryProducts = [
 ];
 
 // ─────────────────────────────────────────────
-// SHAADI SPECIALS — STYLIST MEN (10 outfits) — sizing/pricing via WhatsApp
-// Images: /public/images/Stylist_Men_set_1.jpg … Stylist_Men_set_10.jpg
+// SHAADI SPECIALS — STYLIST MEN (12 outfits) — sizing/pricing via WhatsApp
+// Images: /public/images/Stylist_Men_set_1.jpg … Stylist_Men_set_12.jpg
 // category 'shaadi' (shows in the Shaadi Specials tab) + group 'stylist-men'
 // ─────────────────────────────────────────────
 
@@ -2496,9 +2496,73 @@ const shaadiMenProducts = [
     badge:    'New Arrival',
     badgeType:'exclusive',
     image:    null,
-    images:   ['/images/Stylist_Men_set_10.jpg'],
+    images:   ['/images/Stylist_Men_set_12.jpg'],
     colors:   [],
     alt:      'Soft Rose Pink Tailored Single-Breasted Blazer Suit — wearit premium rental, Hinjewadi Pune',
+    featured: false,
+    phase:    1,
+  },
+  {
+    id:       'stylist-men-light-grey-slim-fit-suit',
+    name:     'Modern Light Grey Tailored Slim-Fit Suit Set',
+    slug:     'stylist-men-light-grey-slim-fit-suit',
+    category: 'shaadi',
+    group:    'stylist-men',
+    sizes:    [],
+    sizeType: 'inquire',
+    price:    null,
+    deposit:  null,
+    description: 'Effortless European sophistication tailored for day celebrations and modern wedding receptions. Crafted in premium Italian-blend light grey suiting fabric with sleek slim notch lapels, a single dark button closure, welt chest pocket, and flap side pockets. Paired with matching flat-front tailored trousers and a crisp white formal dress shirt.',
+    specs: {
+      sareeName: 'Modern Light Grey Tailored Slim-Fit Suit Set',
+      fabric:    'Premium Italian Poly-Viscose Suiting Blend with Breathable Silk Satin Lining',
+      work:      'Precision-Tailored Slim Notch Lapel, Structured Shoulders, Contrast Button & Welt Detailing',
+      color:     'Refined Light Slate Grey with Crisp White Inner Shirt',
+      occasion:  'Wedding Receptions | Cocktail Parties | Sakharpuda (Engagement) | Day Wedding Ceremonies | Sangeet',
+      type:      'Modern Slim-Fit 2-Piece Formal Suit Set',
+    },
+    setIncludes: '1 Tailored Light Grey Blazer + 1 Pair Matching Flat-Front Formal Trousers',
+    pairsWith:   'Complements pastel pink, lavender, and mint green wedding lehengas or contemporary western gowns',
+    trustBadge:  '100% Dry-cleaned, steam-pressed & vacuum-sealed in a suit protector bag',
+    tags:     ['men', 'grey suit', 'light grey blazer', 'reception suit', 'cocktail', 'groom', 'groomsmen', 'western menswear', 'formal suit'],
+    badge:    'New Arrival',
+    badgeType:'exclusive',
+    image:    null,
+    images:   ['/images/Stylist_Men_set_11.jpg'],
+    colors:   [],
+    alt:      'Modern Light Grey Tailored Slim-Fit Suit Set — wearit premium rental, Hinjewadi Pune',
+    featured: false,
+    phase:    1,
+  },
+  {
+    id:       'stylist-men-classic-black-tuxedo-suit',
+    name:     'Classic Black Formal 2-Button Slim-Fit Tuxedo Suit Set',
+    slug:     'stylist-men-classic-black-tuxedo-suit',
+    category: 'shaadi',
+    group:    'stylist-men',
+    sizes:    [],
+    sizeType: 'inquire',
+    price:    null,
+    deposit:  null,
+    description: 'The quintessential gentleman\'s formal statement. Designed with razor-sharp tailoring in rich crease-resistant jet black suiting fabric, this suit features a structured two-button closure, tailored notch lapels, structured chest welt pocket, and dual side flap pockets. Styled over a crisp white formal shirt with matching black tailored formal trousers.',
+    specs: {
+      sareeName: 'Classic Black Formal 2-Button Slim-Fit Tuxedo Suit Set',
+      fabric:    'High-Grade Crease-Resistant Poly-Wool Suiting Fabric with Premium Inner Lining',
+      work:      'Precision Hand-Finished Lapels, Contrast Dark Buttons, Functional Welt Pockets & Structured Silhouette',
+      color:     'Classic Jet Black with Crisp White Inner Shirt',
+      occasion:  'Black-Tie Wedding Receptions | Sangeet Night | Cocktail Galas | Award Evenings | Formal Dinners',
+      type:      'Classic Black 2-Piece Slim-Fit Formal Tuxedo Suit',
+    },
+    setIncludes: '1 Structured Black Blazer + 1 Pair Matching Black Formal Trousers',
+    pairsWith:   'Flawlessly matches western evening gowns, black sequin cocktail sarees, and crimson bridal lehengas',
+    trustBadge:  '100% Dry-cleaned, steam-pressed & vacuum-sealed in a suit protector bag',
+    tags:     ['men', 'black suit', 'classic black blazer', 'tuxedo', 'reception', 'cocktail gala', 'black tie', 'groom suit', 'formal menswear'],
+    badge:    'New Arrival',
+    badgeType:'exclusive',
+    image:    null,
+    images:   ['/images/Stylist_Men_set_12.jpg'],
+    colors:   [],
+    alt:      'Classic Black Formal 2-Button Slim-Fit Tuxedo Suit Set — wearit premium rental, Hinjewadi Pune',
     featured: false,
     phase:    1,
   },

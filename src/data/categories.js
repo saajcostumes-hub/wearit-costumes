@@ -8,7 +8,7 @@
  *   kids     → Kids Fancy Dress (moved to FIRST position — highest demand)
  *   lehenga  → real products added: Ivory Bridal + Navy Paithani
  *   jewellery→ NEW — 19 jewellery sets
- *   shaadi   → + 10 Stylist Men outfits (groom wear) added to the Shaadi Specials tab (placed right after Dandiya Special)
+ *   shaadi   → + 12 Stylist Men outfits (groom wear) added to the Shaadi Specials tab (placed right after Dandiya Special)
  * ─────────────────────────────────────────────
  */
 
@@ -215,6 +215,8 @@ export const categoryTabs = [
       { id: 'stylist-men-pastel-mosaic-achkan', name: 'Pastel Mosaic Achkan with White Kurta', sub: 'Mehendi · Day Wedding', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-pastel-mosaic-achkan' },
       { id: 'stylist-men-ivory-bandhani-sherwani-safa', name: 'Ivory Sherwani, Bandhani Stole & Royal Safa', sub: 'Barat · Grand Shaadi', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-ivory-bandhani-sherwani-safa' },
       { id: 'stylist-men-rose-pink-blazer-suit', name: 'Soft Rose Pink Tailored Blazer Suit', sub: 'Cocktail · Reception', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-rose-pink-blazer-suit' },
+      { id: 'stylist-men-light-grey-slim-fit-suit', name: 'Modern Light Grey Slim-Fit Suit Set', sub: 'Reception · Cocktail', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-light-grey-slim-fit-suit' },
+      { id: 'stylist-men-classic-black-tuxedo-suit', name: 'Classic Black 2-Button Tuxedo Suit Set', sub: 'Black-Tie · Reception', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-classic-black-tuxedo-suit' },
       { id: 'nauwari-green-paithani',  name: 'Green Paithani Rajlakshmi Kashtha',  sub: 'Weddings · Festive',   badge: 'Only in wearit', badgeType: 'exclusive', slug: 'nauwari-green-paithani' },
       { id: 'kashtha-lilac-brahmani',  name: 'Lilac Designer Brahmani Kashtha',    sub: 'Weddings · Partywear', badge: 'Most Loved',     badgeType: 'exclusive', slug: 'kashtha-lilac-brahmani' },
       { id: 'kashtha-velvet-nauvari',  name: 'Velvet Nauvaari Kashtha',            sub: 'Weddings · Festive',   badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kashtha-velvet-nauvari' },
