@@ -7,6 +7,7 @@
  *   velvet   → Velvet Nauwari Kashta (Velvet Nauvaari)
  *   kids     → Kids Fancy Dress (moved to FIRST position — highest demand)
  *   lehenga  → real products added: Ivory Bridal + Navy Paithani
+ *   jewellery→ NEW — 9 jewellery sets (placed right after Dandiya Special)
  * ─────────────────────────────────────────────
  */
 
@@ -24,6 +25,14 @@ export const heroChips = [
     categoryId:  'lehenga',
     catalogSlug: 'lehenga-ivory-bridal',
     btnLabel:    'Browse Dandiya Special',
+  },
+  {
+    id:          'jewellery',
+    label:       'Jewellery',
+    isWomens:    true,
+    categoryId:  'jewellery',
+    catalogSlug: 'jewellery-peshwai-pearl-rani-haar',
+    btnLabel:    'Browse Jewellery',
   },
   {
     id:          'kids',
@@ -111,6 +120,22 @@ export const categoryTabs = [
       { id: 'lehenga-maroon-sequin-mirrorwork',  name: 'Maroon Sequin Lehenga with Heavy Mirror-Work Border', sub: 'Dandiya · Navratri', badge: null,   badgeType: null,        slug: 'lehenga-maroon-sequin-mirrorwork' },
       { id: 'lehenga-white-wine-designer',       name: 'Premium Designer White & Wine Lehenga',      sub: 'Dandiya · Garba',      badge: 'New Arrival',    badgeType: 'exclusive', slug: 'lehenga-white-wine-designer' },
       { id: 'lehenga-teal-orange-patchwork',     name: 'Teal & Orange Designer Patchwork Lehenga',   sub: 'Dandiya · Navratri',   badge: null,             badgeType: null,        slug: 'lehenga-teal-orange-patchwork' },
+    ],
+  },
+  {
+    id:        'jewellery',
+    label:     'Jewellery',
+    isDefault: false,
+    items: [
+      { id: 'jewellery-gunmetal-black-sphere-collar', name: 'Matte Gunmetal & Black Sphere Designer Collar Set', sub: 'Cocktail · Indo-Western', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-gunmetal-black-sphere-collar' },
+      { id: 'jewellery-peshwai-pearl-rani-haar', name: 'Imperial Pearl Choker & Rani Haar Set', sub: 'Weddings · Peshwai', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-peshwai-pearl-rani-haar' },
+      { id: 'jewellery-pink-lotus-meenakari-choker', name: 'Pink Lotus Meenakari Floral Choker Set', sub: 'Haldi · Sangeet', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-pink-lotus-meenakari-choker' },
+      { id: 'jewellery-temple-lakshmi-haram-choker', name: 'Grand Temple Lakshmi Haram & Choker Set', sub: 'Bridal · Temple', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-temple-lakshmi-haram-choker' },
+      { id: 'jewellery-antique-gold-ruby-drop-choker', name: 'Classic Antique Gold Ruby Drop Choker Set', sub: 'Weddings · Diwali', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-antique-gold-ruby-drop-choker' },
+      { id: 'jewellery-royal-sapphire-blue-crystal', name: 'Royal Sapphire Blue Crystal Set', sub: 'Cocktail · Reception', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-royal-sapphire-blue-crystal' },
+      { id: 'jewellery-gold-multichain-waterfall', name: 'Cascading Multi-Chain Gold Waterfall Set', sub: 'Sangeet · Gowns', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-gold-multichain-waterfall' },
+      { id: 'jewellery-kundan-polki-pearl-choker', name: 'Kundan Polki & Pearl Choker Set', sub: 'Bridal · Sangeet', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-kundan-polki-pearl-choker' },
+      { id: 'jewellery-peacock-emerald-temple-choker', name: 'Antique Gold Peacock & Emerald Choker Set', sub: 'Ganesh Chaturthi · Festive', badge: 'New Arrival', badgeType: 'exclusive', slug: 'jewellery-peacock-emerald-temple-choker' },
     ],
   },
   {
