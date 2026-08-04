@@ -15,17 +15,26 @@
 
 // ─────────────────────────────────────────────
 // 1. HERO CHIPS (Phase 1)
+// Order (final): Kids → Shaadi → Jewellery → Paithani → Designer → Dandiya → Velvet → Maternity → Western
 // Kids moved to position 0 — now the default active chip on homepage
 // ─────────────────────────────────────────────
 
 export const heroChips = [
   {
-    id:          'lehenga',
-    label:       'Dandiya Special',
+    id:          'kids',
+    label:       'Kids Fancy Dress',
+    isWomens:    false,
+    categoryId:  'kids',
+    catalogSlug: 'kids-nauvari-kashta-saree-1',
+    btnLabel:    'Browse Kids Fancy Dress',
+  },
+  {
+    id:          'shaadi',
+    label:       'Shaadi Specials',
     isWomens:    true,
-    categoryId:  'lehenga',
-    catalogSlug: 'lehenga-ivory-bridal',
-    btnLabel:    'Browse Dandiya Special',
+    categoryId:  'shaadi',
+    catalogSlug: 'shaadi-specials',
+    btnLabel:    'Browse Shaadi Specials',
   },
   {
     id:          'jewellery',
@@ -34,14 +43,6 @@ export const heroChips = [
     categoryId:  'jewellery',
     catalogSlug: 'jewellery-peshwai-pearl-rani-haar',
     btnLabel:    'Browse Jewellery',
-  },
-  {
-    id:          'kids',
-    label:       'Kids Fancy Dress',
-    isWomens:    false,
-    categoryId:  'kids',
-    catalogSlug: 'kids-nauvari-kashta-saree-1',
-    btnLabel:    'Browse Kids Fancy Dress',
   },
   {
     id:          'nauwari-saree',
@@ -60,6 +61,14 @@ export const heroChips = [
     btnLabel:    'Browse Designer Nauwari Kashta',
   },
   {
+    id:          'lehenga',
+    label:       'Dandiya Special',
+    isWomens:    true,
+    categoryId:  'lehenga',
+    catalogSlug: 'lehenga-ivory-bridal',
+    btnLabel:    'Browse Dandiya Special',
+  },
+  {
     id:          'velvet',
     label:       'Velvet Nauwari Kashta',
     isWomens:    true,
@@ -74,14 +83,6 @@ export const heroChips = [
     categoryId:  'maternity',
     catalogSlug: 'maternity-smoky-plum-grey-gown',
     btnLabel:    'Browse Maternity Gowns',
-  },
-  {
-    id:          'shaadi',
-    label:       'Shaadi Specials',
-    isWomens:    true,
-    categoryId:  'shaadi',
-    catalogSlug: 'shaadi-specials',
-    btnLabel:    'Browse Shaadi Specials',
   },
   {
     id:          'western',
@@ -103,24 +104,38 @@ export const defaultChipId = heroChips[0].id;
 
 export const categoryTabs = [
   {
-    id:        'lehenga',
-    label:     'Dandiya Special',
+    id:        'kids',
+    label:     'Kids Fancy Dress',
     isDefault: false,
     items: [
-      { id: 'lehenga-ivory-bridal',             name: 'Ivory Gold Embroidered Net Lehenga',         sub: 'Bridal · Reception',   badge: null,             badgeType: null,        slug: 'lehenga-ivory-bridal' },
-      { id: 'lehenga-navy-paithani',             name: 'Navy Blue Paithani Zari Lehenga',            sub: 'Weddings · Festive',   badge: null,             badgeType: null,        slug: 'lehenga-navy-paithani' },
-      { id: 'lehenga-tricolor-dandiya',          name: 'Vibrant Tri-Color Dandiya Lehenga Set',      sub: 'Dandiya · Garba',      badge: 'New Arrival',    badgeType: 'exclusive', slug: 'lehenga-tricolor-dandiya' },
-      { id: 'lehenga-multicolor-striped-dandiya',name: 'Multi-Color Striped Traditional Dandiya Lehenga', sub: 'Dandiya · Navratri', badge: null,        badgeType: null,        slug: 'lehenga-multicolor-striped-dandiya' },
-      { id: 'lehenga-red-black-mirrorwork',      name: 'Red & Black Mirror Work Dandiya Lehenga',    sub: 'Dandiya · Garba',      badge: null,             badgeType: null,        slug: 'lehenga-red-black-mirrorwork' },
-      { id: 'lehenga-white-lining-festive',      name: 'Elegant White Lining Festive Lehenga',       sub: 'Dandiya · Navratri',   badge: null,             badgeType: null,        slug: 'lehenga-white-lining-festive' },
-      { id: 'lehenga-designer-heavy-geometric',  name: 'Designer Heavy Dandiya Lehenga',             sub: 'Dandiya · Garba',      badge: 'Most Loved',     badgeType: 'exclusive', slug: 'lehenga-designer-heavy-geometric' },
-      { id: 'lehenga-multicolor-patchwork',      name: 'Multi-Color Patchwork Style Dandiya Lehenga',sub: 'Dandiya · Navratri',   badge: null,             badgeType: null,        slug: 'lehenga-multicolor-patchwork' },
-      { id: 'lehenga-patachitra-mustard',        name: 'Patachitra-Style Motif Printed Lehenga',     sub: 'Dandiya · Garba',      badge: null,             badgeType: null,        slug: 'lehenga-patachitra-mustard' },
-      { id: 'lehenga-pink-paisley-dupatta',      name: 'Pink Lehenga with Unique Black Festive Dupatta', sub: 'Dandiya · Navratri', badge: null,        badgeType: null,        slug: 'lehenga-pink-paisley-dupatta' },
-      { id: 'lehenga-black-mirrorwork-motif',    name: 'Black Mirror-Work Motif Dandiya Lehenga',    sub: 'Dandiya · Garba',      badge: 'Only in wearit', badgeType: 'exclusive', slug: 'lehenga-black-mirrorwork-motif' },
-      { id: 'lehenga-maroon-sequin-mirrorwork',  name: 'Maroon Sequin Lehenga with Heavy Mirror-Work Border', sub: 'Dandiya · Navratri', badge: null,   badgeType: null,        slug: 'lehenga-maroon-sequin-mirrorwork' },
-      { id: 'lehenga-white-wine-designer',       name: 'Premium Designer White & Wine Lehenga',      sub: 'Dandiya · Garba',      badge: 'New Arrival',    badgeType: 'exclusive', slug: 'lehenga-white-wine-designer' },
-      { id: 'lehenga-teal-orange-patchwork',     name: 'Teal & Orange Designer Patchwork Lehenga',   sub: 'Dandiya · Navratri',   badge: null,             badgeType: null,        slug: 'lehenga-teal-orange-patchwork' },
+      { id: 'kids-combo-set-1',              name: 'Mom & Daughter Nauwari Combo',       sub: 'Matching Sets · Family',   badge: 'New Arrival', badgeType: 'exclusive', slug: 'kids-combo-set-1' },
+      { id: 'kids-varkari-set-1',            name: 'Little Varkari Pilgrim Set',          sub: 'Wari · Cultural',          badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kids-varkari-set-1' },
+      { id: 'kids-rakhumai-set-4',           name: 'Yellow Mirror-Work Festive Lehenga',  sub: 'Navratri · Garba',         badge: 'Most Loved',   badgeType: 'exclusive', slug: 'kids-rakhumai-set-4' },
+      { id: 'kids-nauvari-kashta-saree-1',   name: 'Red & Green Zari Kids Nauwari Kashta',sub: 'Ganesh Chaturthi · Festive', badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kids-nauvari-kashta-saree-1' },
+    ],
+  },
+  {
+    id:        'shaadi',
+    label:     'Shaadi Specials',
+    isDefault: false,
+    items: [
+      { id: 'stylist-men-royal-wine-kurta-dhoti', name: 'Royal Wine Silk Kurta & Pleated Dhoti Set', sub: 'Lagna · Sakharpuda', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-royal-wine-kurta-dhoti' },
+      { id: 'stylist-men-midnight-black-chevron-achkan', name: 'Midnight Black Chevron Zari Achkan Set', sub: 'Sangeet · Reception', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-midnight-black-chevron-achkan' },
+      { id: 'stylist-men-champagne-gold-kurta-dushala', name: 'Champagne Gold Kurta, Wine Dhoti & Dushala', sub: 'Lagna · Peshwai', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-champagne-gold-kurta-dushala' },
+      { id: 'stylist-men-indigo-quilted-sherwani', name: 'Royal Indigo Quilted Sherwani Set', sub: 'Reception · Sangeet', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-indigo-quilted-sherwani' },
+      { id: 'stylist-men-silver-grey-kurta-bundi', name: 'Silver-Grey Kurta & Embroidered Bundi Set', sub: 'Day Wedding · Haldi', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-silver-grey-kurta-bundi' },
+      { id: 'stylist-men-ivory-red-groom-sherwani', name: 'Ivory & Red Groom Sherwani Royal Ensemble', sub: 'Pheras · Varmala', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-ivory-red-groom-sherwani' },
+      { id: 'stylist-men-sapphire-draped-kurta-red-dhoti', name: 'Sapphire Draped Kurta with Red Dhoti', sub: 'Sangeet · Garba', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-sapphire-draped-kurta-red-dhoti' },
+      { id: 'stylist-men-pastel-mosaic-achkan', name: 'Pastel Mosaic Achkan with White Kurta', sub: 'Mehendi · Day Wedding', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-pastel-mosaic-achkan' },
+      { id: 'stylist-men-ivory-bandhani-sherwani-safa', name: 'Ivory Sherwani, Bandhani Stole & Royal Safa', sub: 'Barat · Grand Shaadi', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-ivory-bandhani-sherwani-safa' },
+      { id: 'stylist-men-rose-pink-blazer-suit', name: 'Soft Rose Pink Tailored Blazer Suit', sub: 'Cocktail · Reception', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-rose-pink-blazer-suit' },
+      { id: 'stylist-men-light-grey-slim-fit-suit', name: 'Modern Light Grey Slim-Fit Suit Set', sub: 'Reception · Cocktail', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-light-grey-slim-fit-suit' },
+      { id: 'stylist-men-classic-black-tuxedo-suit', name: 'Classic Black 2-Button Tuxedo Suit Set', sub: 'Black-Tie · Reception', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-classic-black-tuxedo-suit' },
+      { id: 'nauwari-green-paithani',  name: 'Green Paithani Rajlakshmi Kashtha',  sub: 'Weddings · Festive',   badge: 'Only in wearit', badgeType: 'exclusive', slug: 'nauwari-green-paithani' },
+      { id: 'kashtha-lilac-brahmani',  name: 'Lilac Designer Brahmani Kashtha',    sub: 'Weddings · Partywear', badge: 'Most Loved',     badgeType: 'exclusive', slug: 'kashtha-lilac-brahmani' },
+      { id: 'kashtha-velvet-nauvari',  name: 'Velvet Nauvaari Kashtha',            sub: 'Weddings · Festive',   badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kashtha-velvet-nauvari' },
+      { id: 'kashtha-saree-2',         name: 'Purple Designer Brahmani Kashtha',   sub: 'Weddings · Festive',   badge: null,             badgeType: null,        slug: 'kashtha-saree-2' },
+      { id: 'lehenga-ivory-bridal',    name: 'Ivory Gold Embroidered Net Lehenga', sub: 'Bridal · Reception',   badge: null,             badgeType: null,        slug: 'lehenga-ivory-bridal' },
     ],
   },
   {
@@ -150,17 +165,6 @@ export const categoryTabs = [
     ],
   },
   {
-    id:        'kids',
-    label:     'Kids Fancy Dress',
-    isDefault: false,
-    items: [
-      { id: 'kids-combo-set-1',              name: 'Mom & Daughter Nauwari Combo',       sub: 'Matching Sets · Family',   badge: 'New Arrival', badgeType: 'exclusive', slug: 'kids-combo-set-1' },
-      { id: 'kids-varkari-set-1',            name: 'Little Varkari Pilgrim Set',          sub: 'Wari · Cultural',          badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kids-varkari-set-1' },
-      { id: 'kids-rakhumai-set-4',           name: 'Yellow Mirror-Work Festive Lehenga',  sub: 'Navratri · Garba',         badge: 'Most Loved',   badgeType: 'exclusive', slug: 'kids-rakhumai-set-4' },
-      { id: 'kids-nauvari-kashta-saree-1',   name: 'Red & Green Zari Kids Nauwari Kashta',sub: 'Ganesh Chaturthi · Festive', badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kids-nauvari-kashta-saree-1' },
-    ],
-  },
-  {
     id:        'nauwari',
     label:     'Paithani Nauwari Kashta',
     isDefault: false,
@@ -181,6 +185,27 @@ export const categoryTabs = [
     ],
   },
   {
+    id:        'lehenga',
+    label:     'Dandiya Special',
+    isDefault: false,
+    items: [
+      { id: 'lehenga-ivory-bridal',             name: 'Ivory Gold Embroidered Net Lehenga',         sub: 'Bridal · Reception',   badge: null,             badgeType: null,        slug: 'lehenga-ivory-bridal' },
+      { id: 'lehenga-navy-paithani',             name: 'Navy Blue Paithani Zari Lehenga',            sub: 'Weddings · Festive',   badge: null,             badgeType: null,        slug: 'lehenga-navy-paithani' },
+      { id: 'lehenga-tricolor-dandiya',          name: 'Vibrant Tri-Color Dandiya Lehenga Set',      sub: 'Dandiya · Garba',      badge: 'New Arrival',    badgeType: 'exclusive', slug: 'lehenga-tricolor-dandiya' },
+      { id: 'lehenga-multicolor-striped-dandiya',name: 'Multi-Color Striped Traditional Dandiya Lehenga', sub: 'Dandiya · Navratri', badge: null,        badgeType: null,        slug: 'lehenga-multicolor-striped-dandiya' },
+      { id: 'lehenga-red-black-mirrorwork',      name: 'Red & Black Mirror Work Dandiya Lehenga',    sub: 'Dandiya · Garba',      badge: null,             badgeType: null,        slug: 'lehenga-red-black-mirrorwork' },
+      { id: 'lehenga-white-lining-festive',      name: 'Elegant White Lining Festive Lehenga',       sub: 'Dandiya · Navratri',   badge: null,             badgeType: null,        slug: 'lehenga-white-lining-festive' },
+      { id: 'lehenga-designer-heavy-geometric',  name: 'Designer Heavy Dandiya Lehenga',             sub: 'Dandiya · Garba',      badge: 'Most Loved',     badgeType: 'exclusive', slug: 'lehenga-designer-heavy-geometric' },
+      { id: 'lehenga-multicolor-patchwork',      name: 'Multi-Color Patchwork Style Dandiya Lehenga',sub: 'Dandiya · Navratri',   badge: null,             badgeType: null,        slug: 'lehenga-multicolor-patchwork' },
+      { id: 'lehenga-patachitra-mustard',        name: 'Patachitra-Style Motif Printed Lehenga',     sub: 'Dandiya · Garba',      badge: null,             badgeType: null,        slug: 'lehenga-patachitra-mustard' },
+      { id: 'lehenga-pink-paisley-dupatta',      name: 'Pink Lehenga with Unique Black Festive Dupatta', sub: 'Dandiya · Navratri', badge: null,        badgeType: null,        slug: 'lehenga-pink-paisley-dupatta' },
+      { id: 'lehenga-black-mirrorwork-motif',    name: 'Black Mirror-Work Motif Dandiya Lehenga',    sub: 'Dandiya · Garba',      badge: 'Only in wearit', badgeType: 'exclusive', slug: 'lehenga-black-mirrorwork-motif' },
+      { id: 'lehenga-maroon-sequin-mirrorwork',  name: 'Maroon Sequin Lehenga with Heavy Mirror-Work Border', sub: 'Dandiya · Navratri', badge: null,   badgeType: null,        slug: 'lehenga-maroon-sequin-mirrorwork' },
+      { id: 'lehenga-white-wine-designer',       name: 'Premium Designer White & Wine Lehenga',      sub: 'Dandiya · Garba',      badge: 'New Arrival',    badgeType: 'exclusive', slug: 'lehenga-white-wine-designer' },
+      { id: 'lehenga-teal-orange-patchwork',     name: 'Teal & Orange Designer Patchwork Lehenga',   sub: 'Dandiya · Navratri',   badge: null,             badgeType: null,        slug: 'lehenga-teal-orange-patchwork' },
+    ],
+  },
+  {
     id:        'velvet',
     label:     'Velvet Nauwari Kashta',
     isDefault: false,
@@ -198,30 +223,6 @@ export const categoryTabs = [
       { id: 'maternity-rose-bloom-tulle-gown', name: 'Rose Bloom Coral Tulle Gown',       sub: 'Photoshoot · Romantic', badge: 'Most Loved',  badgeType: 'exclusive', slug: 'maternity-rose-bloom-tulle-gown' },
       { id: 'maternity-wine-ruffled-cape-gown', name: 'Wine Ruffled Tulle Cape Gown',     sub: 'Photoshoot · Statement',badge: null,          badgeType: null,        slug: 'maternity-wine-ruffled-cape-gown' },
       { id: 'maternity-red-satin-draped-gown', name: 'Crimson Red Satin Draped Gown',     sub: 'Photoshoot · Evening',  badge: null,          badgeType: null,        slug: 'maternity-red-satin-draped-gown' },
-    ],
-  },
-  {
-    id:        'shaadi',
-    label:     'Shaadi Specials',
-    isDefault: false,
-    items: [
-      { id: 'stylist-men-royal-wine-kurta-dhoti', name: 'Royal Wine Silk Kurta & Pleated Dhoti Set', sub: 'Lagna · Sakharpuda', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-royal-wine-kurta-dhoti' },
-      { id: 'stylist-men-midnight-black-chevron-achkan', name: 'Midnight Black Chevron Zari Achkan Set', sub: 'Sangeet · Reception', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-midnight-black-chevron-achkan' },
-      { id: 'stylist-men-champagne-gold-kurta-dushala', name: 'Champagne Gold Kurta, Wine Dhoti & Dushala', sub: 'Lagna · Peshwai', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-champagne-gold-kurta-dushala' },
-      { id: 'stylist-men-indigo-quilted-sherwani', name: 'Royal Indigo Quilted Sherwani Set', sub: 'Reception · Sangeet', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-indigo-quilted-sherwani' },
-      { id: 'stylist-men-silver-grey-kurta-bundi', name: 'Silver-Grey Kurta & Embroidered Bundi Set', sub: 'Day Wedding · Haldi', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-silver-grey-kurta-bundi' },
-      { id: 'stylist-men-ivory-red-groom-sherwani', name: 'Ivory & Red Groom Sherwani Royal Ensemble', sub: 'Pheras · Varmala', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-ivory-red-groom-sherwani' },
-      { id: 'stylist-men-sapphire-draped-kurta-red-dhoti', name: 'Sapphire Draped Kurta with Red Dhoti', sub: 'Sangeet · Garba', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-sapphire-draped-kurta-red-dhoti' },
-      { id: 'stylist-men-pastel-mosaic-achkan', name: 'Pastel Mosaic Achkan with White Kurta', sub: 'Mehendi · Day Wedding', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-pastel-mosaic-achkan' },
-      { id: 'stylist-men-ivory-bandhani-sherwani-safa', name: 'Ivory Sherwani, Bandhani Stole & Royal Safa', sub: 'Barat · Grand Shaadi', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-ivory-bandhani-sherwani-safa' },
-      { id: 'stylist-men-rose-pink-blazer-suit', name: 'Soft Rose Pink Tailored Blazer Suit', sub: 'Cocktail · Reception', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-rose-pink-blazer-suit' },
-      { id: 'stylist-men-light-grey-slim-fit-suit', name: 'Modern Light Grey Slim-Fit Suit Set', sub: 'Reception · Cocktail', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-light-grey-slim-fit-suit' },
-      { id: 'stylist-men-classic-black-tuxedo-suit', name: 'Classic Black 2-Button Tuxedo Suit Set', sub: 'Black-Tie · Reception', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-classic-black-tuxedo-suit' },
-      { id: 'nauwari-green-paithani',  name: 'Green Paithani Rajlakshmi Kashtha',  sub: 'Weddings · Festive',   badge: 'Only in wearit', badgeType: 'exclusive', slug: 'nauwari-green-paithani' },
-      { id: 'kashtha-lilac-brahmani',  name: 'Lilac Designer Brahmani Kashtha',    sub: 'Weddings · Partywear', badge: 'Most Loved',     badgeType: 'exclusive', slug: 'kashtha-lilac-brahmani' },
-      { id: 'kashtha-velvet-nauvari',  name: 'Velvet Nauvaari Kashtha',            sub: 'Weddings · Festive',   badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kashtha-velvet-nauvari' },
-      { id: 'kashtha-saree-2',         name: 'Purple Designer Brahmani Kashtha',   sub: 'Weddings · Festive',   badge: null,             badgeType: null,        slug: 'kashtha-saree-2' },
-      { id: 'lehenga-ivory-bridal',    name: 'Ivory Gold Embroidered Net Lehenga', sub: 'Bridal · Reception',   badge: null,             badgeType: null,        slug: 'lehenga-ivory-bridal' },
     ],
   },
   {
