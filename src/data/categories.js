@@ -7,7 +7,8 @@
  *   velvet   → Velvet Nauwari Kashta (Velvet Nauvaari)
  *   kids     → Kids Fancy Dress (moved to FIRST position — highest demand)
  *   lehenga  → real products added: Ivory Bridal + Navy Paithani
- *   jewellery→ NEW — 19 jewellery sets (placed right after Dandiya Special)
+ *   jewellery→ NEW — 19 jewellery sets
+ *   shaadi   → + 10 Stylist Men outfits (groom wear) added to the Shaadi Specials tab (placed right after Dandiya Special)
  * ─────────────────────────────────────────────
  */
 
@@ -204,6 +205,16 @@ export const categoryTabs = [
     label:     'Shaadi Specials',
     isDefault: false,
     items: [
+      { id: 'stylist-men-royal-wine-kurta-dhoti', name: 'Royal Wine Silk Kurta & Pleated Dhoti Set', sub: 'Lagna · Sakharpuda', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-royal-wine-kurta-dhoti' },
+      { id: 'stylist-men-midnight-black-chevron-achkan', name: 'Midnight Black Chevron Zari Achkan Set', sub: 'Sangeet · Reception', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-midnight-black-chevron-achkan' },
+      { id: 'stylist-men-champagne-gold-kurta-dushala', name: 'Champagne Gold Kurta, Wine Dhoti & Dushala', sub: 'Lagna · Peshwai', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-champagne-gold-kurta-dushala' },
+      { id: 'stylist-men-indigo-quilted-sherwani', name: 'Royal Indigo Quilted Sherwani Set', sub: 'Reception · Sangeet', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-indigo-quilted-sherwani' },
+      { id: 'stylist-men-silver-grey-kurta-bundi', name: 'Silver-Grey Kurta & Embroidered Bundi Set', sub: 'Day Wedding · Haldi', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-silver-grey-kurta-bundi' },
+      { id: 'stylist-men-ivory-red-groom-sherwani', name: 'Ivory & Red Groom Sherwani Royal Ensemble', sub: 'Pheras · Varmala', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-ivory-red-groom-sherwani' },
+      { id: 'stylist-men-sapphire-draped-kurta-red-dhoti', name: 'Sapphire Draped Kurta with Red Dhoti', sub: 'Sangeet · Garba', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-sapphire-draped-kurta-red-dhoti' },
+      { id: 'stylist-men-pastel-mosaic-achkan', name: 'Pastel Mosaic Achkan with White Kurta', sub: 'Mehendi · Day Wedding', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-pastel-mosaic-achkan' },
+      { id: 'stylist-men-ivory-bandhani-sherwani-safa', name: 'Ivory Sherwani, Bandhani Stole & Royal Safa', sub: 'Barat · Grand Shaadi', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-ivory-bandhani-sherwani-safa' },
+      { id: 'stylist-men-rose-pink-blazer-suit', name: 'Soft Rose Pink Tailored Blazer Suit', sub: 'Cocktail · Reception', badge: 'New Arrival', badgeType: 'exclusive', slug: 'stylist-men-rose-pink-blazer-suit' },
       { id: 'nauwari-green-paithani',  name: 'Green Paithani Rajlakshmi Kashtha',  sub: 'Weddings · Festive',   badge: 'Only in wearit', badgeType: 'exclusive', slug: 'nauwari-green-paithani' },
       { id: 'kashtha-lilac-brahmani',  name: 'Lilac Designer Brahmani Kashtha',    sub: 'Weddings · Partywear', badge: 'Most Loved',     badgeType: 'exclusive', slug: 'kashtha-lilac-brahmani' },
       { id: 'kashtha-velvet-nauvari',  name: 'Velvet Nauvaari Kashtha',            sub: 'Weddings · Festive',   badge: 'Only in wearit', badgeType: 'exclusive', slug: 'kashtha-velvet-nauvari' },

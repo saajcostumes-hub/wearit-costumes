@@ -2,6 +2,7 @@
 // @ts-nocheck
 // src/pages/catalog.astro — Sprint 4 update
 // Phase 1: Kids Fancy Dress moved to FIRST position (highest demand)
+// Shaadi Specials: Stylist Men outfits shown first (data-group + CSS order)
 // Dandiya update: Lehenga renamed to "Dandiya Special" and moved to position 1 (right after All)
 // ─────────────────────────────────────────────
 
@@ -79,6 +80,7 @@ const categoryTabs = [
             <div
               class="catalog-item"
               data-category={product.category}
+              data-group={product.group ?? ''}
               data-sizes={product.sizes.join(',')}
               data-sizetype={product.sizeType}
             >
@@ -124,6 +126,8 @@ const categoryTabs = [
         || cat === activeCategory
         || (activeCategory === 'shaadi' && shaadiCategories.includes(cat));
       item.style.display = show ? '' : 'none';
+      // Shaadi Specials: Stylist Men outfits first, then the rest (grid `order`)
+      item.style.order = (activeCategory === 'shaadi' && item.getAttribute('data-group') === 'stylist-men') ? '-1' : '';
       if (show) visible++;
     });
 
