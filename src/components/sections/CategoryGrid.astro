@@ -24,7 +24,11 @@ const productBySlug = Object.fromEntries(allProducts.map(p => [p.slug, p]));
     </div>
   </div>
 
-  <!-- Tab nav -->
+  <!-- Tab nav (scrollable) with fade + arrow hints -->
+  <div class="catgrid__tabs-wrap">
+  <button type="button" class="catgrid__arrow catgrid__arrow--left" aria-label="Scroll categories left" hidden>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
   <div class="catgrid__tabs" role="tablist" aria-label="Costume categories">
     {categoryTabs.map(tab => (
       <button
@@ -38,6 +42,10 @@ const productBySlug = Object.fromEntries(allProducts.map(p => [p.slug, p]));
         {tab.label}
       </button>
     ))}
+  </div>
+  <button type="button" class="catgrid__arrow catgrid__arrow--right" aria-label="Scroll categories right" hidden>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
   </div>
 
   <!-- Tab panels: default panel visible, others hidden via inline style -->
@@ -119,8 +127,32 @@ const productBySlug = Object.fromEntries(allProducts.map(p => [p.slug, p]));
       panels.forEach(panel => {
         panel.style.display = panel.id === `panel-${target}` ? '' : 'none';
       });
+
+      // Bring the tapped tab fully into view (reveals the next one too)
+      tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     });
   });
+
+  // ── Scroll hints: arrows + edge fade appear only when there is more to see ──
+  const scroller = document.querySelector('.catgrid__tabs');
+  const btnLeft  = document.querySelector('.catgrid__arrow--left');
+  const btnRight = document.querySelector('.catgrid__arrow--right');
+
+  function updateArrows() {
+    if (!scroller || !btnLeft || !btnRight) return;
+    const max = scroller.scrollWidth - scroller.clientWidth;
+    btnLeft.hidden  = scroller.scrollLeft <= 4;
+    btnRight.hidden = max <= 4 || scroller.scrollLeft >= max - 4;
+  }
+
+  if (scroller) {
+    scroller.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows);
+    btnLeft?.addEventListener('click',  () => scroller.scrollBy({ left: -scroller.clientWidth * 0.6, behavior: 'smooth' }));
+    btnRight?.addEventListener('click', () => scroller.scrollBy({ left:  scroller.clientWidth * 0.6, behavior: 'smooth' }));
+    updateArrows();
+    window.addEventListener('load', updateArrows);
+  }
 </script>
 
 <style>
@@ -157,6 +189,65 @@ const productBySlug = Object.fromEntries(allProducts.map(p => [p.slug, p]));
   }
 
   /* ── Tab nav ── */
+  .catgrid__tabs-wrap {
+    position: relative;
+    max-width: 1200px;
+    margin-inline: auto;
+    width: 100%;
+  }
+
+  /* Arrow buttons sit on a soft fade so the next tab looks 'cut off' */
+  .catgrid__arrow {
+    position: absolute;
+    top: 0;
+    bottom: 1px;                 /* keep the bottom hairline visible */
+    z-index: 2;
+    width: 3rem;
+    display: flex;
+    align-items: center;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: #2A1124;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .catgrid__arrow[hidden] { display: none; }
+
+  .catgrid__arrow--right {
+    right: 0;
+    justify-content: flex-end;
+    padding-right: 0.5rem;
+    background: linear-gradient(to right, rgba(250,248,245,0), #FAF8F5 62%);
+  }
+  .catgrid__arrow--left {
+    left: 0;
+    justify-content: flex-start;
+    padding-left: 0.5rem;
+    background: linear-gradient(to left, rgba(250,248,245,0), #FAF8F5 62%);
+  }
+
+  /* the round gold chip inside the arrow */
+  .catgrid__arrow svg {
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0.4rem;
+    border-radius: 9999px;
+    background: #fff;
+    border: 1px solid rgba(212, 175, 55, 0.55);
+    color: #B8962E;
+    box-shadow: 0 2px 8px rgba(42, 17, 36, 0.12);
+  }
+  .catgrid__arrow--right svg { animation: catgrid-nudge 1.6s ease-in-out 3; }
+
+  @keyframes catgrid-nudge {
+    0%, 100% { transform: translateX(0); }
+    50%      { transform: translateX(4px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .catgrid__arrow--right svg { animation: none; }
+  }
+
   .catgrid__tabs {
     display: flex;
     border-bottom: 0.5px solid rgba(42, 17, 36, 0.08);
@@ -165,9 +256,9 @@ const productBySlug = Object.fromEntries(allProducts.map(p => [p.slug, p]));
     scrollbar-width: none;
     -ms-overflow-style: none;
     gap: 0;
-    max-width: 1200px;
-    margin-inline: auto;
     width: 100%;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
   }
 
   .catgrid__tabs::-webkit-scrollbar { display: none; }
@@ -178,7 +269,7 @@ const productBySlug = Object.fromEntries(allProducts.map(p => [p.slug, p]));
 
   /* ── Tab button — reset browser defaults ── */
   .catgrid__tab {
-    padding: 0.625rem 1.125rem;
+    padding: 0.625rem 0.875rem;
     font-size: 0.8125rem;
     font-weight: 500;
     color: rgba(42, 17, 36, 0.38);

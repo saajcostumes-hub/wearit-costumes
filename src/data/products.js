@@ -2744,7 +2744,27 @@ export const allProducts = [
   ...westernProducts,
 ];
 
-export const featuredProducts = allProducts.filter(p => p.featured);
+// ── Popular this season — curated & ordered (homepage shows in this exact order)
+// Mixed categories so the grid looks varied. No Dandiya/Navratri outfits (festival is over).
+// None of these may use an image already used in the hero carousel (HeroSection.astro).
+// To change: edit this list of slugs. Any slug that doesn't exist is skipped safely.
+const featuredSlugOrder = [
+  'jewellery-peacock-lakshmi-temple-haram',
+  'stylist-men-midnight-black-chevron-achkan',
+  'nauwari-violet-paithani',
+  'kids-nauvari-kashta-saree-1',
+  'maternity-wine-ruffled-cape-gown',
+  'kashtha-saree-2',
+  'western-maroon-ruffle-saree-gown',
+  'lehenga-ivory-bridal',
+  'kids-combo-set-1',
+  'jewellery-kundan-polki-pearl-choker',
+  'stylist-men-champagne-gold-kurta-dushala',
+  'lehenga-navy-paithani',
+];
+export const featuredProducts = featuredSlugOrder
+  .map(slug => allProducts.find(p => p.slug === slug))
+  .filter(Boolean);
 
 export const productsByCategory = {
   nauwari:   nauwariProducts,
